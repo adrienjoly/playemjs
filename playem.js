@@ -76,8 +76,9 @@ function inheritEventEmitter(object) {
 // source: https://github.com/joyent/node/blob/6ecb0cd65d2f818a35adb80d23261555b63528ca/tools/blog/node_modules/glob/node_modules/inherits/inherits.js#L3
 */
 
-if (USE_SWFOBJECT)
-	loader.includeJS("/js/swfobject.js");
+if (USE_SWFOBJECT && !window.swfobject)
+	loader.includeJS("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
+	// TODO: must be loaded before playem-youtube.js
 
 // message handling
 
