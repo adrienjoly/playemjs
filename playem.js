@@ -8,10 +8,10 @@ var PLAY_TIMEOUT = 10000;
 
 window.showMessage = window.showMessage || function(msg) {
 	console.log("[showMessage]", msg);
-}
+};
 
 if (undefined == window.console) 
-	console = {log:function(){}};
+	window.console = {log:function(){}};
 
 var loader = new (function Loader() {
 	var yetToLoad = 0, remainingIncludes = {};
@@ -265,7 +265,7 @@ function Playem(playerFunctions) {
 			},
 			onError: function(player, error) {
 				console.log(player.label + " error:", error);
-				((error || {}).exception || {}).stack && console.log(error.exception.stack);
+				((error || {}).exception || {}).stack && console.log(error.exception.stack);
 				setPlayTimeout();
 				playerFunctions.onError && playerFunctions.onError(error);
 			}
