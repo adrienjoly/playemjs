@@ -47,6 +47,7 @@ var loader = new (function Loader() {
 	};
 });
 
+/*
 // EventEmitter
 
 function EventEmitter() {
@@ -57,7 +58,7 @@ EventEmitter.prototype.on = function(eventName, handler){
 	this._eventListeners[eventName] = (this._eventListeners[eventName] || []).concat(handler);
 }
 
-EventEmitter.prototype.emit = function(eventName /*, args...*/){
+EventEmitter.prototype.emit = function(eventName){
 	var args = Array.prototype.slice.call(arguments, 1); // remove eventName from arguments, and make it an array
 	var listeners = this._eventListeners[eventName];
 	for (var i in listeners)
@@ -69,17 +70,17 @@ function inheritEventEmitter(object) {
 	for (var i in eventEmitter)
 		object[i] = eventEmitter[i];
 }
-
+*/
 /*
 // TODO: use util.inherits() from node.js instead?
 // usage: http://nodejs.org/docs/latest/api/util.html#util_util_inherits_constructor_superconstructor
 // source: https://github.com/joyent/node/blob/6ecb0cd65d2f818a35adb80d23261555b63528ca/tools/blog/node_modules/glob/node_modules/inherits/inherits.js#L3
 */
-
+/*
 if (USE_SWFOBJECT && !window.swfobject)
 	loader.includeJS("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js");
 	// TODO: must be loaded before playem-youtube.js
-
+*/
 // message handling
 
 var messageHandlers = {};
