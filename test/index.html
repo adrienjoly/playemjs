@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="http://whyd.com/js/swfobject.js"></script>
+<script src="../playem.js"></script>
+<script src="../playem-youtube.js"></script>
+
+<div id="container"></div>
+
+<script>
+
+var handlers = {
+    onPlay: function(){ console.log("play"); },
+    onTrackInfo: function(t){
+        console.log(t.trackPosition +"/"+t.trackDuration);
+    },
+    onError: function(e){ console.log("error", e); },
+};
+
+var playem = new Playem(handlers);
+
+var defaultDefaultParams = {
+    playerId: "genericplayer",
+    origin: window.location.host || window.location.hostname,
+    playerContainer: document.getElementById("container")
+};
+
+//playem.addPlayer(AudioFilePlayer);
+playem.addPlayer(YoutubePlayer, defaultDefaultParams);
+//playem.addPlayer(DailymotionPlayer, defaultDefaultParams);
+//playem.addPlayer(DeezerPlayer, defaultDefaultParams);
+//playem.addPlayer(VimeoPlayer, defaultDefaultParams);
+//playem.addPlayer(SoundCloudPlayer, defaultDefaultParams);
+
+playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
+
+playem.play();
+
+</script>
+</body>
+</html>
