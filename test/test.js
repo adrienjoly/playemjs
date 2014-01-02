@@ -36,6 +36,13 @@
 	//====
 	// utility functions
 
+	function objValues(obj){
+		var values = [];
+		for (var i in obj)
+			values.push(obj[i]);
+		return values;
+	}
+
 	function forEachAsync(fcts, cb) {
 		fcts = fcts || [];
 		(function next(){
@@ -53,6 +60,7 @@
 	var eventLogger = new (function EventLogger(){
 		var self = this;
 		this.log = []; // [[timestamp, tag, fct name, args...]]
+		var listeners = [];
 		/*var handlers = {
 		    onPlay: function(){ console.log("play"); },
 		    onTrackInfo: function(t){
@@ -60,15 +68,17 @@
 		    },
 		    onError: function(e){ console.log("error", e); },
 		};*/
-		this.makeHandlers = function(tag){
-			function makeLogger(evt){
-				return function(){
-					var entry = [ Date.now(), tag, evt ].concat(Array.prototype.slice.call(arguments));
-					self.log.push(entry);
-					console.log.apply(console, entry)
-					return entry;
-				};
-			}
+		function makeLogger(evt){
+			return function(){
+				var entry = [ Date.now(), evt ].concat(Array.prototype.slice.call(arguments));
+				self.log.push(entry);
+				//console.log.apply(console, entry);
+				for(var i in listeners)
+					listeners[i](evt, arguments);
+				return entry;
+			};
+		}
+		this.makeHandlers = function(){
 			var handlers = {};
 			for (i in EVENTS) {
 				var evt = EVENTS[i];
@@ -76,13 +86,20 @@
 			}
 			return handlers;
 		};
+		this.addListener = function(fct){
+			listeners.push(fct);
+			return listeners.length-1;
+		};
+		this.removeListener = function(idx){
+			listeners.splice(idx);
+		};
 	});
 
 	//====
 	// playemjs init
 
 	function init(cb){
-		var playem = new Playem(eventLogger.makeHandlers("playem"));
+		var playem = new Playem(eventLogger.makeHandlers());
 		function makePlayerLoader(pl){
 			return function(next) {
 				if (window[pl+"Player"]) // check that class exists
@@ -105,8 +122,47 @@
 	// start tests when ready
 
 	init(function(playem){
-		playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
-		playem.play();
+		var tests = {
+			"playem initializes without error": function(cb){
+				cb(!!playem);
+			},
+			"first video starts playing in less than 10 seconds": function(cb){
+				var listenerId, timeout;
+				playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
+				playem.play();
+				function clean(){
+					clearTimeout(timeout);
+					eventLogger.removeListener(listenerId);
+				}
+				timeout = setTimeout(function(){
+					clean();
+					cb(false);
+				}, 10000);
+				listenerId = eventLogger.addListener(function(evt){
+					console.log(evt);
+					if (evt == "onPlay") {
+						clean();
+						cb(true);
+					}
+				});
+				console.log("coucou")
+			}
+		};
+		function wrapTest(title){
+			var runTest = tests[title];
+			return function(cb){
+				console.log("TESTING: " + title + " ...");
+				runTest(function(res){
+					console.log("=> ", !!res ? "OK" : "FAIL");
+					cb(res);
+				});
+			};
+		}
+		for(var title in tests)
+			tests[title] = wrapTest(title);
+		forEachAsync(objValues(tests), function(){
+			console.log("All tests done!");
+		});
 	});
 
 })();
