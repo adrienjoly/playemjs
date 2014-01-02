@@ -1,3 +1,5 @@
+var USE_FLASH_VIMEO = true; // ... or "universal embed" (iframe), if false
+
 VimeoPlayer = (function() {
 
 	var EVENT_MAP = {
