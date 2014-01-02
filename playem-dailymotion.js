@@ -122,7 +122,7 @@ DailymotionPlayer = (function() {
 	}
 
 	DailymotionPlayer.prototype.getEid = function(url, cb) {
-		cb((url.match(regex) || []).pop(), this);
+		cb((url.match(regex) || []).pop(), this);
 	}
 
 	DailymotionPlayer.prototype.play = function(id) {
