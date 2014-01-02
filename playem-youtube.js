@@ -1,3 +1,7 @@
+window.$ = window.$ || function(){return window.$};
+$.show = $.show || function(){return $};
+$.attr = $.attr || function(){return $};
+
 YoutubePlayer = (function() {
 	//includeJS("https://www.youtube.com/player_api", eventHandlers.onApiLoaded);
 	var EVENT_MAP = {
