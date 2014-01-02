@@ -1,10 +1,17 @@
-var DeezerPlayer = (function() {
-  
+window.showMessage = window.showMessage || function(msg) {
+  console.log("[showMessage]", msg);
+};
+
+function DeezerPlayer(p) {
+
+  // PARAMETERS
+  var p = p || {};
+  var APP_ID = p.appId;
+  var CHANNEL_URL = p.channelUrl;
+
+  // CONSTANTS
   var SDK_URL = 'http://cdn-files.deezer.com/js/min/dz.js';
   var SDK_LOADED = false;  
-  var APP_ID = '125765';
-  var WHYD_HOST = window.location.href.substr(0, window.location.href.indexOf("/", 10));
-  var CHANNEL_URL = WHYD_HOST + '/html/channel.html';
   var URL_REG = /http:\/\/(?:www\.)deezer\.com\/track\/(\d+)/i;
   
   var EVENT_MAP = {
@@ -27,7 +34,6 @@ var DeezerPlayer = (function() {
     loadSDK(function() {
       init(function() { 
         console.log('DeezerPlayer ready');
-        DZ.whydPlayer = self;
         //DZ.getLoginStatus = function(cb) {cb && cb({userID: null})}
         DZ.getLoginStatus(function(response) {
           IS_LOGGED = response.userID;
@@ -199,10 +205,6 @@ var DeezerPlayer = (function() {
       if (response.userID) {
         IS_LOGGED = true;
         showMessage('Login successful. Your Deezer tracks will be full length from now on!');        
-        /*init(function() {
-          IS_LOGGED = true;
-          DZ.whydPlayer.isReady = true;
-        });*/
       } else {
         showMessage('Deezer login unsuccesful.', true);
       }
@@ -212,4 +214,4 @@ var DeezerPlayer = (function() {
   //============================================================================
   return Player;
   
-})();
+};
