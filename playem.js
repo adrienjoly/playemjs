@@ -1,6 +1,6 @@
 // configuration
 
-var USE_SWFOBJECT = !!window.swfobject; // ... to embed youtube flash player
+var USE_SWFOBJECT = true; //!!window.swfobject; // ... to embed youtube flash player
 var PLAY_TIMEOUT = 10000;
 
 // utility functions
