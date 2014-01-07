@@ -8,12 +8,12 @@
 	// constants and parameters
 
 	var PLAYERS = [
-	//	"AudioFile",
 		"Youtube",
-	//	"Dailymotion",
+		"SoundCloud",
+		"Vimeo",
+		"Dailymotion",
+	//	"AudioFile",
 	//	"Deezer",
-	//	"Vimeo",
-	//	"SoundCloud",
 	];
 
 	var EVENTS = [
@@ -61,6 +61,7 @@
 		var self = this;
 		this.log = []; // [[timestamp, tag, fct name, args...]]
 		var listeners = [];
+		var lastTypedEvent = {};
 		/*var handlers = {
 		    onPlay: function(){ console.log("play"); },
 		    onTrackInfo: function(t){
@@ -72,6 +73,7 @@
 			return function(){
 				var entry = [ Date.now(), evt ].concat(Array.prototype.slice.call(arguments));
 				self.log.push(entry);
+				lastTypedEvent[evt] = entry;
 				//console.log.apply(console, entry);
 				for(var i in listeners)
 					listeners[i](evt, arguments);
@@ -93,6 +95,9 @@
 		this.removeListener = function(idx){
 			listeners.splice(idx);
 		};
+		this.getLastTypedEvent = function(evt){
+			return lastTypedEvent[evt];
+		};
 	});
 
 	//====
@@ -110,7 +115,7 @@
 				if (window[pl+"Player"]) // check that class exists
 					initPlayer();
 				else
-					loader.includeJS("../playem-"+pl.toLowerCase()+".js", initPlayer);
+					loader.includeJS("../playem-"+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
 			};
 		}
 		forEachAsync(PLAYERS.map(makePlayerLoader), function(){
@@ -128,7 +133,8 @@
 			},
 			"first video starts playing in less than 10 seconds": function(cb){
 				var listenerId, timeout;
-				playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
+				//playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
+				playem.addTrackByUrl("https://youtube.com/watch?v=jmRI3Ew4BvA");
 				playem.play();
 				function clean(){
 					clearTimeout(timeout);
@@ -139,22 +145,45 @@
 					cb(false);
 				}, 10000);
 				listenerId = eventLogger.addListener(function(evt){
-					console.log(evt);
+					//console.log(evt);
 					if (evt == "onPlay") {
 						clean();
 						cb(true);
 					}
 				});
-				console.log("coucou")
+			},
+			"set volume to 50%": function(cb){
+				playem.setVolume(0.5);
+				cb(true)
+			},
+			"get track duration and skip to the end": function(cb){
+				var trackDuration = eventLogger.getLastTypedEvent("onTrackInfo");
+				trackDuration = ((trackDuration && trackDuration.pop()) || {}).trackDuration;
+				console.log("track duration", trackDuration);
+				if (!trackDuration)
+					cb(false);
+				else {
+					var targetPos = 12; //trackDuration - 10;
+					console.log("track target", targetPos);
+					playem.seekTo(targetPos);
+					var timeout = setTimeout(function(){
+						clearTimeout(timeout);
+						var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
+						trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
+						console.log("track position", trackPosition);
+						cb(trackPosition && trackPosition > targetPos);
+					}, 1000);
+				}
 			}
 		};
 		function wrapTest(title){
 			var runTest = tests[title];
 			return function(cb){
-				console.log("TESTING: " + title + " ...");
+				console.log("%c[TEST] " + title + " ...", "color:#888");
 				runTest(function(res){
-					console.log("=> ", !!res ? "OK" : "FAIL");
-					cb(res);
+					console.log('%c[TEST]=> ' + (!!res ? "OK" : "FAIL"), "color:" + (!!res ? "green" : "red"));
+					if (!!res)
+						cb();
 				});
 			};
 		}
