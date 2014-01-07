@@ -1,3 +1,7 @@
+// WARNING:
+// The following global constants must be set before instantiation:
+//             DEEZER_APP_ID and DEEZER_CHANNEL_URL
+
 window.showMessage = window.showMessage || function(msg) {
   console.log("[showMessage]", msg);
 };
@@ -6,14 +10,7 @@ window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 $.append = $.append || function(html){document.write(html);};
 
-// WARNING: this player needs to provide a channel file => not working on localhost
-
 DeezerPlayer = (function(){
-
-  // PARAMETERS
-  var p = p || {};
-  var APP_ID = p.appId;
-  var CHANNEL_URL = p.channelUrl;
 
   // CONSTANTS
   var SDK_URL = 'http://cdn-files.deezer.com/js/min/dz.js';
@@ -137,8 +134,8 @@ DeezerPlayer = (function(){
   //============================================================================
   function init(onload) {
     DZ.init({
-      appId: APP_ID,
-      channelUrl: CHANNEL_URL,
+      appId: DEEZER_APP_ID,
+      channelUrl: DEEZER_CHANNEL_URL,
       player: {
         onload: onload
       }
