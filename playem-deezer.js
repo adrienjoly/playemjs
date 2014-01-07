@@ -2,7 +2,13 @@ window.showMessage = window.showMessage || function(msg) {
   console.log("[showMessage]", msg);
 };
 
-function DeezerPlayer(p) {
+window.$ = window.$ || function(){return window.$};
+$.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
+$.append = $.append || function(html){document.write(html);};
+
+// WARNING: this player needs to provide a channel file => not working on localhost
+
+DeezerPlayer = (function(){
 
   // PARAMETERS
   var p = p || {};
@@ -165,8 +171,8 @@ function DeezerPlayer(p) {
     
     for (var e in EVENT_MAP)
       DZ.Event.suscribe(e, createHandler(e));
-      self.eventHandlers.onApiLoaded && self.eventHandlers.onApiLoaded(self);
-      
+    self.eventHandlers.onApiLoaded && self.eventHandlers.onApiLoaded(self);
+    self.eventHandlers.onApiReady && self.eventHandlers.onApiReady(self);
   }
   
   //============================================================================
@@ -214,4 +220,4 @@ function DeezerPlayer(p) {
   //============================================================================
   return Player;
   
-};
+})();
