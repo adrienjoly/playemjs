@@ -57,12 +57,12 @@ AudioFilePlayer = (function() {
 
 		var loading = setInterval(function(){
 			try {
-				if (soundManager && soundManager.isReady) {
+				if (/*(*/window["soundManager"] /*|| {}).isReady*/) {
 					clearInterval(loading);
 					console.log("soundManager is ready");
 					that.isReady = true;
 					//setTimeout(function() {
-						eventHandlers.onApiLoaded && eventHandlers.onApiLoaded();
+						eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
 						eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 					//}, 100);
 				}
