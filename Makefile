@@ -9,15 +9,15 @@ PLAYERS = $(filter-out %-TODO.js,$(wildcard \
 YUI_COMPRESSOR = /usr/local/bin/yuicompressor
 YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
 
-playem.js: $(PLAYERS)
+playem-all.js: $(PLAYERS)
 	@echo '==> Compiling: $(PLAYERS)'
 	@mkdir -p ./dist
-	@cat $(PLAYERS) > ./dist/playem.js
+	@cat $(PLAYERS) > ./dist/playem-all.js
 	@echo
 
-playem-min.js: playem.js
+playem-min.js: playem-all.js
 	@echo '==> Minifying $<'
-	$(YUI_COMPRESSOR) $(YUI_COMPRESSOR_FLAGS) --type js $< >./dist/playem-min.js
+	$(YUI_COMPRESSOR) $(YUI_COMPRESSOR_FLAGS) --type js ./dist/playem-all.js >./dist/playem-min.js
 	# $< >$@
 	@echo
 
