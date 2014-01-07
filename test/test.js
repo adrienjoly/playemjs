@@ -102,15 +102,15 @@
 		var playem = new Playem(eventLogger.makeHandlers());
 		function makePlayerLoader(pl){
 			return function(next) {
-				if (window[pl+"Player"]) // check that class exists
+				function initPlayer(){
+					playem.addPlayer(window[pl + "Player"], defaultPlayerParams); // instanciates player class
 					next();
-				else {
-					console.log("Loading " + pl + " player...");
-					loader.includeJS("../playem-"+pl.toLowerCase()+".js", function(){
-						playem.addPlayer(window[pl + "Player"], defaultPlayerParams); // instanciates player class
-						next();
-					});
 				}
+				console.log("Init " + pl + " player...");
+				if (window[pl+"Player"]) // check that class exists
+					initPlayer();
+				else
+					loader.includeJS("../playem-"+pl.toLowerCase()+".js", initPlayer);
 			};
 		}
 		forEachAsync(PLAYERS.map(makePlayerLoader), function(){
