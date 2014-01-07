@@ -1,5 +1,8 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
+window.$ = window.$ || function(){return window.$};
+$.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
+
 SoundCloudPlayer = (function() {
 	var EVENT_MAP = {
 		"onplay": "onPlaying",
