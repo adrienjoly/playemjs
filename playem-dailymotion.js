@@ -38,11 +38,11 @@ DailymotionPlayer = (function() {
 			that.element.addEventListener("onStateChange", "onDailymotionStateChange");
 			that.element.addEventListener("onError", "onDailymotionError");
 			//that.element.addEventListener("onVideoProgress", "onDailymotionVideoProgress");
-			that.safeClientCall("onApiReady", that);
 		}
 		
 		that.isReady = true;
 		that.safeClientCall("onApiLoaded", that);
+		that.safeClientCall("onApiReady", that);
 	}
 	
 	DailymotionPlayer.prototype.safeCall = function(fctName, p1, p2) {
