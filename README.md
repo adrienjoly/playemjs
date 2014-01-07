@@ -1,3 +1,5 @@
+[![Analytics](https://ga-beacon.appspot.com/UA-1858235-12/playemjs/github)](https://github.com/igrigorik/ga-beacon)
+
 playemjs
 ========
 
