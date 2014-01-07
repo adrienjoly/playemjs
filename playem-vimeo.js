@@ -1,6 +1,6 @@
-var USE_FLASH_VIMEO = true; // ... or "universal embed" (iframe), if false
-
 VimeoPlayer = (function() {
+
+	var USE_FLASH_VIMEO = true; // ... or "universal embed" (iframe), if false
 
 	var EVENT_MAP = {
 		"play": "onPlaying",
@@ -126,7 +126,7 @@ VimeoPlayer = (function() {
 						};
 						that.element.api_addEventListener('on'+evt[0].toUpperCase()+evt.substr(1), "vimeoHandlers." + evt);
 					})(evt);
-				if (/*!this.isReady &&*/ this.eventHandlers.onEmbedReady)
+				if (this.eventHandlers.onEmbedReady)
 					this.eventHandlers.onEmbedReady();
 				//this.isReady = true;				
 			}
@@ -241,7 +241,7 @@ VimeoPlayer = (function() {
 				allowFullScreen: true,
 				src: 'http://player.vimeo.com/video/' + vars.videoId + "?" + $.param(strParams)
 			}).show();
-			if (/*!this.isReady &&*/ this.eventHandlers.onEmbedReady)
+			if (this.eventHandlers.onEmbedReady)
 				this.eventHandlers.onEmbedReady();
 			//this.isReady = true;
 		}

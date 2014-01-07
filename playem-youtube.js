@@ -117,7 +117,7 @@ YoutubePlayer = (function() {
 			$(this.element).attr(embedAttrs);
 		}
 		$(this.element).show();
-		/*!this.isReady &&*/ this.safeClientCall("onEmbedReady");
+		this.safeClientCall("onEmbedReady");
 		//this.isReady = true;
 	}
 

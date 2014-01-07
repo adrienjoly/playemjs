@@ -92,7 +92,7 @@ function Playem(playerFunctions) {
 	}
 
 	function playTrack(track) {
-		console.log("playTrack", track);
+		//console.log("playTrack", track);
 		doWhenReady(track.player, function() {
 			if (currentTrack) {
 				currentTrack.player.stop && currentTrack.player.stop();
@@ -252,4 +252,4 @@ function Playem(playerFunctions) {
 		setVolume: setVolume
 	};
 	return exportedMethods;
-}
+};
