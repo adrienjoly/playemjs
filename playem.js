@@ -60,7 +60,7 @@ function Playem(playerFunctions) {
 				console.log("waiting for", player.label, "...");
 		}
 		if (player.isReady)
-			fct();
+			setTimeout(fct);
 		else
 			interval = setInterval(poll, 1000);
 	}

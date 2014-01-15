@@ -135,7 +135,7 @@
 				var listenerId, timeout;
 				//playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI"); // "RUSH in Rio" concert, WMG => not authorized on whyd
 				//playem.addTrackByUrl("https://youtube.com/watch?v=jmRI3Ew4BvA"); // Yeah Yeah Yeahs - Sacrilege
-				//playem.addTrackByUrl("//youtube.com/watch?v=iL3IYGgqaNU"); // man is not a bird @ batofar
+				playem.addTrackByUrl("//youtube.com/watch?v=iL3IYGgqaNU"); // man is not a bird @ batofar
 				//playem.addTrackByUrl("//soundcloud.com/manisnotabird/sounds-of-spring"); // /!\ you need to append the stream URL using ContentEmbed class first
 				//playem.addTrackByUrl("http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805");
 				playem.addTrackByUrl("https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483");
