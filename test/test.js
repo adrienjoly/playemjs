@@ -133,8 +133,9 @@
 			},
 			"first video starts playing in less than 10 seconds": function(cb){
 				var listenerId, timeout;
-				//playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI");
-				playem.addTrackByUrl("https://youtube.com/watch?v=jmRI3Ew4BvA");
+				//playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI"); // "RUSH in Rio" concert, WMG => not authorized on whyd
+				//playem.addTrackByUrl("https://youtube.com/watch?v=jmRI3Ew4BvA"); // Yeah Yeah Yeahs - Sacrilege
+				playem.addTrackByUrl("//youtube.com/watch?v=iL3IYGgqaNU"); // man is not a bird @ batofar
 				playem.play();
 				function clean(){
 					clearTimeout(timeout);
@@ -152,28 +153,47 @@
 					}
 				});
 			},
-			"set volume to 50%": function(cb){
-				playem.setVolume(0.5);
-				cb(true)
+			"set volume to 0%": function(cb){
+				playem.setVolume(0.0);
+				cb(true);
 			},
-			"get track duration and skip to the end": function(cb){
-				var trackDuration = eventLogger.getLastTypedEvent("onTrackInfo");
-				trackDuration = ((trackDuration && trackDuration.pop()) || {}).trackDuration;
-				console.log("track duration", trackDuration);
-				if (!trackDuration)
-					cb(false);
-				else {
-					var targetPos = 12; //trackDuration - 10;
-					console.log("track target", targetPos);
-					playem.seekTo(targetPos);
-					var timeout = setTimeout(function(){
-						clearTimeout(timeout);
-						var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
-						trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
-						console.log("track position", trackPosition);
-						cb(trackPosition && trackPosition > targetPos);
+			"get track duration": function(cb){
+				setTimeout(function(){
+					var trackDuration = eventLogger.getLastTypedEvent("onTrackInfo");
+					trackDuration = ((trackDuration && trackDuration.pop()) || {}).trackDuration;
+					//console.log("track duration", trackDuration);
+					cb(!!trackDuration);
+				}, 1000);
+			},
+			"skip to middle of track": function(cb){
+				var targetPos = 0.5;
+				playem.seekTo(targetPos);
+				setTimeout(function(){
+					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
+					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
+					//console.log("track position", trackPosition);
+					cb(trackPosition && trackPosition >= targetPos);
+				}, 1000);
+			},
+			"set volume to 50%": function(cb){
+				var targetPos = 0.5;
+				playem.seekTo(targetPos);
+				setTimeout(function(){
+					playem.setVolume(0.5);
+					setTimeout(function(){
+						cb(true)
 					}, 1000);
-				}
+				}, 1000);
+			},
+			"skip to end of track": function(cb){
+				var targetPos = 0.98;
+				playem.seekTo(targetPos);
+				setTimeout(function(){
+					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
+					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
+					//console.log("track position", trackPosition);
+					cb(trackPosition && trackPosition >= targetPos);
+				}, 2000);
 			}
 		};
 		function wrapTest(title){
