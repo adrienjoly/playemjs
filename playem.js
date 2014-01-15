@@ -50,20 +50,19 @@ function Playem(playerFunctions) {
 	var playTimeout = null;
 
 	function doWhenReady(player, fct) {
-		var done = false;
-		whenReady = {
-			player: player,
-			fct: function () {
-				if (done) return;
-				done = true;
+		var interval = null;
+		function poll(){
+			if (player.isReady && interval) {
+				clearInterval(interval);
 				fct();
-				whenReady = null;
 			}
-		};
+			else
+				console.log("waiting for", player.label, "...");
+		}
 		if (player.isReady)
-			whenReady.fct();
+			fct();
 		else
-			console.log("waiting for", player.label, "...");
+			interval = setInterval(poll, 1000);
 	}
 
 	function addTrackById(id, player, metadata) {
@@ -77,6 +76,7 @@ function Playem(playerFunctions) {
 				metadata: metadata || {}
 			};
 			trackList.push(track);
+			return track;
 			//console.log("added:", player.label, "track", id, track/*, metadata*/);
 		}
 		else
@@ -96,6 +96,7 @@ function Playem(playerFunctions) {
 		doWhenReady(track.player, function() {
 			if (currentTrack) {
 				currentTrack.player.stop && currentTrack.player.stop();
+				// TODO:
 				$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
 				$("#genericholder").html("").remove();
 				if (progress)
@@ -106,7 +107,7 @@ function Playem(playerFunctions) {
 			delete currentTrack.trackDuration; // = null;
 			if (playerFunctions.onTrackChange)
 				playerFunctions.onTrackChange(track);
-			//console.log("playing", track);
+			console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
 			track.player.play(track.trackId);
 			setVolume(volume);
 			if (currentTrack.index == trackList.length-1 && playerFunctions.loadMore)
@@ -216,16 +217,19 @@ function Playem(playerFunctions) {
 		clearQueue: function() {
 			trackList = [];
 		},
-		addTrackByUrl: function(url, metadata) {
+		addTrackByUrl: function(url, metadata, cb) {
 			var remaining = players.length;
 			for (var p=0; p<players.length; ++p)
 				players[p].getEid(url, function(eid, player){
 					//console.log("test ", player.label, eid);
-					if (eid)
-						addTrackById(eid, player, metadata);
+					if (eid) {
+						var track = addTrackById(eid, player, metadata);
+						//console.log("added track", track);
+						cb && cb(track);
+					}
 					else if (--remaining == 0) {
-						$(metadata.post).addClass("disabled");
-						console.log("unrecognized track:", url, metadata);
+						metadata && $(metadata.post).addClass("disabled");
+						cb ? cb({error:"unrecognized track:" + url}) : console.log("unrecognized track:", url, metadata);
 					}
 				});
 		},

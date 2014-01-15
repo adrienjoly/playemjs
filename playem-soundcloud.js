@@ -1,5 +1,7 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
+var SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4"; // TODO: out of this file
+
 window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 
@@ -31,7 +33,7 @@ SoundCloudPlayer = (function() {
 
 		var that = this;
 		$.getScript("https://connect.soundcloud.com/sdk.js", function() {
-			SC.initialize({client_id: "9d5bbaf9df494a4c23475d9fde1f69b4"});
+			SC.initialize({client_id: SOUNDCLOUD_CLIENT_ID});
 			for (var i in EVENT_MAP)
 				(function(i) {
 					that.soundOptions[i] = function() {
@@ -48,7 +50,9 @@ SoundCloudPlayer = (function() {
 			});
 			that.isReady = true;
 			that.callHandler("onApiLoaded", that); // eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
-			that.callHandler("onApiReady", that); // eventHandlers.onApiReady && eventHandlers.onApiReady(that);
+			soundManager.onready(function() {
+				that.callHandler("onApiReady", that); // eventHandlers.onApiReady && eventHandlers.onApiReady(that);
+			});
 		});
 
 		this.callHandler = function(name, params) {
@@ -73,7 +77,7 @@ SoundCloudPlayer = (function() {
 	}
 
 	SoundCloudPlayer.prototype.getEid = function(url, cb) {
-		var matches = /https?:\/\/(?:www\.)?soundcloud\.com\/([\w-_\/]+)/.exec(url);
+		var matches = /(?:https?:)?\/\/(?:www\.)?soundcloud\.com\/([\w-_\/]+)/.exec(url);
 		cb(matches ? url.substr(url.lastIndexOf("/")+1) : null, this);
 	}
 
