@@ -12,8 +12,8 @@
 		"SoundCloud",
 		"Vimeo",
 		"Dailymotion",
+		"Deezer",
 	//	"AudioFile",
-	//	"Deezer",
 	];
 
 	var EVENTS = [
@@ -127,18 +127,30 @@
 	// start tests when ready
 
 	init(function(playem){
+
+		var tracks = [
+			"http://www.deezer.com/track/73414915",
+			//"//youtube.com/v/kvHbAmGkBtI", // "RUSH in Rio" concert, WMG => not authorized on whyd
+			//"https://youtube.com/watch?v=jmRI3Ew4BvA", // Yeah Yeah Yeahs - Sacrilege
+			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
+			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
+			//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
+			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
+		];
+
 		var tests = {
 			"playem initializes without error": function(cb){
 				cb(!!playem);
 			},
+			"all tracks load within 1 second": function(cb){
+				for (var i in tracks)
+					playem.addTrackByUrl(tracks[i]);
+				setTimeout(function(){
+					cb(playem.getQueue().length == tracks.length);
+				}, 1000);
+			},
 			"first video starts playing in less than 10 seconds": function(cb){
 				var listenerId, timeout;
-				//playem.addTrackByUrl("//youtube.com/v/kvHbAmGkBtI"); // "RUSH in Rio" concert, WMG => not authorized on whyd
-				//playem.addTrackByUrl("https://youtube.com/watch?v=jmRI3Ew4BvA"); // Yeah Yeah Yeahs - Sacrilege
-				playem.addTrackByUrl("//youtube.com/watch?v=iL3IYGgqaNU"); // man is not a bird @ batofar
-				//playem.addTrackByUrl("//soundcloud.com/manisnotabird/sounds-of-spring"); // /!\ you need to append the stream URL using ContentEmbed class first
-				//playem.addTrackByUrl("http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805");
-				playem.addTrackByUrl("https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483");
 				playem.play();
 				function clean(){
 					clearTimeout(timeout);
@@ -189,6 +201,16 @@
 				}, 1000);
 			},
 			"skip to end of track": function(cb){
+				var targetPos = 0.999;
+				playem.seekTo(targetPos);
+				setTimeout(function(){
+					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
+					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
+					//console.log("track position", trackPosition);
+					cb(trackPosition && trackPosition >= targetPos);
+				}, 2000);
+			},
+			"next track plays within 10 seconds": function(cb){
 				var targetPos = 0.999;
 				playem.seekTo(targetPos);
 				setTimeout(function(){

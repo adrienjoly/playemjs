@@ -15,7 +15,7 @@ DeezerPlayer = (function(){
   // CONSTANTS
   var SDK_URL = 'http://cdn-files.deezer.com/js/min/dz.js';
   var SDK_LOADED = false;  
-  var URL_REG = /http:\/\/(?:www\.)deezer\.com\/track\/(\d+)/i;
+  var URL_REG = /(?:https?:)?\/\/(?:www\.)deezer\.com\/track\/(\d+)/i;
   
   var EVENT_MAP = {
     player_play: 'onPlaying',
@@ -121,7 +121,9 @@ DeezerPlayer = (function(){
   //============================================================================  
   function loadSDK(cb) {
     if (!SDK_LOADED) {
-      $('body').append('<div id="dz-root"></div>');
+      //$('body').append('<div id="dz-root"></div>');
+      var dz = document.createElement('div'); dz.id = 'dz-root';
+      document.getElementsByTagName("body")[0].appendChild(dz);
       $.getScript(SDK_URL, function() {
         SDK_LOADED = true;
         cb();

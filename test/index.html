@@ -6,7 +6,17 @@
 
 <script src="../lib/soundmanager2-nodebug-jsmin.js"></script>
 <!--<script src="../lib/soundmanager2-jsmin.js"></script>-->
-<script>soundManager.setup({url: "/lib/", flashVersion: 9, onready: function() {soundManager.isReady=true;}});</script>
+<script>
+	soundManager.setup({
+		url: "/lib/",
+		flashVersion: 9,
+		onready: function() {
+			soundManager.isReady=true;
+		}
+	});
+	var DEEZER_APP_ID = 125765;
+	var DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
+</script>
 
 <script src="../playem.js"></script>
 <!--<script src="../dist/playem-min.js"></script>-->
