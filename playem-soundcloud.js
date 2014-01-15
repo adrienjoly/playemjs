@@ -1,7 +1,5 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
-var SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4"; // TODO: out of this file
-
 window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 
