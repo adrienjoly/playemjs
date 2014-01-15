@@ -3,6 +3,10 @@
 var USE_SWFOBJECT = true; //!!window.swfobject; // ... to embed youtube flash player
 var PLAY_TIMEOUT = 10000;
 
+window.$ = window.$ || function(){return window.$};
+$.html = $.html || function(){return $};
+$.remove = $.remove || function(){return $};
+
 // utility functions
 
 if (undefined == window.console) 
@@ -96,7 +100,7 @@ function Playem(playerFunctions) {
 		doWhenReady(track.player, function() {
 			if (currentTrack) {
 				currentTrack.player.stop && currentTrack.player.stop();
-				// TODO:
+				// TODO: delete elements in players instead
 				$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
 				$("#genericholder").html("").remove();
 				if (progress)
