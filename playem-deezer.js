@@ -13,7 +13,7 @@ $.append = $.append || function(html){document.write(html);};
 DeezerPlayer = (function(){
 
   // CONSTANTS
-  var SDK_URL = '//cdn-files.deezer.com/js/min/dz.js';
+  var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js';
   var SDK_LOADED = false;  
   var URL_REG = /(?:https?:)?\/\/(?:www\.)deezer\.com\/track\/(\d+)/i;
   
