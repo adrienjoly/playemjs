@@ -129,13 +129,13 @@
 	init(function(playem){
 
 		var tracks = [
-			"http://www.deezer.com/track/73414915",
 			//"//youtube.com/v/kvHbAmGkBtI", // "RUSH in Rio" concert, WMG => not authorized on whyd
 			//"https://youtube.com/watch?v=jmRI3Ew4BvA", // Yeah Yeah Yeahs - Sacrilege
 			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
 			//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
 			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
+			"http://www.deezer.com/track/73414915",
 		];
 
 		var tests = {
@@ -210,16 +210,8 @@
 					cb(trackPosition && trackPosition >= targetPos);
 				}, 2000);
 			},
-			"next track plays within 10 seconds": function(cb){
-				var targetPos = 0.999;
-				playem.seekTo(targetPos);
-				setTimeout(function(){
-					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
-					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
-					//console.log("track position", trackPosition);
-					cb(trackPosition && trackPosition >= targetPos);
-				}, 2000);
-			}
+			//"next track plays within 10 seconds": function(cb){
+			//}
 		};
 		function wrapTest(title){
 			var runTest = tests[title];
@@ -235,7 +227,7 @@
 		for(var title in tests)
 			tests[title] = wrapTest(title);
 		forEachAsync(objValues(tests), function(){
-			console.log("All tests done!");
+			console.log("%cAll tests done!", "color:green");
 		});
 	});
 
