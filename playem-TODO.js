@@ -1,20 +1,3 @@
-// EventEmitter
-
-function EventEmitter() {
-	this._eventListeners = {};
-}
-
-EventEmitter.prototype.on = function(eventName, handler){
-	this._eventListeners[eventName] = (this._eventListeners[eventName] || []).concat(handler);
-}
-
-EventEmitter.prototype.emit = function(eventName){
-	var args = Array.prototype.slice.call(arguments, 1); // remove eventName from arguments, and make it an array
-	var listeners = this._eventListeners[eventName];
-	for (var i in listeners)
-		listeners[i].apply(null, args);
-}
-
 function inheritEventEmitter(object) {
 	var eventEmitter = new EventEmitter();
 	for (var i in eventEmitter)

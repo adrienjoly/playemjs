@@ -80,6 +80,7 @@
 				return entry;
 			};
 		}
+		/*
 		this.makeHandlers = function(){
 			var handlers = {};
 			for (i in EVENTS) {
@@ -88,6 +89,14 @@
 			}
 			return handlers;
 		};
+		*/
+		this.listenTo = function(playem){
+			var handlers = {};
+			for (i in EVENTS) {
+				var evt = EVENTS[i];
+				playem.on(evt, makeLogger(evt));
+			}
+		}
 		this.addListener = function(fct){
 			listeners.push(fct);
 			return listeners.length-1;
@@ -104,7 +113,8 @@
 	// playemjs init
 
 	function init(cb){
-		var playem = new Playem(eventLogger.makeHandlers());
+		var playem = new Playem(/*eventLogger.makeHandlers()*/);
+		eventLogger.listenTo(playem);
 		function makePlayerLoader(pl){
 			return function(next) {
 				function initPlayer(){
