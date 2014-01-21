@@ -170,7 +170,7 @@ function Playem() {
 					that.emit("loadMore");
 				// if the track does not start playing within 7 seconds, skip to next track
 				setPlayTimeout(function() {
-					console.log("TIMEOUT: track is not playing => skipping to next song");
+					console.log("TIMEOUT: track did not start playing"); // => skipping to next song
 					that.emit("onError", {code:"timeout", source:"Playem"});
 					//exportedMethods.next();
 				});
@@ -190,10 +190,8 @@ function Playem() {
 					//console.log(player.label + " api ready");
 					if (whenReady && player == whenReady.player)
 						whenReady.fct();
-					if (0 == --playersToLoad) {
+					if (0 == --playersToLoad)
 						that.emit("onReady");
-						console.log("all api ready", that);
-					}
 				},
 				onEmbedReady: function(player) {
 					//console.log("embed ready");
@@ -204,7 +202,6 @@ function Playem() {
 					//setPlayTimeout(); // removed because soundcloud sends a "onPlaying" event, even for not authorized tracks
 					setVolume(volume);
 					setTimeout(function() {
-						console.log("on play", that);
 						that.emit("onPlay");
 					}, 1);
 					if (player.trackInfo && player.trackInfo.duration)

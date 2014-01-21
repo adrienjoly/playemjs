@@ -96,6 +96,9 @@
 				var evt = EVENTS[i];
 				playem.on(evt, makeLogger(evt));
 			}
+			playem.on("onError", function(e){
+				console.warn("catched error", e);
+			});
 		}
 		this.addListener = function(fct){
 			listeners.push(fct);
@@ -139,6 +142,8 @@
 	init(function(playem){
 
 		var tracks = [
+			"//youtube.com/watch?v=xxx", // should not work
+			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
 			//"//youtube.com/v/kvHbAmGkBtI", // "RUSH in Rio" concert, WMG => not authorized on whyd
 			//"https://youtube.com/watch?v=jmRI3Ew4BvA", // Yeah Yeah Yeahs - Sacrilege
 			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
