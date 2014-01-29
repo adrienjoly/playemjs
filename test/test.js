@@ -139,50 +139,39 @@
 	//====
 	// start tests when ready
 
+	function wrapTests(tests){
+		var testArray = [];
+		function wrapTest(title){
+			var runTest = tests[title];
+			return function(cb){
+				console.log("%c[TEST] " + title + " ...", "color:#888");
+				runTest(function(res){
+					console.log('%c[TEST]=> ' + (!!res ? "OK" : "FAIL"), "color:" + (!!res ? "green" : "red"));
+					if (!!res)
+						cb();
+				});
+			};
+		}
+		for(var title in tests)
+			testArray.push(wrapTest(title));
+		return testArray;
+	}
+
 	init(function(playem){
 
 		var tracks = [
-			"//youtube.com/watch?v=xxx", // should not work
+			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
+			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
 			//"//youtube.com/v/kvHbAmGkBtI", // "RUSH in Rio" concert, WMG => not authorized on whyd
 			//"https://youtube.com/watch?v=jmRI3Ew4BvA", // Yeah Yeah Yeahs - Sacrilege
-			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
 			//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
-			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
 			"http://www.deezer.com/track/73414915",
+			"//youtube.com/watch?v=xxx", // should not work
 		];
 
-		var tests = {
-			"playem initializes without error": function(cb){
-				cb(!!playem);
-			},
-			"all tracks load within 1 second": function(cb){
-				for (var i in tracks)
-					playem.addTrackByUrl(tracks[i]);
-				setTimeout(function(){
-					cb(playem.getQueue().length == tracks.length);
-				}, 1000);
-			},
-			"first video starts playing in less than 10 seconds": function(cb){
-				var listenerId, timeout;
-				playem.play();
-				function clean(){
-					clearTimeout(timeout);
-					eventLogger.removeListener(listenerId);
-				}
-				timeout = setTimeout(function(){
-					clean();
-					cb(false);
-				}, 10000);
-				listenerId = eventLogger.addListener(function(evt){
-					//console.log(evt);
-					if (evt == "onPlay") {
-						clean();
-						cb(true);
-					}
-				});
-			},
+		var commonTests = wrapTests({
 			"set volume to 0%": function(cb){
 				playem.setVolume(0.0);
 				cb(true);
@@ -221,27 +210,49 @@
 				setTimeout(function(){
 					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
 					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
-					//console.log("track position", trackPosition);
+					console.log("track position", trackPosition);
 					cb(trackPosition && trackPosition >= targetPos);
 				}, 2000);
 			},
 			//"next track plays within 10 seconds": function(cb){
 			//}
-		};
-		function wrapTest(title){
-			var runTest = tests[title];
-			return function(cb){
-				console.log("%c[TEST] " + title + " ...", "color:#888");
-				runTest(function(res){
-					console.log('%c[TEST]=> ' + (!!res ? "OK" : "FAIL"), "color:" + (!!res ? "green" : "red"));
-					if (!!res)
-						cb();
+		});
+
+		var firstTests = wrapTests({
+			"playem initializes without error": function(cb){
+				cb(!!playem);
+			},
+			"all tracks load within 1 second": function(cb){
+				for (var i in tracks)
+					playem.addTrackByUrl(tracks[i]);
+				setTimeout(function(){
+					cb(playem.getQueue().length == tracks.length);
+				}, 1000);
+			},
+			"first video starts playing in less than 10 seconds": function(cb){
+				var listenerId, timeout;
+				playem.play();
+				function clean(){
+					clearTimeout(timeout);
+					eventLogger.removeListener(listenerId);
+				}
+				timeout = setTimeout(function(){
+					clean();
+					cb(false);
+				}, 10000);
+				listenerId = eventLogger.addListener(function(evt){
+					//console.log(evt);
+					if (evt == "onPlay") {
+						clean();
+						cb(true);
+					}
 				});
-			};
-		}
-		for(var title in tests)
-			tests[title] = wrapTest(title);
-		forEachAsync(objValues(tests), function(){
+			},
+		});
+
+		var tests = firstTests.concat(commonTests);
+
+		forEachAsync(tests, function(){
 			console.log("%cAll tests done!", "color:green");
 		});
 	});
