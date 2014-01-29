@@ -180,8 +180,8 @@
 	init(function(playem){
 
 		var tracks = [
+			"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 			"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
-			//"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
 			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first

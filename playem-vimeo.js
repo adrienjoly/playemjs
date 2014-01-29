@@ -1,3 +1,11 @@
+window.$ = window.$ || function(){return window.$};
+$.show = $.show || function(){return $};
+$.param = $.param || function(obj){
+	return Object.keys(obj).map(function(f){
+		return encodeURIComponent(f) + "=" + encodeURIComponent(obj[f]);
+	}).join("&");
+};
+
 VimeoPlayer = (function() {
 
 	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
@@ -86,7 +94,7 @@ VimeoPlayer = (function() {
 	}
 
 	VimeoPlayer.prototype.getEid = function(url, cb) {
-		var matches = /https?:\/\/(?:www\.)?vimeo\.com\/(clip\:)?(\d+)/.exec(url);
+		var matches = /(?:https?:\/\/(?:www\.)?)?vimeo\.com\/(clip\:)?(\d+)/.exec(url);
 		cb(matches ? matches.pop() : null, this);
 	}
 
@@ -133,7 +141,7 @@ VimeoPlayer = (function() {
 			window.vimeoHandlers = {};
 
 			function setHandlers () {
-				for (var evt in EVENT_MAP) 
+				for (var evt in EVENT_MAP)
 					(function(evt){
 						vimeoHandlers[evt] = function(data) {
 							//console.log("vimeo event", evt, '=> on'+evt[0].toUpperCase()+evt.substr(1));
@@ -161,9 +169,9 @@ VimeoPlayer = (function() {
 			
 			window.vimeo_ready = function() {
 				console.log("vimeo embed is ready (embed element)");
-				$object.attr("id", "");
-				$embed.attr("id", that.embedVars.playerId);
-				that.element = document.getElementById(that.embedVars.playerId);
+				that.element.setAttribute("id", ""); // $object.attr("id", "");
+				that.element = that.element.getElementsByTagName("embed")[0];
+				that.element.setAttribute("id", that.embedVars.playerId) // $embed.attr("id", that.embedVars.playerId);
 				setHandlers();
 			}
 			window.vimeo_ready_object = function() {
@@ -214,10 +222,9 @@ VimeoPlayer = (function() {
 			this.holder.innerHTML = "<object "+objectHtml+">" + innerHTML + "</object>";
 
 			this.element = document.getElementById(this.embedVars.playerId);
-			$object = $(this.element);
-			$embed = $("#"+this.embedVars.playerId + " > embed");
-
-			$object.show();
+			//$object = $(this.element);
+			//$embed = $("#"+this.embedVars.playerId + " > embed");
+			//$object.show();
 		}
 		else { // "universal embed" (iframe)
 			$(this.element).attr({
