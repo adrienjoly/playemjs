@@ -185,7 +185,7 @@
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
 			//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
 			"http://www.deezer.com/track/73414915",
-			"//youtube.com/watch?v=xxx", // should not work
+			//"//youtube.com/watch?v=xxx", // should not work
 		];
 
 		var nextIndex = 0;
@@ -194,23 +194,27 @@
 			"automatic switch to next track": function(cb){
 				eventLogger.once("onTrackChange", function(args){
 					var index = ((args && args[0]) || {}).index;
-					console.log("index", index);
 					cb(index === nextIndex++);
 				}, 5000);
 			},
 			"track starts playing in less than 10 seconds": function(cb){
-				playem.play();
 				eventLogger.once("onPlay", cb, 10000);
 			},
-			"set volume to 0%": function(cb){
-				playem.setVolume(0.0);
-				cb(true);
-			},
 			"get track duration": function(cb){
-				eventLogger.once("onTrackInfo", function(args){
-					var trackDuration = ((args && args[0]) || {}).trackDuration;
-					cb(!!trackDuration);
-				}, 1000);
+				var retries = 3;
+				(function waitForDuration(){
+					eventLogger.once("onTrackInfo", function(args){
+						var trackDuration = ((args && args[0]) || {}).trackDuration;
+						if(!trackDuration && --retries)
+							waitForDuration();
+						else
+							cb(!!trackDuration);
+					}, 1000);
+				})()
+			},
+			"set volume to 10%": function(cb){
+				playem.setVolume(0.1);
+				cb(true);
 			},
 			"skip to middle of track": function(cb){
 				var targetPos = 0.5;
@@ -226,14 +230,14 @@
 					cb(true)
 				}, 1000);
 			},
-			"automatic switch to next track, on end of track": function(cb){
+			"skip to end of track": function(cb){
 				var targetPos = 0.999;
+				cb(true);
 				playem.seekTo(targetPos);
-				eventLogger.once("onTrackChange", cb, 5000);
 			},
 		});
 
-		var firstTests = wrapTests({
+		var tests = wrapTests({
 			"playem initializes without error": function(cb){
 				cb(!!playem);
 			},
@@ -247,7 +251,8 @@
 			},
 		});
 
-		var tests = firstTests.concat(commonTests);
+		for(var i in tracks)
+			tests = tests.concat(commonTests);
 
 		forEachAsync(tests, function(){
 			console.log("%cAll tests done!", "color:green");
