@@ -7,6 +7,8 @@
 	//====
 	// constants and parameters
 
+	var LOG_PLAYER_EVENTS = false;
+
 	var PLAYERS = [
 		"Youtube",
 		"SoundCloud",
@@ -74,7 +76,8 @@
 				var entry = [ Date.now(), evt ].concat(Array.prototype.slice.call(arguments));
 				self.log.push(entry);
 				lastTypedEvent[evt] = entry;
-				//console.log.apply(console, entry);
+				if (LOG_PLAYER_EVENTS)
+					console.log.apply(console, entry);
 				for(var i in listeners)
 					listeners[i](evt, arguments);
 				return entry;
@@ -177,6 +180,8 @@
 	init(function(playem){
 
 		var tracks = [
+			"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
+			//"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
 			"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
 			//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
@@ -200,6 +205,10 @@
 			"track starts playing in less than 10 seconds": function(cb){
 				eventLogger.once("onPlay", cb, 10000);
 			},
+			"set volume to 10%": function(cb){
+				playem.setVolume(0.1);
+				cb(true);
+			},
 			"get track duration": function(cb){
 				var retries = 3;
 				(function waitForDuration(){
@@ -211,10 +220,6 @@
 							cb(!!trackDuration);
 					}, 1000);
 				})()
-			},
-			"set volume to 10%": function(cb){
-				playem.setVolume(0.1);
-				cb(true);
 			},
 			"skip to middle of track": function(cb){
 				var targetPos = 0.5;
@@ -253,6 +258,11 @@
 
 		for(var i in tracks)
 			tests = tests.concat(commonTests);
+
+		tests.push(function(cb){
+			playem.stop();
+			cb(true);
+		});
 
 		forEachAsync(tests, function(){
 			console.log("%cAll tests done!", "color:green");

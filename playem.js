@@ -296,6 +296,10 @@ function Playem() {
 				currentTrack.player.pause();
 				that.emit("onPause");
 			},
+			stop: function() {
+				currentTrack.player.stop();
+				//that.emit("onStop");
+			},
 			resume: function() {
 				currentTrack.player.resume();
 			},
