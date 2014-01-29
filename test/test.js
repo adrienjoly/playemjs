@@ -110,6 +110,23 @@
 		this.getLastTypedEvent = function(evt){
 			return lastTypedEvent[evt];
 		};
+		this.once = function(evtName, cb, timeoutDelay, timeoutCb){
+			var listenerId, timeout, that = this;
+			function clean(){
+				clearTimeout(timeout);
+				that.removeListener(listenerId);
+			}
+			timeout = setTimeout(function(){
+				clean();
+				timeoutCb();
+			}, timeoutDelay);
+			listenerId = this.addListener(function(evt, data){
+				if (evt == evtName) {
+					clean();
+					cb(data);
+				}
+			});
+		};
 	});
 
 	//====
@@ -230,23 +247,10 @@
 				}, 1000);
 			},
 			"first video starts playing in less than 10 seconds": function(cb){
-				var listenerId, timeout;
 				playem.play();
-				function clean(){
-					clearTimeout(timeout);
-					eventLogger.removeListener(listenerId);
-				}
-				timeout = setTimeout(function(){
-					clean();
-					cb(false);
-				}, 10000);
-				listenerId = eventLogger.addListener(function(evt){
-					//console.log(evt);
-					if (evt == "onPlay") {
-						clean();
-						cb(true);
-					}
-				});
+				eventLogger.once("onPlay", function(){
+					cb(true);
+				}, 10000, cb);
 			},
 		});
 
