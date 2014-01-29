@@ -118,7 +118,7 @@
 			}
 			timeout = setTimeout(function(){
 				clean();
-				timeoutCb();
+				(timeoutCb || cb)();
 			}, timeoutDelay);
 			listenerId = this.addListener(function(evt, data){
 				if (evt == evtName) {
@@ -188,51 +188,49 @@
 			"//youtube.com/watch?v=xxx", // should not work
 		];
 
+		var nextIndex = 0;
+
 		var commonTests = wrapTests({
+			"automatic switch to next track": function(cb){
+				eventLogger.once("onTrackChange", function(args){
+					var index = ((args && args[0]) || {}).index;
+					console.log("index", index);
+					cb(index === nextIndex++);
+				}, 5000);
+			},
+			"track starts playing in less than 10 seconds": function(cb){
+				playem.play();
+				eventLogger.once("onPlay", cb, 10000);
+			},
 			"set volume to 0%": function(cb){
 				playem.setVolume(0.0);
 				cb(true);
 			},
 			"get track duration": function(cb){
-				setTimeout(function(){
-					var trackDuration = eventLogger.getLastTypedEvent("onTrackInfo");
-					trackDuration = ((trackDuration && trackDuration.pop()) || {}).trackDuration;
-					//console.log("track duration", trackDuration);
+				eventLogger.once("onTrackInfo", function(args){
+					var trackDuration = ((args && args[0]) || {}).trackDuration;
 					cb(!!trackDuration);
 				}, 1000);
 			},
 			"skip to middle of track": function(cb){
 				var targetPos = 0.5;
 				playem.seekTo(targetPos);
-				setTimeout(function(){
-					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
-					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
-					//console.log("track position", trackPosition);
+				eventLogger.once("onTrackInfo", function(args){
+					var trackPosition = ((args && args[0]) || {}).trackPosition;
 					cb(trackPosition && trackPosition >= targetPos);
 				}, 1000);
 			},
 			"set volume to 50%": function(cb){
-				var targetPos = 0.5;
-				playem.seekTo(targetPos);
+				playem.setVolume(0.5);
 				setTimeout(function(){
-					playem.setVolume(0.5);
-					setTimeout(function(){
-						cb(true)
-					}, 1000);
+					cb(true)
 				}, 1000);
 			},
-			"skip to end of track": function(cb){
+			"automatic switch to next track, on end of track": function(cb){
 				var targetPos = 0.999;
 				playem.seekTo(targetPos);
-				setTimeout(function(){
-					var trackPosition = eventLogger.getLastTypedEvent("onTrackInfo");
-					trackPosition = ((trackPosition && trackPosition.pop()) || {}).trackPosition;
-					console.log("track position", trackPosition);
-					cb(trackPosition && trackPosition >= targetPos);
-				}, 2000);
+				eventLogger.once("onTrackChange", cb, 5000);
 			},
-			//"next track plays within 10 seconds": function(cb){
-			//}
 		});
 
 		var firstTests = wrapTests({
@@ -244,13 +242,8 @@
 					playem.addTrackByUrl(tracks[i]);
 				setTimeout(function(){
 					cb(playem.getQueue().length == tracks.length);
+					playem.play();
 				}, 1000);
-			},
-			"first video starts playing in less than 10 seconds": function(cb){
-				playem.play();
-				eventLogger.once("onPlay", function(){
-					cb(true);
-				}, 10000, cb);
 			},
 		});
 
