@@ -5,19 +5,18 @@ $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 
 SoundCloudPlayer = (function() {
 	var EVENT_MAP = {
-		"onplay": "onPlaying",
-		"onresume": "onPlaying",
-		"onpause": "onPaused",
-		"onstop": "onPaused",
-		"onfinish": "onEnded"
-	};
-
-	var ERROR_EVENTS = [
-		"onerror",
-		"ontimeout",
-		"onfailure",
-		"ondataerror"
-	];
+			"onplay": "onPlaying",
+			"onresume": "onPlaying",
+			"onpause": "onPaused",
+			"onstop": "onPaused",
+			"onfinish": "onEnded"
+		},
+		ERROR_EVENTS = [
+			"onerror",
+			"ontimeout",
+			"onfailure",
+			"ondataerror"
+		];
 
 	function SoundCloudPlayer(eventHandlers, embedVars) {  
 		this.label = 'SoundCloud';
@@ -80,8 +79,7 @@ SoundCloudPlayer = (function() {
 	}
 
 	SoundCloudPlayer.prototype.getTrackInfo = function(callback) {
-		var that = this;
-		var i = setInterval(function() {
+		var that = this, i = setInterval(function() {
 			//console.log("SC info", that.widget.duration)
 			if (that.widget && that.widget.duration) {
 				clearInterval(i);

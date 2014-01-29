@@ -13,18 +13,16 @@ $.append = $.append || function(html){document.write(html);};
 DeezerPlayer = (function(){
 
   // CONSTANTS
-  var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js';
-  var SDK_LOADED = false;  
-  var URL_REG = /(?:https?:)?\/\/(?:www\.)deezer\.com\/track\/(\d+)/i;
-  
-  var EVENT_MAP = {
-    player_play: 'onPlaying',
-    player_paused: 'onPaused',
-    player_position: 'onTrackInfo'
-  };
-  
-  var IS_LOGGED = false;
-  
+  var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js',
+      SDK_LOADED = false,
+      IS_LOGGED = false,
+      URL_REG = /(?:https?:)?\/\/(?:www\.)deezer\.com\/track\/(\d+)/i,
+      EVENT_MAP = {
+        player_play: 'onPlaying',
+        player_paused: 'onPaused',
+        player_position: 'onTrackInfo'
+      };
+
   //============================================================================
   function Player(eventHandlers) {
     
@@ -150,10 +148,10 @@ DeezerPlayer = (function(){
     function createHandler(e) {
       if (e === 'player_position') {
         return function(eventObject) {
-          var onTrackInfoHandler = self.eventHandlers.onTrackInfo;
-          var onEndedHandler = self.eventHandlers.onEnded;
-          var position = eventObject[0];
-          var duration = eventObject[1];
+          var onTrackInfoHandler = self.eventHandlers.onTrackInfo, 
+              onEndedHandler = self.eventHandlers.onEnded,
+              position = eventObject[0],
+              duration = eventObject[1];
           if (onTrackInfoHandler) {
             self.currentTrack = {position: position, duration: duration};
             onTrackInfoHandler(self.currentTrack);

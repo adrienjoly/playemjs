@@ -33,7 +33,7 @@ AudioFilePlayer = (function() {
 		this.widget = null;
 		this.isReady = false;
 		this.trackInfo = {};
-		var that = this;
+		var i, loading, that = this;
 
 		this.soundOptions = {
 			id: null,
@@ -46,7 +46,7 @@ AudioFilePlayer = (function() {
 			}
 		};
 
-		for (var i in EVENT_MAP)
+		for (i in EVENT_MAP)
 			(function(i) {
 				that.soundOptions[i] = function() {
 					console.log("event:", i, this);
@@ -55,7 +55,7 @@ AudioFilePlayer = (function() {
 				}
 			})(i);
 
-		var loading = setInterval(function(){
+		loading = setInterval(function(){
 			try {
 				if (/*(*/window["soundManager"] /*|| {}).isReady*/) {
 					clearInterval(loading);
@@ -75,7 +75,7 @@ AudioFilePlayer = (function() {
 	}
 
 	AudioFilePlayer.prototype.getEid = function(url, cb) {
-		var url = (url || "").split("#").pop();
+		url = (url || "").split("#").pop();
 		if (!url)
 			return cb(null, this);
 		var ext = url.split("#").pop().toLowerCase().split(".").pop().toLowerCase();
@@ -86,8 +86,7 @@ AudioFilePlayer = (function() {
 	}
 	
 	AudioFilePlayer.prototype.getTrackInfo = function(callback) {
-		var that = this;
-		var i = setInterval(function() {
+		var that = this, i = setInterval(function() {
 			console.log("info", that.widget.duration)
 			if (that.widget && that.widget.duration) {
 				clearInterval(i);

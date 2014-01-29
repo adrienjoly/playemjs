@@ -1,12 +1,11 @@
 DailymotionPlayer = (function() {
 
-	var regex = /https?:\/\/(?:www\.)?dailymotion.com(?:\/embed)?\/video\/([\w-]+)/;
-
-	var EVENT_MAP = {
-		0: "onEnded",
-		1: "onPlaying",
-		2: "onPaused"
-	};
+	var regex = /https?:\/\/(?:www\.)?dailymotion.com(?:\/embed)?\/video\/([\w-]+)/,
+		EVENT_MAP = {
+			0: "onEnded",
+			1: "onPlaying",
+			2: "onPaused"
+		};
 
 	function DailymotionPlayer(eventHandlers, embedVars) {
 		this.eventHandlers = eventHandlers || {};
@@ -47,8 +46,8 @@ DailymotionPlayer = (function() {
 	
 	DailymotionPlayer.prototype.safeCall = function(fctName, p1, p2) {
 		//return (this.element || {})[fctName] && this.element[fctName](p1, p2);
-		var args = Array.apply(null, arguments).slice(1); // exclude first arg (fctName)
-		var fct = (this.element || {})[fctName];
+		var args = Array.apply(null, arguments).slice(1), // exclude first arg (fctName)
+			fct = (this.element || {})[fctName];
 		fct && fct.apply(this.element, args);
 	}
 	
@@ -73,37 +72,38 @@ DailymotionPlayer = (function() {
 		this.holder.appendChild(this.element);
 		this.embedVars.playerContainer.appendChild(this.holder);
 
-		var params = {
-			allowScriptAccess: "always"
-		};
+		var paramsQS,
+			paramsHTML,
+			embedAttrs, 
+			params = {
+				allowScriptAccess: "always"
+			},
+			atts = {
+				id: this.embedVars.playerId
+			},
+			swfParams = {
+				//api: "postMessage",
+				info: 0,
+				logo: 0,
+				related: 0,
+				autoplay: 1,
+				enableApi: 1,
+				showinfo: 0,
+				hideInfos: 1,
+				chromeless: 1,
+				withLoading: 0,
+				playerapiid: this.embedVars.playerId
+			};
 
-		var atts = {
-			id: this.embedVars.playerId
-		};
-
-		var swfParams = {
-			//api: "postMessage",
-			info: 0,
-			logo: 0,
-			related: 0,
-			autoplay: 1,
-			enableApi: 1,
-			showinfo: 0,
-			hideInfos: 1,
-			chromeless: 1,
-			withLoading: 0,
-			playerapiid: this.embedVars.playerId
-		};
-
-		var paramsQS = Object.keys(swfParams).map(function(k){ // query string
+		paramsQS = Object.keys(swfParams).map(function(k){ // query string
 			return k + "=" + encodeURIComponent(swfParams[k]);
 		}).join("&");
 
-		var paramsHTML = Object.keys(params).map(function(k){
+		paramsHTML = Object.keys(params).map(function(k){
 			return '<param name="' + k +'" value="' + encodeURIComponent(params[k]) + '">';
 		}).join();
 
-		var embedAttrs = {
+		embedAttrs = {
 			id: this.embedVars.playerId,
 			width: this.embedVars.height || '200',
 			height: this.embedVars.width || '200',
@@ -148,9 +148,7 @@ DailymotionPlayer = (function() {
 	};*/
 	
 	DailymotionPlayer.prototype.getTrackPosition = function(callback) {
-		var time = this.element.getCurrentTime();
-		/**/this.trackInfo.duration = this.element.getDuration();
-		//console.log("DM time & duration", time, this.trackInfo.duration);
+		this.trackInfo.duration = this.element.getDuration();
 		callback && callback(this.element.getCurrentTime());
 	};
 	

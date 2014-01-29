@@ -1,27 +1,26 @@
 VimeoPlayer = (function() {
 
-	var USE_FLASH_VIMEO = true; // ... or "universal embed" (iframe), if false
-
-	var EVENT_MAP = {
-		"play": "onPlaying",
-		"resume": "onPlaying",
-		"pause": "onPaused",
-		"finish": "onEnded",
-		"playProgress": function(that, e) { // Html5 event
-			that.trackInfo = {
-				duration: Number(e.data.duration),
-				position: Number(e.data.seconds)
-			};
-			that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
-		},
-		"progress": function(that, seconds) { // Flash event
-			that.trackInfo = {
-				duration: Number(that.element.api_getDuration()),
-				position: Number(seconds)
-			};
-			that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
-		}
-	};
+	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
+		EVENT_MAP = {
+			"play": "onPlaying",
+			"resume": "onPlaying",
+			"pause": "onPaused",
+			"finish": "onEnded",
+			"playProgress": function(that, e) { // Html5 event
+				that.trackInfo = {
+					duration: Number(e.data.duration),
+					position: Number(e.data.seconds)
+				};
+				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
+			},
+			"progress": function(that, seconds) { // Flash event
+				that.trackInfo = {
+					duration: Number(that.element.api_getDuration()),
+					position: Number(seconds)
+				};
+				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
+			}
+		};
 
 	function VimeoPlayer(eventHandlers, embedVars) {  
 		this.label = 'Vimeo';
@@ -30,7 +29,7 @@ VimeoPlayer = (function() {
 		this.embedVars = embedVars || {};
 		this.isReady = false;
 		this.trackInfo = {};
-		var that = this;
+		var i, that = this;
 		
 		if (!USE_FLASH_VIMEO) {
 			function onMessageReceived(e) {
@@ -40,7 +39,7 @@ VimeoPlayer = (function() {
 					if (data.player_id == that.embedVars.playerId) {
 						//console.log("VIMEO EVENT", data);
 						if (data.event == "ready")
-							for (var i in EVENT_MAP)
+							for (i in EVENT_MAP)
 								that.post('addEventListener', i);
 						else
 							(eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event])(that, data);
@@ -115,8 +114,24 @@ VimeoPlayer = (function() {
 
 		if (USE_FLASH_VIMEO) {
 			// inspired by http://derhess.de/vimeoTest/test.html
-			var that = this;
+			var i, embedAttrs, params, innerHTML, objectAttrs, objectHtml, $embed, $object, // = $(this.element);
+				that = this,
+				flashvars = {
+					server: 'vimeo.com',
+					player_server: 'player.vimeo.com',
+					api_ready: 'vimeo_ready',
+					player_id: this.embedVars.playerId,
+					clip_id: vars.videoId,
+					title: 0,
+					byline: 0,
+					portrait: 0,
+					fullscreen: 0,
+					autoplay: 1,
+					js_api: 1
+				};
+
 			window.vimeoHandlers = {};
+
 			function setHandlers () {
 				for (var evt in EVENT_MAP) 
 					(function(evt){
@@ -131,24 +146,8 @@ VimeoPlayer = (function() {
 				//this.isReady = true;				
 			}
 
-			var flashvars = {
-				server: 'vimeo.com',
-				player_server: 'player.vimeo.com',
-				api_ready: 'vimeo_ready',
-				player_id: this.embedVars.playerId,
-				clip_id: vars.videoId,
-				title: 0,
-				byline: 0,
-				portrait: 0,
-				fullscreen: 0,
-				autoplay: 1,
-				js_api: 1
-			};
-
-			var $object; // = $(this.element);
-			
 			// CHROME: ready called from here
-			var embedAttrs = {
+			embedAttrs = {
 			//	id: this.embedVars.playerId,
 				src: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 				type: 'application/x-shockwave-flash',
@@ -177,22 +176,22 @@ VimeoPlayer = (function() {
 			flashvars.api_ready = 'vimeo_ready_object';
 
 			// IE9: ready called from here
-			var params = {
+			params = {
 				AllowScriptAccess: "always",
 				WMode: "opaque",
 				FlashVars: $.param(flashvars).replace(/\&/g, "&amp;"),
 				Movie: "http://vimeo.com/moogaloop.swf?" + $.param(flashvars) //"http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0&amp;time=1350388628283"
 			};
 
-			var innerHTML = "";
-			for (var i in params) {
+			innerHTML = "";
+			for (i in params) {
 				//console.log('<param name="'+i.toLowerCase()+'" value="'+params[i]+'">')
 				innerHTML += '<param name="'+i.toLowerCase()+'" value="'+params[i]+'">';
 				//$object.append($('<param name="'+i.toLowerCase()+'" value="'+params[i]+'">'));
 					//.append('<PARAM NAME="'+i+'" VALUE="'+params[i].replace("&", "&amp;")+'">');
 			}
 
-			var objectAttrs = {
+			objectAttrs = {
 				id: this.embedVars.playerId,
 				src: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 			//	data: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
@@ -203,33 +202,24 @@ VimeoPlayer = (function() {
 				height: this.embedVars.width || '200'
 			};
 
-			var objectHtml = "";
-			for (var i in objectAttrs)
+			objectHtml = "";
+			for (i in objectAttrs)
 				objectHtml += i + '="' + objectAttrs[i] + '" ';
 
 			//$embed.appendTo($object); // needed by chrome
 			innerHTML += "<embed ";
-			for (var i in embedAttrs)
+			for (i in embedAttrs)
 				innerHTML += i + '="' + embedAttrs[i] + '" ';			
 			innerHTML += "></embed>"
 			this.holder.innerHTML = "<object "+objectHtml+">" + innerHTML + "</object>";
 
 			this.element = document.getElementById(this.embedVars.playerId);
 			$object = $(this.element);
-			var $embed = $("#"+this.embedVars.playerId + " > embed");
+			$embed = $("#"+this.embedVars.playerId + " > embed");
 
 			$object.show();
 		}
 		else { // "universal embed" (iframe)
-			var strParams = {
-				api: 1,
-				js_api: 1,
-				player_id: this.embedVars.playerId,
-				title: 0,
-				byline: 0,
-				portrait: 0,
-				autoplay: 1
-			};
 			$(this.element).attr({
 				id: this.embedVars.playerId,
 				width: this.embedVars.height || '200',
@@ -239,7 +229,15 @@ VimeoPlayer = (function() {
 				mozallowfullscreen: true,
 				allowScriptAccess: "always",
 				allowFullScreen: true,
-				src: 'http://player.vimeo.com/video/' + vars.videoId + "?" + $.param(strParams)
+				src: 'http://player.vimeo.com/video/' + vars.videoId + "?" + $.param({
+					api: 1,
+					js_api: 1,
+					player_id: this.embedVars.playerId,
+					title: 0,
+					byline: 0,
+					portrait: 0,
+					autoplay: 1
+				})
 			}).show();
 			if (this.eventHandlers.onEmbedReady)
 				this.eventHandlers.onEmbedReady();

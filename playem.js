@@ -1,7 +1,7 @@
 // configuration
 
-var USE_SWFOBJECT = true; //!!window.swfobject; // ... to embed youtube flash player
-var PLAY_TIMEOUT = 10000;
+var USE_SWFOBJECT = true, //!!window.swfobject; // ... to embed youtube flash player
+	PLAY_TIMEOUT = 10000;
 
 window.$ = window.$ || function(){return window.$};
 $.html = $.html || function(){return $};
@@ -12,9 +12,10 @@ $.remove = $.remove || function(){return $};
 if (undefined == window.console) 
 	window.console = {log:function(){}};
 
-var loader = new (function Loader() {
-	var FINAL_STATES = {"loaded": true, "complete": true, 4: true};
-	var pending = {}, head = document.getElementsByTagName("head")[0];
+loader = new (function Loader() {
+	var FINAL_STATES = {"loaded": true, "complete": true, 4: true},
+		head = document.getElementsByTagName("head")[0],
+		pending = {};
 	return {
 		includeJS: function(src, cb){
 			if (pending[src]) return;
@@ -43,9 +44,9 @@ EventEmitter.prototype.on = function(eventName, handler){
 }
 
 EventEmitter.prototype.emit = function(eventName){
-	var args = Array.prototype.slice.call(arguments, 1); // remove eventName from arguments, and make it an array
-	var listeners = this._eventListeners[eventName];
-	for (var i in listeners)
+	var i, args = Array.prototype.slice.call(arguments, 1), // remove eventName from arguments, and make it an array
+		listeners = this._eventListeners[eventName];
+	for (i in listeners)
 		listeners[i].apply(null, args);
 }
 
@@ -94,17 +95,18 @@ function Playem() {
 
 		EventEmitter.call(this);
 
-		var players = []; // instanciated Player classes, added by client
+		var players = [], // instanciated Player classes, added by client
+			i,
+			exportedMethods,
+			currentTrack = null,
+			trackList = [],
+			whenReady = null,
+			playersToLoad = 0,
+			progress = null,
+			that = this,
+			playTimeout = null,
+			volume = 1;
 
-		// core functions
-		
-		var currentTrack = null;
-		var trackList = [];
-		var whenReady = null;
-		var playersToLoad = 0;
-		var progress = null;
-		var that = this;
-		var playTimeout = null;
 
 		function doWhenReady(player, fct) {
 			var interval = null;
@@ -139,8 +141,6 @@ function Playem() {
 			else
 				console.log("warning: no id provided");
 		}
-
-		var volume = 1;
 
 		function setVolume(vol) {
 			volume = vol;
@@ -262,7 +262,7 @@ function Playem() {
 		}
 
 		// exported methods, mostly wrappers to Players' methods
-		var exportedMethods = {
+		exportedMethods = {
 			addPlayer: function (playerClass, vars) {
 				playersToLoad++;
 				players.push(new playerClass(createEventHandlers(this), vars));
@@ -274,8 +274,8 @@ function Playem() {
 				trackList = [];
 			},
 			addTrackByUrl: function(url, metadata, cb) {
-				var remaining = players.length;
-				for (var p=0; p<players.length; ++p)
+				var p, remaining = players.length;
+				for (p=0; p<players.length; ++p)
 					players[p].getEid(url, function(eid, player){
 						//console.log("test ", player.label, eid);
 						if (eid) {
@@ -312,7 +312,7 @@ function Playem() {
 			setVolume: setVolume
 		};
 		//return exportedMethods;
-		for (var i in exportedMethods)
+		for (i in exportedMethods)
 			this[i] = exportedMethods[i];
 	}
 

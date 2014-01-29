@@ -4,11 +4,13 @@ $.attr = $.attr || function(){return $};
 
 YoutubePlayer = (function() {
 	//includeJS("https://www.youtube.com/player_api", eventHandlers.onApiLoaded);
-	var EVENT_MAP = {
-		/*YT.PlayerState.ENDED*/ 0: "onEnded",
-		/*YT.PlayerState.PLAYING*/ 1: "onPlaying",
-		/*YT.PlayerState.PAUSED*/ 2: "onPaused"
-	};
+	var regex = // /https?\:\/\/(?:www\.)?youtu(?:\.)?be(?:\.com)?\/(?:(?:.*)?[\?\&]v=|v\/|embed\/|\/)?([a-zA-Z0-9_\-]+)/; //^https?\:\/\/(?:www\.)?youtube\.com\/[a-z]+\/([a-zA-Z0-9\-_]+)/
+			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/,
+		EVENT_MAP = {
+			/*YT.PlayerState.ENDED*/ 0: "onEnded",
+			/*YT.PlayerState.PLAYING*/ 1: "onPlaying",
+			/*YT.PlayerState.PAUSED*/ 2: "onPaused"
+		};
 
 	function YoutubePlayer(eventHandlers, embedVars) {
 		this.eventHandlers = eventHandlers || {};
@@ -78,7 +80,8 @@ YoutubePlayer = (function() {
 		this.holder.appendChild(this.element);
 		this.embedVars.playerContainer.appendChild(this.holder);
 
-		var params = {
+
+		var paramsQS, paramsHTML, embedAttrs, params = {
 			autoplay: 1,
 			version: 3, 
 			enablejsapi: 1,
@@ -93,15 +96,15 @@ YoutubePlayer = (function() {
 			origin: this.embedVars.origin
 		};
 
-		var paramsQS = Object.keys(params).map(function(k){ // query string
+		paramsQS = Object.keys(params).map(function(k){ // query string
 			return k + "=" + encodeURIComponent(params[k]);
 		}).join("&");
 
-		var paramsHTML = Object.keys(params).map(function(k){
+		paramsHTML = Object.keys(params).map(function(k){
 			return '<param name="' + k +'" value="' + encodeURIComponent(params[k]) + '">';
 		}).join();
 
-		var embedAttrs = {
+		embedAttrs = {
 			id: this.embedVars.playerId,
 			width: this.embedVars.height || '200',
 			height: this.embedVars.width || '200',
@@ -122,9 +125,6 @@ YoutubePlayer = (function() {
 	}
 
 	YoutubePlayer.prototype.getEid = function(url, cb) {
-		var regex = // /https?\:\/\/(?:www\.)?youtu(?:\.)?be(?:\.com)?\/(?:(?:.*)?[\?\&]v=|v\/|embed\/|\/)?([a-zA-Z0-9_\-]+)/; //^https?\:\/\/(?:www\.)?youtube\.com\/[a-z]+\/([a-zA-Z0-9\-_]+)/
-			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/;
-		//var matches = regex.exec(url);
 		var matches = url.match(regex);
 		cb(matches ? matches.pop() : null, this);
 	}
