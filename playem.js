@@ -153,9 +153,17 @@ function Playem() {
 			doWhenReady(track.player, function() {
 				if (currentTrack) {
 					currentTrack.player.stop && currentTrack.player.stop();
-					// TODO: delete elements in players instead
-					$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
-					$("#genericholder").html("").remove();
+					// TODO: delete elements in players instead ?
+					//$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
+					var holder = document.getElementById("genericholder");
+					if (holder) {
+						var iframe = holder.getElementsByTagName("iframe")[0];
+						if (iframe)
+							iframe.setAttribute("src", "");
+						//$("#genericholder").html("").remove();
+						holder.innerHTML = "";
+						holder.parentNode.removeChild(holder);
+					}
 					if (progress)
 						clearInterval(progress);
 				}
@@ -248,6 +256,7 @@ function Playem() {
 				},
 				onEnded: function(player) {
 					//console.log(player.label + ".onEnded");
+					currentTrack.player.stop && currentTrack.player.stop();
 					that.emit("onEnd");
 					playemFunctions.next();
 				},
