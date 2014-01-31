@@ -122,7 +122,7 @@ VimeoPlayer = (function() {
 
 		if (USE_FLASH_VIMEO) {
 			// inspired by http://derhess.de/vimeoTest/test.html
-			var i, embedAttrs, params, innerHTML, objectAttrs, objectHtml, $embed, $object, // = $(this.element);
+			var i, embedAttrs, params, innerHTML, objectAttrs, objectHtml, //$embed, $object, // = $(this.element);
 				that = this,
 				flashvars = {
 					server: 'vimeo.com',
