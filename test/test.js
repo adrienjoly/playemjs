@@ -15,7 +15,7 @@
 		"Vimeo",
 		"Dailymotion",
 		"Deezer",
-	//	"AudioFile",
+		"AudioFile",
 	];
 
 	var EVENTS = [
@@ -180,6 +180,9 @@
 	init(function(playem){
 
 		var tracks = [
+			"http://robtowns.com/music/blind_willie.mp3",
+			//"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // does not pass test... too short?
+			//];/*
 			"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 			"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
 			"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
@@ -191,7 +194,7 @@
 			//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
 			"http://www.deezer.com/track/73414915",
 			//"//youtube.com/watch?v=xxx", // should not work
-		];
+		];//*/
 
 		var nextIndex = 0;
 
@@ -236,7 +239,7 @@
 				}, 1000);
 			},
 			"skip to end of track": function(cb){
-				var targetPos = 0.999;
+				var targetPos = 0.998;
 				cb(true);
 				playem.seekTo(targetPos);
 			},
