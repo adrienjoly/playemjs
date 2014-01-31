@@ -31,6 +31,9 @@ playem-min.js: playem-all.js
 	@echo Playemjs commit: $(GIT_COMMIT_HASH)
 	@echo
 
+tests:
+	@./test/server.sh
+
 compile: playem-min.js
 
 install:
