@@ -155,9 +155,9 @@ function Playem() {
 					currentTrack.player.stop && currentTrack.player.stop();
 					// TODO: delete elements in players instead ?
 					//$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
-					var holder = document.getElementById("genericholder");
+					var iframe, holder = document.getElementById("genericholder");
 					if (holder) {
-						var iframe = holder.getElementsByTagName("iframe")[0];
+						iframe = holder.getElementsByTagName("iframe")[0];
 						if (iframe)
 							iframe.setAttribute("src", "");
 						//$("#genericholder").html("").remove();
