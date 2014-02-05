@@ -37,6 +37,7 @@ DeezerPlayer = (function(){
         console.log('DeezerPlayer ready');
         //DZ.getLoginStatus = function(cb) {cb && cb({userID: null})}
         DZ.getLoginStatus(function(response) {
+          DZ.player.setRepeat(0);
           IS_LOGGED = response.userID;
           self.isReady = true;
           hookHandlers(self);          
@@ -85,7 +86,8 @@ DeezerPlayer = (function(){
       this.sound = null;
     } else {
       DZ.player.seek(0);
-      DZ.player.pause();    
+      DZ.player.pause();
+      DZ.player.playTracks([]);
     }    
   }
   
