@@ -85,9 +85,7 @@ DeezerPlayer = (function(){
       this.sound.destruct();
       this.sound = null;
     } else {
-      DZ.player.seek(0);
       DZ.player.pause();
-      DZ.player.playTracks([]);
     }    
   }
   
