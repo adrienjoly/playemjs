@@ -89,11 +89,14 @@ function inherits(ctor, superCtor) {
  * - "loadMore"
  */
 
-function Playem() {
+function Playem(playemPrefs) {
 
-	function Playem() {
+	function Playem(playemPrefs) {
 
 		EventEmitter.call(this);
+
+		playemPrefs = playemPrefs || {};
+		playemPrefs.loop = playemPrefs.hasOwnProperty("loop") ? playemPrefs.loop : true;
 
 		var players = [], // instanciated Player classes, added by client
 			i,
@@ -107,6 +110,9 @@ function Playem() {
 			playTimeout = null,
 			volume = 1;
 
+		this.setPref = function(key, val){
+			playemPrefs[key] = val;
+		}
 
 		function doWhenReady(player, fct) {
 			var interval = null;
@@ -313,7 +319,8 @@ function Playem() {
 				currentTrack.player.resume();
 			},
 			next: function() {
-				playTrack(trackList[(currentTrack.index + 1) % trackList.length]);
+				if (playemPrefs.loop || currentTrack.index + 1 < trackList.length)
+					playTrack(trackList[(currentTrack.index + 1) % trackList.length]);
 			},
 			prev: function() {
 				playTrack(trackList[(trackList.length + currentTrack.index - 1) % trackList.length]);
