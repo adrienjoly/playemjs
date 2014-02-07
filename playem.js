@@ -122,7 +122,7 @@ function Playem(playemPrefs) {
 					fct();
 				}
 				else
-					console.log("waiting for", player.label, "...");
+					console.warn("PLAYEM waiting for", player.label, "...");
 			}
 			if (player.isReady)
 				setTimeout(fct);
@@ -145,7 +145,7 @@ function Playem(playemPrefs) {
 				//console.log("added:", player.label, "track", id, track/*, metadata*/);
 			}
 			else
-				console.log("warning: no id provided");
+				throw new Error("no id provided");
 		}
 
 		function setVolume(vol) {
@@ -177,14 +177,14 @@ function Playem(playemPrefs) {
 				delete currentTrack.trackPosition; // = null;
 				delete currentTrack.trackDuration; // = null;
 				that.emit("onTrackChange", track);
-				console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
+				//console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
 				track.player.play(track.trackId);
 				setVolume(volume);
 				if (currentTrack.index == trackList.length-1)
 					that.emit("loadMore");
 				// if the track does not start playing within 7 seconds, skip to next track
 				setPlayTimeout(function() {
-					console.log("TIMEOUT: track did not start playing"); // => skipping to next song
+					console.warn("PLAYEM TIMEOUT"); // => skipping to next song
 					that.emit("onError", {code:"timeout", source:"Playem"});
 					//exportedMethods.next();
 				});
@@ -267,8 +267,7 @@ function Playem(playemPrefs) {
 					playemFunctions.next();
 				},
 				onError: function(player, error) {
-					console.log(player.label + " error:", error);
-					((error || {}).exception || {}).stack && console.log(error.exception.stack);
+					console.error(player.label + " error:", ((error || {}).exception || error || {}).stack || error);
 					setPlayTimeout();
 					that.emit("onError", error);
 				}
@@ -300,7 +299,7 @@ function Playem(playemPrefs) {
 						}
 						else if (--remaining == 0) {
 							metadata && $(metadata.post).addClass("disabled");
-							cb ? cb({error:"unrecognized track:" + url}) : console.log("unrecognized track:", url, metadata);
+							throw new Error("unrecognized track: " + url);
 						}
 					});
 			},

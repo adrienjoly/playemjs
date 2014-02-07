@@ -74,9 +74,9 @@ VimeoPlayer = (function() {
 
 	VimeoPlayer.prototype.post = USE_FLASH_VIMEO ? function(action, value) {
 		if (!this.element)
-			return console.log("warning: this.element not found");
+			return console.warn("VIMEO: this.element not found");
 		if (!this.element["api_"+action])
-			return console.log("warning: action not found:", "api_"+action);
+			return console.warn("VIMEO: action not found:", "api_"+action);
 		try {
 			if (value != undefined)
 				this.element["api_"+action](value);
@@ -168,14 +168,14 @@ VimeoPlayer = (function() {
 			////$embed.appendTo($object);
 			
 			window.vimeo_ready = function() {
-				console.log("vimeo embed is ready (embed element)");
+				//console.log("vimeo embed is ready (embed element)");
 				that.element.setAttribute("id", ""); // $object.attr("id", "");
 				that.element = that.element.getElementsByTagName("embed")[0];
 				that.element.setAttribute("id", that.embedVars.playerId) // $embed.attr("id", that.embedVars.playerId);
 				setHandlers();
 			}
 			window.vimeo_ready_object = function() {
-				console.log("vimeo embed is ready (object element)");
+				//console.log("vimeo embed is ready (object element)");
 				// => nothing to do
 				setHandlers();
 			}

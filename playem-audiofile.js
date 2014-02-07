@@ -49,7 +49,7 @@ AudioFilePlayer = (function() {
 		for (i in EVENT_MAP)
 			(function(i) {
 				that.soundOptions[i] = function() {
-					console.log("event:", i, this);
+					//console.log("event:", i, this);
 					var handler = eventHandlers[EVENT_MAP[i]];
 					handler && handler(that);
 				}
@@ -59,7 +59,7 @@ AudioFilePlayer = (function() {
 			try {
 				if (/*(*/window["soundManager"] /*|| {}).isReady*/) {
 					clearInterval(loading);
-					console.log("soundManager is ready");
+					//console.log("soundManager is ready");
 					that.isReady = true;
 					//setTimeout(function() {
 						eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
@@ -115,7 +115,7 @@ AudioFilePlayer = (function() {
 	AudioFilePlayer.prototype.embed = function(vars) {
 		if (!vars || !vars.trackId)
 			return;
-		console.log("AudioFilePlayer embed vars:", vars);
+		//console.log("AudioFilePlayer embed vars:", vars);
 		this.embedVars = vars = vars || {};
 		this.soundOptions.id = vars.playerId = vars.playerId || 'mp3Player' + (new Date()).getTime();
 		this.soundOptions.url = vars.trackId;
@@ -125,9 +125,9 @@ AudioFilePlayer = (function() {
 			this.widget = null;
 			delete this.widget;
 		}
-		console.log("-> soundManager parameters", this.soundOptions);
+		//console.log("-> soundManager parameters", this.soundOptions);
 		this.widget = soundManager.createSound(this.soundOptions);
-		console.log("-> soundManager instance", !!this.widget);
+		//console.log("-> soundManager instance", !!this.widget);
 		this.eventHandlers.onEmbedReady && this.eventHandlers.onEmbedReady(this);
 		this.eventHandlers.onTrackInfo && this.getTrackInfo(this.eventHandlers.onTrackInfo);
 		this.play();
@@ -147,7 +147,7 @@ AudioFilePlayer = (function() {
 			this.isReady && this.widget && this.widget.pause();
 		}
 		catch(e) {
-			console.log(e.stack);
+			console.error(e.stack);
 		}
 	}
 

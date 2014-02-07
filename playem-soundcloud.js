@@ -34,14 +34,14 @@ SoundCloudPlayer = (function() {
 			for (var i in EVENT_MAP)
 				(function(i) {
 					that.soundOptions[i] = function() {
-						console.log("SC event:", i /*, this*/);
+						//console.log("SC event:", i /*, this*/);
 						var handler = eventHandlers[EVENT_MAP[i]];
 						handler && handler(that);
 					}
 				})(i);
 			ERROR_EVENTS.map(function(evt){
 				that.soundOptions[evt] = function(e) {
-					console.log("SC error:", evt, e);
+					console.error("SC error:", evt, e, e.stack);
 					that.eventHandlers.onError && that.eventHandlers.onError(that, {code:evt.substr(2), source:"SoundCloudPlayer"});
 				};
 			});
@@ -57,7 +57,7 @@ SoundCloudPlayer = (function() {
 				eventHandlers[name] && eventHandlers[name](params);//.apply(null, params);
 			}
 			catch (e) {
-				console.log(e, e.stack);
+				console.error("SC error:", e, e.stack);
 			}
 		}
 	}
@@ -69,7 +69,7 @@ SoundCloudPlayer = (function() {
 				this.widget[fctName](param);
 		}
 		catch(e) {
-			console.log("SC safecall error", e, e.stack);
+			console.error("SC safecall error", e.stack);
 		}
 	}
 

@@ -52,7 +52,7 @@ YoutubePlayer = (function() {
 			this.element[fctName](param);
 		}
 		catch(e) {
-			console.log("YT safecall error", e, e.stack);
+			console.error("YT safecall error", e.stack);
 		}
 	}
 
@@ -62,7 +62,7 @@ YoutubePlayer = (function() {
 				this.eventHandlers[fctName](param);
 		}
 		catch(e) {
-			console.log("YT safeclientcall error", e, e.stack);
+			console.error("YT safeclientcall error", e.stack);
 		}
 	}
 

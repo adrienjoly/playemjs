@@ -56,7 +56,7 @@ DailymotionPlayer = (function() {
 			return this.eventHandlers[fctName] && this.eventHandlers[fctName](p1, p2);
 		}
 		catch(e) {
-			console.log("DM safeclientcall error", e, e.stack);
+			console.error("DM safeclientcall error", e.stack);
 		}
 	}
 

@@ -3,7 +3,7 @@
 //             DEEZER_APP_ID and DEEZER_CHANNEL_URL
 
 window.showMessage = window.showMessage || function(msg) {
-  console.log("[showMessage]", msg);
+  console.warn("[showMessage]", msg);
 };
 
 window.$ = window.$ || function(){return window.$};
@@ -34,7 +34,7 @@ DeezerPlayer = (function(){
         
     loadSDK(function() {
       init(function() { 
-        console.log('DeezerPlayer ready');
+        //console.log('DeezerPlayer ready');
         //DZ.getLoginStatus = function(cb) {cb && cb({userID: null})}
         DZ.getLoginStatus(function(response) {
           DZ.player.setRepeat(0);
