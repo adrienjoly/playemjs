@@ -17,7 +17,7 @@ DailymotionPlayer = (function() {
 		var that = this;
 
 		window.onDailymotionStateChange = function(newState) {
-			console.log(newState);
+			console.log("DM new state", newState);
 			that.safeClientCall(EVENT_MAP[newState], that);
 			/*if (newState == 1) {
 				console.log("getduration", that.element.getDuration());
