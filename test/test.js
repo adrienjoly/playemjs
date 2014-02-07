@@ -129,7 +129,7 @@ function PlayemLogger() {
 	};
 }
 
-function TestRunner(playem) {
+function TestRunner() {
 
 	var tests = [];
 	var finalCallback = null;
@@ -168,7 +168,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	playem.setPref("loop", false);
 
-	var runner = new TestRunner(playem);
+	var runner = new TestRunner();
 	var eventLogger = new PlayemLogger().listenTo(playem);
 
 	var tracks = [
