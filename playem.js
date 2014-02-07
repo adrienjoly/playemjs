@@ -311,7 +311,7 @@ function Playem(playemPrefs) {
 				that.emit("onPause");
 			},
 			stop: function() {
-				currentTrack.player.stop();
+				currentTrack.player.stop && currentTrack.player.stop();
 				//that.emit("onStop");
 			},
 			resume: function() {
