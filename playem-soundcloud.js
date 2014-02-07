@@ -78,16 +78,6 @@ SoundCloudPlayer = (function() {
 		cb(matches ? url.substr(url.lastIndexOf("/")+1) : null, this);
 	}
 
-	SoundCloudPlayer.prototype.getTrackInfo = function(callback) {
-		var that = this, i = setInterval(function() {
-			//console.log("SC info", that.widget.duration)
-			if (that.widget && that.widget.duration) {
-				clearInterval(i);
-				callback(that.widget);
-			}
-		}, 500);
-	}
-
 	SoundCloudPlayer.prototype.getTrackPosition = function(callback) {
 		callback(this.trackInfo.position = this.widget.position / 1000);
 		if (this.widget.durationEstimate)
