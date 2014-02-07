@@ -87,31 +87,25 @@ AudioFilePlayer = (function() {
 	
 	AudioFilePlayer.prototype.getTrackInfo = function(callback) {
 		var that = this, i = setInterval(function() {
-			console.log("info", that.widget.duration)
+			//console.log("info", that.widget.duration)
 			if (that.widget && that.widget.duration) {
 				clearInterval(i);
-				callback(that.widget);
+				callback(that.trackInfo = {
+					duration: that.widget.duration / 1000, // that.widget.durationEstimate / 1000
+					position: that.widget.position / 1000
+				});
 				//that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.widget);
 			}
 		}, 500);
 	}
 
 	AudioFilePlayer.prototype.getTrackPosition = function(callback) {
+		var that = this;
 		//console.log("position", that.widget.position)
-		if (this.widget && this.widget.position) {
-			callback(this.widget.position / 1000);
-			if (this.widget.durationEstimate /*&& this.widget.durationEstimate/1000 != that.widget.duration*/) {
-				this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo({
-					duration: this.widget.duration / 1000
-				});
-			}
-			/*
-			var e = this.widget;
-			var kbLoaded = Math.floor(e.bytesLoaded / 1000);
-          	var kbTotal = Math.floor(e.bytesTotal / 1000);
-          	var durationEstimate = Math.floor(this.durationEstimate / 1000);
-          	*/
-		}
+		this.getTrackInfo(function(){
+			callback(that.trackInfo.position);
+			that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
+		});
 	};
 	
 	AudioFilePlayer.prototype.setTrackPosition = function(pos) {
