@@ -13,8 +13,8 @@ new PlayemLoader().loadAllPlayers(function(playem){
 				singleCb = function(){};
 				cb(res);
 			}
-			eventLogger.once("onPlay", cb, 10000);
-			eventLogger.once("onBuffering", cb, 10000);
+			eventLogger.once("onPlay", singleCb, 10000);
+			eventLogger.once("onBuffering", singleCb, 10000);
 		}
 	});
 
