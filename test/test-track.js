@@ -8,8 +8,13 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	playem.play();
 
 	runner.addTests({
-		"track starts playing in less than 10 seconds": function(cb){
+		"track starts playing (or buffering) in less than 10 seconds": function(cb){
+			function singleCb(res){
+				singleCb = function(){};
+				cb(res);
+			}
 			eventLogger.once("onPlay", cb, 10000);
+			eventLogger.once("onBuffering", cb, 10000);
 		}
 	});
 
