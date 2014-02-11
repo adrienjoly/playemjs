@@ -59,11 +59,12 @@ function PlayemLoader() {
 
 function PlayemLogger() {
 
-	var LOG_PLAYER_EVENTS = false;
+	var LOG_PLAYER_EVENTS = true;
 
 	var EVENTS = [
 		"onError",
 		"onReady",
+		"onBuffering",
 		"onPlay",
 		"onPaused",
 		"onTrackInfo",

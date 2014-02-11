@@ -211,6 +211,12 @@ function Playem(playemPrefs) {
 					//console.log("embed ready");
 					setVolume(volume);
 				},
+				onBuffering: function() {
+					setTimeout(function() {
+						setPlayTimeout();
+						that.emit("onBuffering");
+					});
+				},
 				onPlaying: function(player) {
 					//console.log(player.label + ".onPlaying");
 					//setPlayTimeout(); // removed because soundcloud sends a "onPlaying" event, even for not authorized tracks

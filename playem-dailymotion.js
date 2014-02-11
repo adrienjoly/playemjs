@@ -26,7 +26,13 @@ DailymotionPlayer = (function() {
 		};
 
 		window.onDailymotionError = function(error) {
+			console.log("DM error", error)
 			that.safeClientCall("onError", that, {source:"DailymotionPlayer", data: error});
+		}
+
+		window.onDailymotionAdStart = function(){
+			console.log("DM AD START");
+			that.safeClientCall("onBuffering", that);
 		}
 
 		/*window.onDailymotionVideoProgress = function(a) {
@@ -37,6 +43,8 @@ DailymotionPlayer = (function() {
 			that.element = /*that.element ||*/ document.getElementById(playerId); /* ytplayer*/
 			that.element.addEventListener("onStateChange", "onDailymotionStateChange");
 			that.element.addEventListener("onError", "onDailymotionError");
+			that.element.addEventListener("onLinearAdStart", "onDailymotionAdStart");
+			//that.element.addEventListener("onLinearAdComplete", "onDailymotionAdComplete");
 			//that.element.addEventListener("onVideoProgress", "onDailymotionVideoProgress");
 		}
 		

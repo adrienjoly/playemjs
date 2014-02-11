@@ -4,7 +4,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	var eventLogger = new PlayemLogger().listenTo(playem);
 
 	playem.setPref("loop", false);
-	playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb"); // contains a video ad that delays the onPlay event
+	playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb"); // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
 	playem.play();
 
 	runner.addTests({
