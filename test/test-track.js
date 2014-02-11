@@ -9,12 +9,14 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	runner.addTests({
 		"track starts playing (or buffering) in less than 10 seconds": function(cb){
+			var done = false;
 			function singleCb(res){
-				singleCb = function(){};
-				cb(res);
+				console.log("singleCb", Date.now(), res);
+				!done && cb(res);
+				done = true;
 			}
+			eventLogger.once("onBuffering", singleCb, 9000);
 			eventLogger.once("onPlay", singleCb, 10000);
-			eventLogger.once("onBuffering", singleCb, 10000);
 		}
 	});
 
