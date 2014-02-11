@@ -11,7 +11,6 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"track starts playing (or buffering) in less than 10 seconds": function(cb){
 			var done = false;
 			function singleCb(res){
-				console.log("singleCb", Date.now(), res);
 				!done && cb(res);
 				done = true;
 			}
