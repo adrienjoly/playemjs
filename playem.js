@@ -286,7 +286,7 @@ function Playem(playemPrefs) {
 					if (player == currentTrack.player)
 						return fct(player, x);
 					else
-						console.warn("ignore event: " + fct.name + " from " + playerClass.name);
+						console.warn("ignore event: " + evt + " from " + playerClass.name);
 				};
 			});
 			return eventHandlers;
