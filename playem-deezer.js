@@ -48,6 +48,11 @@ DeezerPlayer = (function(){
   }
   
   //============================================================================
+  Player.prototype.isLogged = function() {
+    return IS_LOGGED;
+  }
+  
+  //============================================================================
   Player.prototype.getEid = function(url, cb) {
     cb(URL_REG.test(url) ? RegExp.$1 : null, this);
   }
