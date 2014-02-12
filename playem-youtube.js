@@ -35,7 +35,7 @@ function YoutubePlayer(){
 
 		window.onYoutubeError = function(error) {
 			//console.log(that.embedVars.playerId + " error:", error);
-			eventHandlers.onError && eventHandlers.onError(that, {source:"YoutubePlayer", data: error});
+			eventHandlers.onError && eventHandlers.onError(that, {source:"YoutubePlayer", code: error});
 		}
 
 		window.onYouTubePlayerReady = window.onYouTubePlayerAPIReady = function(playerId) {
