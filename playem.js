@@ -199,14 +199,6 @@ function Playem(playemPrefs) {
 
 		// functions that are called by players => to propagate to client
 		function createEventHandlers (playemFunctions, playerClass) {
-			function validatePlayer(fct){
-				return function(player, x){
-					if (player == currentTrack.player)
-						return fct(player, x);
-					else
-						console.warn("ignore event: " + fct.name + " from " + playerClass.name);
-				};
-			};
 			var eventHandlers = {
 				onApiReady: function(player){
 					//console.log(player.label + " api ready");
@@ -215,17 +207,17 @@ function Playem(playemPrefs) {
 					if (0 == --playersToLoad)
 						that.emit("onReady");
 				},
-				onEmbedReady: validatePlayer(function onEmbedReady(player) {
+				onEmbedReady: function(player) {
 					//console.log("embed ready");
 					setVolume(volume);
-				}),
-				onBuffering: validatePlayer(function onBuffering(player) {
+				},
+				onBuffering: function(player) {
 					setTimeout(function() {
 						setPlayTimeout();
 						that.emit("onBuffering");
 					});
-				}),
-				onPlaying: validatePlayer(function onPlaying(player) {
+				},
+				onPlaying: function(player) {
 					//console.log(player.label + ".onPlaying");
 					//setPlayTimeout(); // removed because soundcloud sends a "onPlaying" event, even for not authorized tracks
 					setVolume(volume);
@@ -252,7 +244,7 @@ function Playem(playemPrefs) {
 							});
 						}, 1000);
 					}
-				}),
+				},
 				onTrackInfo: function(trackInfo) {
 					//console.log("ontrackinfo", trackInfo, currentTrack);
 					if (currentTrack && trackInfo) {
@@ -265,7 +257,7 @@ function Playem(playemPrefs) {
 					}
 					that.emit("onTrackInfo", currentTrack);
 				},
-				onPaused: validatePlayer(function onPaused(player) {
+				onPaused: function(player) {
 					//console.log(player.label + ".onPaused");
 					setPlayTimeout();
 					if (progress)
@@ -274,19 +266,29 @@ function Playem(playemPrefs) {
 					//if (!avoidPauseEventPropagation)
 					//	that.emit("onPause");
 					//avoidPauseEventPropagation = false;
-				}),
-				onEnded: validatePlayer(function onEnded(player) {
+				},
+				onEnded: function(player) {
 					//console.log(player.label + ".onEnded");
 					currentTrack.player.stop && currentTrack.player.stop();
 					that.emit("onEnd");
 					playemFunctions.next();
-				}),
-				onError: validatePlayer(function(player, error) {
+				},
+				onError: function(player, error) {
 					console.error(player.label + " error:", ((error || {}).exception || error || {}).stack || error);
 					setPlayTimeout();
 					that.emit("onError", error);
-				})
+				}
 			};
+			// handlers will only be triggered is their associated player is currently active
+			["onEmbedReady", "onBuffering", "onPlaying", "onPaused", "onEnded", "onError"].map(function (evt){
+				var fct = eventHandlers[evt];
+				eventHandlers[evt] = function(player, x){
+					if (player == currentTrack.player)
+						return fct(player, x);
+					else
+						console.warn("ignore event: " + fct.name + " from " + playerClass.name);
+				};
+			});
 			return eventHandlers;
 		}
 
