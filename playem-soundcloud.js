@@ -3,7 +3,11 @@
 window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 
-SoundCloudPlayer = (function() {
+function SoundCloudPlayer(){
+	return SoundCloudPlayer.super_.apply(this, arguments);
+};
+
+(function() {
 	var EVENT_MAP = {
 			"onplay": "onPlaying",
 			"onresume": "onPlaying",
@@ -18,7 +22,7 @@ SoundCloudPlayer = (function() {
 			"ondataerror"
 		];
 
-	function SoundCloudPlayer(eventHandlers, embedVars) {  
+	function Player(eventHandlers, embedVars) {  
 		this.label = 'SoundCloud';
 		this.eventHandlers = eventHandlers || {};
 		this.embedVars = embedVars || {};
@@ -62,7 +66,7 @@ SoundCloudPlayer = (function() {
 		}
 	}
 
-	SoundCloudPlayer.prototype.safeCall = function(fctName, param) {
+	Player.prototype.safeCall = function(fctName, param) {
 		try {
 			//console.log("SC safecall", fctName);
 			if (this.widget && this.widget[fctName])
@@ -73,12 +77,12 @@ SoundCloudPlayer = (function() {
 		}
 	}
 
-	SoundCloudPlayer.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url, cb) {
 		var matches = /(?:https?:)?\/\/(?:www\.)?soundcloud\.com\/([\w-_\/]+)/.exec(url);
 		cb(matches ? url.substr(url.lastIndexOf("/")+1) : null, this);
 	}
 
-	SoundCloudPlayer.prototype.getTrackPosition = function(callback) {
+	Player.prototype.getTrackPosition = function(callback) {
 		callback(this.trackInfo.position = this.widget.position / 1000);
 		if (this.widget.durationEstimate)
 			this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo({
@@ -86,11 +90,11 @@ SoundCloudPlayer = (function() {
 			});
 	};
 	
-	SoundCloudPlayer.prototype.setTrackPosition = function(pos) {
+	Player.prototype.setTrackPosition = function(pos) {
 		this.safeCall("setPosition", pos * 1000);
 	};
 
-	SoundCloudPlayer.prototype.play = function(id) {
+	Player.prototype.play = function(id) {
 		this.trackInfo = {};
 		this.embedVars.trackId = id;
 		//console.log("soundcloud play", this.embedVars);
@@ -103,21 +107,25 @@ SoundCloudPlayer = (function() {
 		});
 	}
 
-	SoundCloudPlayer.prototype.resume = function() {
+	Player.prototype.resume = function() {
 		this.safeCall("play");
 	}
 
-	SoundCloudPlayer.prototype.pause = function() {
+	Player.prototype.pause = function() {
 		this.safeCall("pause");
 	}
 
-	SoundCloudPlayer.prototype.stop = function() {
+	Player.prototype.stop = function() {
 		this.safeCall("stop");
 	}
 
-	SoundCloudPlayer.prototype.setVolume = function(vol) {
+	Player.prototype.setVolume = function(vol) {
 		this.safeCall("setVolume", 100 * vol);
 	}
 
-	return SoundCloudPlayer;
+	//inherits(SoundCloudPlayer, Player);
+	SoundCloudPlayer.prototype = Player.prototype;
+	SoundCloudPlayer.super_ = Player;
+	// this method exports Player under the name "SoundCloudPlayer", even after minification
+	// so that SoundCloudPlayer.name == "SoundCloudPlayer" instead of SoundCloudPlayer.name == "Player"
 })();

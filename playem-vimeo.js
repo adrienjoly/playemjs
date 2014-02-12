@@ -6,7 +6,11 @@ $.param = $.param || function(obj){
 	}).join("&");
 };
 
-VimeoPlayer = (function() {
+function VimeoPlayer(){
+	return VimeoPlayer.super_.apply(this, arguments);
+}
+
+(function() {
 
 	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
 		EVENT_MAP = {
@@ -30,7 +34,7 @@ VimeoPlayer = (function() {
 			}
 		};
 
-	function VimeoPlayer(eventHandlers, embedVars) {  
+	function Player(eventHandlers, embedVars) {  
 		this.label = 'Vimeo';
 		this.element = null;
 		this.eventHandlers = eventHandlers || {};
@@ -72,7 +76,7 @@ VimeoPlayer = (function() {
 		//});
 	}
 
-	VimeoPlayer.prototype.post = USE_FLASH_VIMEO ? function(action, value) {
+	Player.prototype.post = USE_FLASH_VIMEO ? function(action, value) {
 		if (!this.element)
 			return console.warn("VIMEO: this.element not found");
 		if (!this.element["api_"+action])
@@ -93,16 +97,16 @@ VimeoPlayer = (function() {
 		this.element.contentWindow.postMessage(JSON.stringify(data), this.element.src.split("?")[0]);
 	}
 
-	VimeoPlayer.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url, cb) {
 		var matches = /(?:https?:\/\/(?:www\.)?)?vimeo\.com\/(clip\:)?(\d+)/.exec(url);
 		cb(matches ? matches.pop() : null, this);
 	}
 
-	VimeoPlayer.prototype.setTrackPosition = function(pos) {
+	Player.prototype.setTrackPosition = function(pos) {
 		this.post("seekTo", pos);
 	};
 	
-	VimeoPlayer.prototype.embed = function(vars) {
+	Player.prototype.embed = function(vars) {
 
 		//console.log("VimeoPlayer embed vars:", vars);
 		this.embedVars = vars = vars || {};
@@ -252,30 +256,33 @@ VimeoPlayer = (function() {
 		}
 	}
 
-	VimeoPlayer.prototype.play = function(id) {
+	Player.prototype.play = function(id) {
 		if (id && (!this.currentId || this.currentId != id)) {
 			this.embedVars.videoId = id;
 			this.embed(this.embedVars);
 		}
 	}
 
-	VimeoPlayer.prototype.resume = function() {
+	Player.prototype.resume = function() {
 		this.post("play");
 	}
 
-	VimeoPlayer.prototype.pause = function() {
+	Player.prototype.pause = function() {
 		this.post("pause");
 	}
 
-	VimeoPlayer.prototype.stop = function() {
+	Player.prototype.stop = function() {
 		//this.post("pause");
 		this.post("unload");
 		//$(this.element).remove();
 	}
 
-	VimeoPlayer.prototype.setVolume = function(vol) {
+	Player.prototype.setVolume = function(vol) {
 		this.post("setVolume", 100 * vol);
 	}
 
-	return VimeoPlayer;
+	//return Playem;
+	//inherits(VimeoPlayer, Player);
+	VimeoPlayer.prototype = Player.prototype;
+	VimeoPlayer.super_ = Player;
 })();

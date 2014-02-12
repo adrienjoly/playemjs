@@ -2,7 +2,11 @@ window.$ = window.$ || function(){return window.$};
 $.show = $.show || function(){return $};
 $.attr = $.attr || function(){return $};
 
-YoutubePlayer = (function() {
+function YoutubePlayer(){
+	return YoutubePlayer.super_.apply(this, arguments);
+}
+
+(function() {
 	//includeJS("https://www.youtube.com/player_api", eventHandlers.onApiLoaded);
 	var regex = // /https?\:\/\/(?:www\.)?youtu(?:\.)?be(?:\.com)?\/(?:(?:.*)?[\?\&]v=|v\/|embed\/|\/)?([a-zA-Z0-9_\-]+)/; //^https?\:\/\/(?:www\.)?youtube\.com\/[a-z]+\/([a-zA-Z0-9\-_]+)/
 			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/,
@@ -12,7 +16,7 @@ YoutubePlayer = (function() {
 			/*YT.PlayerState.PAUSED*/ 2: "onPaused"
 		};
 
-	function YoutubePlayer(eventHandlers, embedVars) {
+	function Player(eventHandlers, embedVars) {
 		this.eventHandlers = eventHandlers || {};
 		this.embedVars = embedVars || {};
 		this.label = "Youtube";
@@ -47,7 +51,7 @@ YoutubePlayer = (function() {
 			setTimeout(function() {that.eventHandlers.onApiReady(that);}, 500);
 	}
 
-	YoutubePlayer.prototype.safeCall = function(fctName, param) {
+	Player.prototype.safeCall = function(fctName, param) {
 		try {
 			this.element[fctName](param);
 		}
@@ -56,7 +60,7 @@ YoutubePlayer = (function() {
 		}
 	}
 
-	YoutubePlayer.prototype.safeClientCall = function(fctName, param) {
+	Player.prototype.safeClientCall = function(fctName, param) {
 		try {
 			if (this.eventHandlers[fctName])
 				this.eventHandlers[fctName](param);
@@ -66,7 +70,7 @@ YoutubePlayer = (function() {
 		}
 	}
 
-	YoutubePlayer.prototype.embed = function (vars) {
+	Player.prototype.embed = function (vars) {
 		//console.log("youtube embed:", vars);
 		this.embedVars = vars = vars || {};
 		this.embedVars.playerId = this.embedVars.playerId || 'ytplayer';
@@ -124,12 +128,12 @@ YoutubePlayer = (function() {
 		//this.isReady = true;
 	}
 
-	YoutubePlayer.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url, cb) {
 		var matches = url.match(regex);
 		cb(matches ? matches.pop() : null, this);
 	}
 
-	YoutubePlayer.prototype.play = function(id) {
+	Player.prototype.play = function(id) {
 		//console.log("PLAY -> YoutubePlayer", this.currentId, id);
 		if (!this.currentId || this.currentId != id) {
 			this.embedVars.videoId = id;
@@ -137,38 +141,41 @@ YoutubePlayer = (function() {
 		}
 	}
 
-	YoutubePlayer.prototype.pause = function() {
+	Player.prototype.pause = function() {
 		//console.log("PAUSE -> YoutubePlayer"/*, this.element, this.element && this.element.pauseVideo*/);
 		if (this.element && this.element.pauseVideo)
 			this.element.pauseVideo();
 	}
 
-	YoutubePlayer.prototype.resume = function() {
+	Player.prototype.resume = function() {
 		//console.log("RESUME -> YoutubePlayer", this.element, this.element && this.element.playVideo);
 		if (this.element && this.element.playVideo)
 			this.element.playVideo();
 	}
 	
-	YoutubePlayer.prototype.stop = function() {
+	Player.prototype.stop = function() {
 		if (this.element && this.element.stopVideo)
 			this.element.stopVideo();
 		//$(this.element).remove();//.hide();
 	}
 	
-	YoutubePlayer.prototype.getTrackPosition = function(callback) {
+	Player.prototype.getTrackPosition = function(callback) {
 		if (callback && this.element && this.element.getCurrentTime)
 			callback(this.element.getCurrentTime());
 	};
 	
-	YoutubePlayer.prototype.setTrackPosition = function(pos) {
+	Player.prototype.setTrackPosition = function(pos) {
 		if (this.element && this.element.seekTo)
 			this.element.seekTo(pos, true);
 	};
 	
-	YoutubePlayer.prototype.setVolume = function(vol) {
+	Player.prototype.setVolume = function(vol) {
 		if (this.element && this.element.setVolume)
 			this.element.setVolume(vol * 100);
 	};
 
-	return YoutubePlayer;
+	//return Player;
+	//inherits(YoutubePlayer, Player);
+	YoutubePlayer.prototype = Player.prototype;
+	YoutubePlayer.super_ = Player;
 })();

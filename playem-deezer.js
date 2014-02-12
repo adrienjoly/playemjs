@@ -10,7 +10,11 @@ window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 $.append = $.append || function(html){document.write(html);};
 
-DeezerPlayer = (function(){
+function DeezerPlayer(){
+  return DeezerPlayer.super_.apply(this, arguments);
+}
+
+(function(){
 
   // CONSTANTS
   var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js',
@@ -220,6 +224,8 @@ DeezerPlayer = (function(){
   }
   
   //============================================================================
-  return Player;
-  
+  //return Player;
+  //inherits(DeezerPlayer, Player);
+  DeezerPlayer.prototype = Player.prototype;
+  DeezerPlayer.super_ = Player;
 })();

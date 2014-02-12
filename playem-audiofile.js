@@ -1,4 +1,8 @@
-AudioFilePlayer = (function() {
+function AudioFilePlayer(){
+	return AudioFilePlayer.super_.apply(this, arguments);
+}
+
+(function() {
 
 	/*
 	loader.includeJS("/js/soundmanager2.js", function() { //-nodebug-jsmin
@@ -25,7 +29,7 @@ AudioFilePlayer = (function() {
 		"onfinish": "onEnded"
 	};
 
-	function AudioFilePlayer(eventHandlers, embedVars) {  
+	function Player(eventHandlers, embedVars) {  
 		this.label = 'Audio file';
 		this.eventHandlers = eventHandlers || {};
 		this.embedVars = embedVars || {};
@@ -74,7 +78,7 @@ AudioFilePlayer = (function() {
 		}, 200);
 	}
 
-	AudioFilePlayer.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url, cb) {
 		url = (url || "").split("#").pop();
 		if (!url)
 			return cb(null, this);
@@ -85,7 +89,7 @@ AudioFilePlayer = (function() {
 			cb(null, this);
 	}
 	
-	AudioFilePlayer.prototype.getTrackInfo = function(callback) {
+	Player.prototype.getTrackInfo = function(callback) {
 		var that = this, i = setInterval(function() {
 			//console.log("info", that.widget.duration)
 			if (that.widget && that.widget.duration) {
@@ -99,7 +103,7 @@ AudioFilePlayer = (function() {
 		}, 500);
 	}
 
-	AudioFilePlayer.prototype.getTrackPosition = function(callback) {
+	Player.prototype.getTrackPosition = function(callback) {
 		var that = this;
 		//console.log("position", that.widget.position)
 		this.getTrackInfo(function(){
@@ -108,11 +112,11 @@ AudioFilePlayer = (function() {
 		});
 	};
 	
-	AudioFilePlayer.prototype.setTrackPosition = function(pos) {
+	Player.prototype.setTrackPosition = function(pos) {
 		this.widget && this.widget.setPosition(pos * 1000);
 	};
 	
-	AudioFilePlayer.prototype.embed = function(vars) {
+	Player.prototype.embed = function(vars) {
 		if (!vars || !vars.trackId)
 			return;
 		//console.log("AudioFilePlayer embed vars:", vars);
@@ -133,16 +137,16 @@ AudioFilePlayer = (function() {
 		this.play();
 	}
 
-	AudioFilePlayer.prototype.play = function(id) {
+	Player.prototype.play = function(id) {
 		//console.log("mp3 play", id)
 		this.isReady && this.embed({trackId:id});
 	}
 
-	AudioFilePlayer.prototype.resume = function() {
+	Player.prototype.resume = function() {
 		this.isReady && this.widget && this.widget.resume();
 	}
 
-	AudioFilePlayer.prototype.pause = function() {
+	Player.prototype.pause = function() {
 		try {
 			this.isReady && this.widget && this.widget.pause();
 		}
@@ -151,14 +155,17 @@ AudioFilePlayer = (function() {
 		}
 	}
 
-	AudioFilePlayer.prototype.stop = function() {
+	Player.prototype.stop = function() {
 		this.widget.stop();
 	}
 
-	AudioFilePlayer.prototype.setVolume = function(vol) {
+	Player.prototype.setVolume = function(vol) {
 		if (this.widget && this.widget.setVolume && this.soundOptions)
 			/*this.widget*/soundManager.setVolume(this.soundOptions.id, 100 * vol);
 	}
 
-	return AudioFilePlayer;
+	//return Player;
+	//inherits(AudioFilePlayer, Player);
+	AudioFilePlayer.prototype = Player.prototype;
+	AudioFilePlayer.super_ = Player;
 })();
