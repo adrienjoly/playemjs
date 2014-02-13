@@ -198,7 +198,7 @@ function Playem(playemPrefs) {
 		}
 
 		// functions that are called by players => to propagate to client
-		function createEventHandlers (playemFunctions, playerClass) {
+		function createEventHandlers (playemFunctions) {
 			var eventHandlers = {
 				onApiReady: function(player){
 					//console.log(player.label + " api ready");
@@ -286,7 +286,7 @@ function Playem(playemPrefs) {
 					if (player == currentTrack.player)
 						return fct(player, x);
 					else
-						console.warn("ignore event: " + evt + " from " + playerClass.name);
+						console.warn("ignore event:", evt, "from", player, "instead of:", currentTrack.player);
 				};
 			});
 			return eventHandlers;
@@ -296,7 +296,7 @@ function Playem(playemPrefs) {
 		exportedMethods = {
 			addPlayer: function (playerClass, vars) {
 				playersToLoad++;
-				players.push(new playerClass(createEventHandlers(this, playerClass), vars));
+				players.push(new playerClass(createEventHandlers(this), vars));
 			},
 			getQueue: function() {
 				return trackList;
