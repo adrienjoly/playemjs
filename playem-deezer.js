@@ -206,7 +206,7 @@ function DeezerPlayer(){
       }, 
       onfinish: function() {
         if (self.eventHandlers.onEnded)
-          self.eventHandlers.onEnded();
+          self.eventHandlers.onEnded(self);
       }
     });    
   }
