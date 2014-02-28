@@ -23,6 +23,7 @@ function PlayemLoader() {
 		"Dailymotion",
 		"Deezer",
 		"AudioFile",
+		"Bandcamp",
 	];
 
 	var DEFAULT_PLAYER_PARAMS = {
