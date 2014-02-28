@@ -41,12 +41,18 @@ function BandcampPlayer(){
   //============================================================================
   Player.prototype.clientCall = function(fctName, p) {
     var args = Array.apply(null, arguments).slice(1) // exclude first arg
-    try {
+    //try {
       return (this.eventHandlers[fctName] || function(){}).apply(null, args);
-    }
-    catch(e) {
-      console.error(e.stack);
-    }
+    //}
+    //catch(e) {
+    //  console.error(e.stack);
+    //}
+  }
+  
+  //============================================================================
+  Player.prototype.soundCall = function(fctName, p) {
+    var args = Array.apply(null, arguments).slice(1) // exclude first arg
+    return ((this.sound || {})[fctName] || function(){}).apply(null, args);
   }
   
   //============================================================================
@@ -92,31 +98,31 @@ function BandcampPlayer(){
   
   //============================================================================
   Player.prototype.pause = function() {
-    this.sound.pause();
+    this.soundCall("pause");
   }
   
   //============================================================================
   Player.prototype.stop = function() {
-    this.sound.stop();
-    this.sound.destruct();
+    this.soundCall("stop");
+    this.soundCall("destruct");
     this.sound = null;
   }
   
   //============================================================================
   Player.prototype.resume = function() {
-    this.sound.resume();
+    this.soundCall("resume");
   }
   
   //============================================================================
   // pos: seconds
   Player.prototype.setTrackPosition = function(pos) {
-    this.sound && this.sound.setPosition(Math.round(pos * 1000));
+    this.soundCall("setPosition", Math.round(pos * 1000));
   }
   
   //============================================================================
   // vol: float between 0 and 1
   Player.prototype.setVolume = function(vol) {
-    this.sound && this.sound.setVolume(Math.round(vol * 100));
+    this.soundCall("setVolume", Math.round(vol * 100));
   }
   
   //============================================================================
