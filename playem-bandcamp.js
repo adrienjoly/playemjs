@@ -20,6 +20,26 @@ function BandcampPlayer(){
   var API_PREFIX = '//api.bandcamp.com/api',
       API_SUFFIX = '&key=' + API_KEY + '&callback=?';
 
+  function isBandcampUrl(url) {
+    return url.indexOf("/bc/") == 0 || url.indexOf("bandcamp.com") != -1;
+  }
+
+  function extractStreamUrl(eId) {
+    var parts = eId.split("#");
+    return parts.length < 2 || eId.indexOf("/bc/") ? null : parts.pop();
+  }
+
+  function fetchStreamUrl(url, cb){
+    $.getJSON(API_PREFIX + '/url/1/info?url=' + encodeURIComponent(url) + API_SUFFIX, function(data) {
+      var trackId = (data || {}).track_id;
+      if (!trackId)
+        return cb();
+      $.getJSON(API_PREFIX + '/track/3/info?track_id=' + trackId + API_SUFFIX, function(data) {
+        cb((data || {}).streaming_url);
+      });
+    });
+  }
+
   //============================================================================
   function Player(eventHandlers) {
     var self = this, loading = null;
@@ -57,22 +77,11 @@ function BandcampPlayer(){
   
   //============================================================================
   Player.prototype.getEid = function(url, cb) {
-    var self = this;
-    if (url.indexOf("bandcamp.com") == -1)
-      return cb();
-    $.getJSON(API_PREFIX + '/url/1/info?url=' + encodeURIComponent(url) + API_SUFFIX, function(data) {
-      var trackId = (data || {}).track_id;
-      if (!trackId)
-        return cb();
-      $.getJSON(API_PREFIX + '/track/3/info?track_id=' + trackId + API_SUFFIX, function(data) {
-        cb(trackId + "#" + (data || {}).streaming_url, self);
-      });
-    });
+    cb(isBandcampUrl(url) && url, this);
   }
-  
-  //============================================================================
-  Player.prototype.play = function(id) {
-    var self = this, url = id.split("#").pop();
+
+  Player.prototype.playStreamUrl = function(url) {
+    var self = this;
     self.sound = soundManager.createSound({
       id: '_playem_bc_' + Date.now(),
       url: url,
@@ -94,6 +103,17 @@ function BandcampPlayer(){
         self.clientCall("onEnded", self);
       }
     });
+  }
+
+  //============================================================================
+  Player.prototype.play = function(id) {
+    var self = this, stream = extractStreamUrl(id);
+    if (stream)
+      this.playStreamUrl(stream);
+    else
+      fetchStreamUrl(id, function(stream){
+        self.playStreamUrl(stream);
+      });
   }
   
   //============================================================================
