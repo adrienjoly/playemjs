@@ -9,6 +9,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	})
 
 	var tracks = [
+		"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
 		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
 		//"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // does not pass test... too short?
 		//];  /*
@@ -79,13 +80,19 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"playem initializes without error": function(cb){
 			cb(!!playem);
 		},
-		"all tracks load within 1 second": function(cb){
-			for (var i in tracks)
-				playem.addTrackByUrl(tracks[i]);
+		"all tracks load within 5 second": function(cb){
+			var i = 0;
+			(function next(){
+				var tr = tracks[i++];
+				if (tr) {
+					console.info("loading", tr, "...")
+					playem.addTrackByUrl(tr, null, next);
+				}
+			})();
 			setTimeout(function(){
 				cb(playem.getQueue().length == tracks.length);
 				playem.play();
-			}, 1000);
+			}, 5000);
 		},
 	});
 
