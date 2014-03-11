@@ -211,7 +211,7 @@ function DeezerPlayer(){
   }
   
   //============================================================================  
-  Player.login = function() {
+  DeezerPlayer.login = function() {
     DZ.login(function(response) {
       if (response.userID) {
         IS_LOGGED = true;
