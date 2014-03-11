@@ -150,15 +150,14 @@ function Playem(playemPrefs) {
 
 		function setVolume(vol) {
 			volume = vol;
-			if (currentTrack && currentTrack.player.setVolume)
-				currentTrack.player.setVolume(vol);
+			callPlayerFct("setVolume", vol);
 		}
 
 		function playTrack(track) {
 			//console.log("playTrack", track);
 			doWhenReady(track.player, function() {
 				if (currentTrack) {
-					currentTrack.player.stop && currentTrack.player.stop();
+					callPlayerFct("stop");
 					// TODO: delete elements in players instead ?
 					//$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
 					var iframe, holder = document.getElementById("genericholder");
@@ -178,7 +177,7 @@ function Playem(playemPrefs) {
 				delete currentTrack.trackDuration; // = null;
 				that.emit("onTrackChange", track);
 				//console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
-				track.player.play(track.trackId);
+				callPlayerFct("play", track.trackId);
 				setVolume(volume);
 				if (currentTrack.index == trackList.length-1)
 					that.emit("loadMore");
@@ -195,6 +194,15 @@ function Playem(playemPrefs) {
 			if (playTimeout)
 				clearTimeout(playTimeout);
 			playTimeout = !handler ? null : setTimeout(handler, PLAY_TIMEOUT);
+		}
+
+		function callPlayerFct(fctName, param){
+			try {
+				return currentTrack.player[fctName](param);
+			}
+			catch(e) {
+				console.warn(e.stack);
+			}
 		}
 
 		// functions that are called by players => to propagate to client
@@ -269,7 +277,7 @@ function Playem(playemPrefs) {
 				},
 				onEnded: function(player) {
 					//console.log(player.label + ".onEnded");
-					currentTrack.player.stop && currentTrack.player.stop();
+					callPlayerFct("stop");
 					that.emit("onEnd");
 					playemFunctions.next();
 				},
@@ -324,15 +332,15 @@ function Playem(playemPrefs) {
 				playTrack(i != undefined ? trackList[i] : currentTrack || trackList[0]);
 			},
 			pause: function() {
-				currentTrack.player.pause();
+				callPlayerFct("pause");
 				that.emit("onPause");
 			},
 			stop: function() {
-				currentTrack.player.stop && currentTrack.player.stop();
+				callPlayerFct("stop");
 				//that.emit("onStop");
 			},
 			resume: function() {
-				currentTrack.player.resume();
+				callPlayerFct("resume");
 			},
 			next: function() {
 				if (playemPrefs.loop || currentTrack.index + 1 < trackList.length)
@@ -342,8 +350,8 @@ function Playem(playemPrefs) {
 				playTrack(trackList[(trackList.length + currentTrack.index - 1) % trackList.length]);
 			},
 			seekTo: function(pos) {
-				if (currentTrack && currentTrack.trackDuration)
-					currentTrack.player.setTrackPosition(pos * currentTrack.trackDuration);
+				if ((currentTrack || {}).trackDuration)
+					callPlayerFct("setTrackPosition", pos * currentTrack.trackDuration);
 			},
 			setVolume: setVolume
 		};
