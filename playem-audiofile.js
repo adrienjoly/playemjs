@@ -60,17 +60,13 @@ function AudioFilePlayer(){
 
 		loading = setInterval(function(){
 			try {
-				if (/*(*/window["soundManager"] /*|| {}).isReady*/) {
+				if (window["soundManager"]) {
 					clearInterval(loading);
-					//console.log("soundManager is ready");
 					that.isReady = true;
-					//setTimeout(function() {
-						eventHandlers.onApiReady && eventHandlers.onApiReady(that);
-					//}, 100);
+					eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 				}
 			}
 			catch (e) {
-				//console.log("AudioFilePlayer error", e, e.stack);
 				that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"AudioFilePayer", exception:e});
 			};
 		}, 200);

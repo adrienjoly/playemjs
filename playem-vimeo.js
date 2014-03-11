@@ -68,10 +68,8 @@ function VimeoPlayer(){
 		}
 		
 		//loader.includeJS("http://a.vimeocdn.com/js/froogaloop2.min.js", function() {
-			setTimeout(function() {
-				that.isReady = true;
-				eventHandlers.onApiReady && eventHandlers.onApiReady(that);
-			}, 500);
+			that.isReady = true;
+			eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 		//});
 	}
 

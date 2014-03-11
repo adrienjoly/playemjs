@@ -46,7 +46,7 @@ function YoutubePlayer(){
 
 		that.isReady = true;
 		if (that.eventHandlers.onApiReady)
-			setTimeout(function() {that.eventHandlers.onApiReady(that);}, 500);
+			that.eventHandlers.onApiReady(that);
 	}
 
 	Player.prototype.safeCall = function(fctName, param) {
