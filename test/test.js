@@ -85,7 +85,7 @@ function PlayemLogger() {
 			self.log.push(entry);
 			lastTypedEvent[evt] = entry;
 			if (LOG_PLAYER_EVENTS)
-				console.log.apply(console, entry);
+				console.log.apply(console, /*entry*/[ Date.now(), evt ]);
 			for(var i in listeners)
 				listeners[i](evt, arguments);
 			return entry;
