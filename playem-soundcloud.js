@@ -50,7 +50,6 @@ function SoundCloudPlayer(){
 				};
 			});
 			that.isReady = true;
-			that.callHandler("onApiLoaded", that); // eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
 			soundManager.onready(function() {
 				that.callHandler("onApiReady", that); // eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 			});

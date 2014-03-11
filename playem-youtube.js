@@ -7,7 +7,7 @@ function YoutubePlayer(){
 }
 
 (function() {
-	//includeJS("https://www.youtube.com/player_api", eventHandlers.onApiLoaded);
+	//includeJS("https://www.youtube.com/player_api");
 	var regex = // /https?\:\/\/(?:www\.)?youtu(?:\.)?be(?:\.com)?\/(?:(?:.*)?[\?\&]v=|v\/|embed\/|\/)?([a-zA-Z0-9_\-]+)/; //^https?\:\/\/(?:www\.)?youtube\.com\/[a-z]+\/([a-zA-Z0-9\-_]+)/
 			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/,
 		EVENT_MAP = {
@@ -45,8 +45,6 @@ function YoutubePlayer(){
 		}
 
 		that.isReady = true;
-		if (that.eventHandlers.onApiLoaded)
-			that.eventHandlers.onApiLoaded(that);
 		if (that.eventHandlers.onApiReady)
 			setTimeout(function() {that.eventHandlers.onApiReady(that);}, 500);
 	}

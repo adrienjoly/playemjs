@@ -53,7 +53,6 @@ function DailymotionPlayer(){
 		}
 		
 		that.isReady = true;
-		that.safeClientCall("onApiLoaded", that);
 		that.safeClientCall("onApiReady", that);
 	}
 	

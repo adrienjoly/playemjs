@@ -7,7 +7,6 @@ function AudioFilePlayer(){
 	/*
 	loader.includeJS("/js/soundmanager2.js", function() { //-nodebug-jsmin
 		console.log("loaded mp3 player");
-		//eventHandlers.onApiLoaded && eventHandlers.onApiLoaded();
 		soundManager.setup({
 			url: '/swf/', //sound manager swf directory
 			flashVersion: 9,
@@ -66,7 +65,6 @@ function AudioFilePlayer(){
 					//console.log("soundManager is ready");
 					that.isReady = true;
 					//setTimeout(function() {
-						eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
 						eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 					//}, 100);
 				}

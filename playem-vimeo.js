@@ -70,7 +70,6 @@ function VimeoPlayer(){
 		//loader.includeJS("http://a.vimeocdn.com/js/froogaloop2.min.js", function() {
 			setTimeout(function() {
 				that.isReady = true;
-				eventHandlers.onApiLoaded && eventHandlers.onApiLoaded(that);
 				eventHandlers.onApiReady && eventHandlers.onApiReady(that);
 			}, 500);
 		//});

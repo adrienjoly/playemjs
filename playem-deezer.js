@@ -177,7 +177,6 @@ function DeezerPlayer(){
     
     for (var e in EVENT_MAP)
       DZ.Event.suscribe(e, createHandler(e));
-    self.eventHandlers.onApiLoaded && self.eventHandlers.onApiLoaded(self);
     self.eventHandlers.onApiReady && self.eventHandlers.onApiReady(self);
   }
   

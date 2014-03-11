@@ -52,7 +52,6 @@ function BandcampPlayer(){
       if (!!window["soundManager"]) {
         clearInterval(loading);
         self.isReady = true;
-        self.clientCall("onApiLoaded", self);
         self.clientCall("onApiReady", self);
       }
     }, 200);
