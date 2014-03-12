@@ -64,7 +64,7 @@ function DailymotionPlayer(){
 		//return (this.element || {})[fctName] && this.element[fctName](p1, p2);
 		var args = Array.apply(null, arguments).slice(1), // exclude first arg (fctName)
 			fct = (this.element || {})[fctName];
-		fct && fct.apply(this.element, args);
+		return fct && fct.apply(this.element, args);
 	}
 	
 	Player.prototype.safeClientCall = function(fctName, p1, p2) {
@@ -161,8 +161,8 @@ function DailymotionPlayer(){
 	};
 	
 	Player.prototype.getTrackPosition = function(callback) {
-		this.trackInfo.duration = this.element.getDuration();
-		callback && callback(this.element.getCurrentTime());
+		this.trackInfo.duration = this.safeCall("getDuration");
+		callback && callback(this.safeCall("getCurrentTime"));
 	};
 	
 	Player.prototype.setTrackPosition = function(pos) {
