@@ -51,10 +51,13 @@ function YoutubePlayer(){
 
 	Player.prototype.safeCall = function(fctName, param) {
 		try {
-			this.element[fctName](param);
+			var args = Array.apply(null, arguments).slice(1), // exclude first arg (fctName)
+				fct = (this.element || {})[fctName];
+			//console.log(fctName, args, this.element)
+			fct && fct.apply(this.element, args);
 		}
 		catch(e) {
-			console.error("YT safecall error", e.stack);
+			console.error("YT safecall error", e, e.stack);
 		}
 	}
 
@@ -158,8 +161,7 @@ function YoutubePlayer(){
 	};
 	
 	Player.prototype.setTrackPosition = function(pos) {
-		if (this.element && this.element.seekTo)
-			this.element.seekTo(pos, true);
+		this.safeCall("seekTo", pos, true);
 	};
 	
 	Player.prototype.setVolume = function(vol) {
