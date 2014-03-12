@@ -5,6 +5,7 @@ function DailymotionPlayer(){
 (function() {
 
 	var regex = /https?:\/\/(?:www\.)?dailymotion.com(?:\/embed)?\/video\/([\w-]+)/,
+		ignoreEnded = 0;
 		EVENT_MAP = {
 			0: "onEnded",
 			1: "onPlaying",
@@ -22,7 +23,10 @@ function DailymotionPlayer(){
 
 		window.onDailymotionStateChange = function(newState) {
 			console.log("DM new state", newState);
-			that.safeClientCall(EVENT_MAP[newState], that);
+			if (newState > 0 || !ignoreEnded)
+				that.safeClientCall(EVENT_MAP[newState], that);
+			else
+				--ignoreEnded;
 			/*if (newState == 1) {
 				console.log("getduration", that.element.getDuration());
 				that.trackInfo.duration = that.element.getDuration(); //that.safeCall("getDuration");
@@ -149,6 +153,7 @@ function DailymotionPlayer(){
 	};
 	
 	Player.prototype.stop = function(vol) {
+		++ignoreEnded;
 		//this.element.stopVideo();
 		this.safeCall("clearVideo");
 		if ((this.element || {}).parentNode)
