@@ -105,8 +105,8 @@ function YoutubePlayer(){
 
 		embedAttrs = {
 			id: this.embedVars.playerId,
-			width: this.embedVars.height || '200',
-			height: this.embedVars.width || '200',
+			width: this.embedVars.width || '200',
+			height: this.embedVars.height || '200',
 			type: "application/x-shockwave-flash",
 			data: window.location.protocol+'//www.youtube.com/v/'+this.embedVars.videoId+'?'+paramsQS,
 			innerHTML: paramsHTML
