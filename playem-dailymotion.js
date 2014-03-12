@@ -145,19 +145,17 @@ function DailymotionPlayer(){
 	}
 
 	Player.prototype.pause = function(vol) {
-		//this.element.pauseVideo();
 		this.safeCall("pauseVideo");
 	};
 
 	Player.prototype.resume = function(vol) {
-		//this.element.playVideo();
 		this.safeCall("playVideo");
 	};
 	
-	/*Player.prototype.stop = function(vol) {
+	Player.prototype.stop = function(vol) {
 		//this.element.stopVideo();
 		this.safeCall("clearVideo");
-	};*/
+	};
 	
 	Player.prototype.getTrackPosition = function(callback) {
 		this.trackInfo.duration = this.element.getDuration();
@@ -165,12 +163,10 @@ function DailymotionPlayer(){
 	};
 	
 	Player.prototype.setTrackPosition = function(pos) {
-		//this.element.seekTo(pos);
 		this.safeCall("seekTo", pos);
 	};
 	
 	Player.prototype.setVolume = function(vol) {
-		//(this.element||{}).setVolume && this.element.setVolume(vol * 100);
 		this.safeCall("setVolume", vol * 100);
 	};
 
