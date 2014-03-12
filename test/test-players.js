@@ -9,7 +9,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	})
 
 	var tracks = [
-		"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // same as next
+		//"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // same as next
 		"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
 		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
 		//"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // does not pass test... too short?
@@ -95,6 +95,12 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	for(var i in tracks)
 		runner.addTests(commonTests);
+
+	runner.addTests({
+		"video container is clean": function(cb){
+			cb(!document.getElementById("container").innerHTML.length);
+		}
+	});
 
 	runner.run(function(res){
 		playem.stop();

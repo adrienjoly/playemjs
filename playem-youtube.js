@@ -75,13 +75,7 @@ function YoutubePlayer(){
 		this.trackInfo = {};
 		this.element = document.createElement("object");
 		this.element.id = this.embedVars.playerId;
-
-		//this.embedVars.playerContainer.appendChild(this.element);
-		this.holder = document.createElement("div");
-		this.holder.id = "genericholder";
-		this.holder.appendChild(this.element);
-		this.embedVars.playerContainer.appendChild(this.holder);
-
+		this.embedVars.playerContainer.appendChild(this.element);
 
 		var paramsQS, paramsHTML, embedAttrs, params = {
 			autoplay: 1,
@@ -154,7 +148,8 @@ function YoutubePlayer(){
 	Player.prototype.stop = function() {
 		if (this.element && this.element.stopVideo)
 			this.element.stopVideo();
-		//$(this.element).remove();//.hide();
+		if (USE_SWFOBJECT)
+			swfobject.removeSWF(this.embedVars.playerId);
 	}
 	
 	Player.prototype.getTrackPosition = function(callback) {

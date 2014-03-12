@@ -153,25 +153,18 @@ function Playem(playemPrefs) {
 			callPlayerFct("setVolume", vol);
 		}
 
+		function stopTrack() {
+			if (currentTrack) {
+				callPlayerFct("stop");
+				if (progress)
+					clearInterval(progress);
+			}
+		}
+
 		function playTrack(track) {
 			//console.log("playTrack", track);
 			doWhenReady(track.player, function() {
-				if (currentTrack) {
-					callPlayerFct("stop");
-					// TODO: delete elements in players instead ?
-					//$("#genericholder iframe").attr("src", ""); // to make sure that IE really destroys the iframe embed
-					var iframe, holder = document.getElementById("genericholder");
-					if (holder) {
-						iframe = holder.getElementsByTagName("iframe")[0];
-						if (iframe)
-							iframe.setAttribute("src", "");
-						//$("#genericholder").html("").remove();
-						holder.innerHTML = "";
-						holder.parentNode.removeChild(holder);
-					}
-					if (progress)
-						clearInterval(progress);
-				}
+				stopTrack();
 				currentTrack = track;
 				delete currentTrack.trackPosition; // = null;
 				delete currentTrack.trackDuration; // = null;
@@ -277,7 +270,7 @@ function Playem(playemPrefs) {
 				},
 				onEnded: function(player) {
 					//console.log(player.label + ".onEnded");
-					callPlayerFct("stop");
+					stopTrack();
 					that.emit("onEnd");
 					playemFunctions.next();
 				},
@@ -335,10 +328,7 @@ function Playem(playemPrefs) {
 				callPlayerFct("pause");
 				that.emit("onPause");
 			},
-			stop: function() {
-				callPlayerFct("stop");
-				//that.emit("onStop");
-			},
+			stop: stopTrack,
 			resume: function() {
 				callPlayerFct("resume");
 			},

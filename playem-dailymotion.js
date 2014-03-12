@@ -78,11 +78,7 @@ function DailymotionPlayer(){
 		this.trackInfo = {};
 		this.element = document.createElement("object");
 		this.element.id = this.embedVars.playerId;
-
-		this.holder = document.createElement("div");
-		this.holder.id = "genericholder";
-		this.holder.appendChild(this.element);
-		this.embedVars.playerContainer.appendChild(this.holder);
+		this.embedVars.playerContainer.appendChild(this.element);
 
 		var paramsQS,
 			paramsHTML,
@@ -155,6 +151,8 @@ function DailymotionPlayer(){
 	Player.prototype.stop = function(vol) {
 		//this.element.stopVideo();
 		this.safeCall("clearVideo");
+		if ((this.element || {}).parentNode)
+			this.element.parentNode.removeChild(this.element);
 	};
 	
 	Player.prototype.getTrackPosition = function(callback) {

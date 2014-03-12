@@ -30,3 +30,43 @@ if (window.addEventListener)
 	window.addEventListener('message', onMessageReceived, false);
 else
 	window.attachEvent('onmessage', onMessageReceived, false);
+
+// destruction of a player
+
+				/*
+				var iframe, holder = document.getElementById("genericholder");
+				if (holder) {
+					// make sure that IE really destroys the iframe embed
+					iframe = holder.getElementsByTagName("iframe")[0];
+					if (iframe)
+						iframe.setAttribute("src", "");
+					// make sure the holder is clean
+					holder.innerHTML = "";
+					holder.parentNode.removeChild(holder);
+				}
+				*/
+				var iframe, player = ((currentTrack || {}).player || {}).element; // hmm, this is dirty...
+				console.log("PLAYER", (currentTrack || {}).player)
+				// destroy the player and its contents
+				try {
+					// make sure that IE really destroys the iframe embed
+					if (iframe = player.parentNode.getElementsByTagName("iframe")[0])
+						iframe.setAttribute("src", "");
+				} catch(e) {
+					console.error('1', e.stack)
+				};
+				try {
+					["iframe", "object", "embed"].map(function(tagName){
+						var i, elts = player.parentNode.getElementsByTagName(tagName);
+						for (i=elts.length-1; i>=0; --i)
+							player.parentNode.removeChild(elts[i]);
+					});
+				} catch(e) {
+					console.error('2', e.stack)
+				};
+				try {
+					player.innerHTML = "";
+					player.parentNode.removeChild(player);
+				} catch(e) {
+					console.error('3', e.stack)
+				};
