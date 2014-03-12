@@ -149,8 +149,8 @@ function VimeoPlayer(){
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
 				allowscriptaccess: "always",
-				width: this.embedVars.height || '200',
-				height: this.embedVars.width || '200'
+				width: this.embedVars.width || '200',
+				height: this.embedVars.height || '200'
 			};
 			
 			window.vimeo_ready = function() {
@@ -188,8 +188,8 @@ function VimeoPlayer(){
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
 				allowscriptaccess: "always",
-				width: this.embedVars.height || '200',
-				height: this.embedVars.width || '200'
+				width: this.embedVars.width || '200',
+				height: this.embedVars.height || '200'
 			};
 
 			objectHtml = "";
@@ -209,8 +209,8 @@ function VimeoPlayer(){
 			this.element = document.createElement("iframe");
 			$(this.element).attr({
 				id: this.embedVars.playerId,
-				width: this.embedVars.height || '200',
-				height: this.embedVars.width || '200',
+				width: this.embedVars.width || '200',
+				height: this.embedVars.height || '200',
 				frameborder: "0",
 				webkitAllowFullScreen: true,
 				mozallowfullscreen: true,
