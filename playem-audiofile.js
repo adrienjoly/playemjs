@@ -107,7 +107,7 @@ function AudioFilePlayer(){
 	};
 	
 	Player.prototype.setTrackPosition = function(pos) {
-		this.widget && this.widget.setPosition(pos * 1000);
+		this.widget && this.widget.setPosition(Math.floor(Math.min(this.widget.duration, pos * 1000) - 2000));
 	};
 	
 	Player.prototype.embed = function(vars) {
