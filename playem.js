@@ -194,7 +194,7 @@ function Playem(playemPrefs) {
 				return currentTrack.player[fctName](param);
 			}
 			catch(e) {
-				console.warn(e.stack);
+				console.warn("Player call error", fctName, e, e.stack);
 			}
 		}
 
