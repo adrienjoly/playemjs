@@ -54,10 +54,12 @@ function VimeoPlayer(){
 							for (i in EVENT_MAP)
 								that.post('addEventListener', i);
 						else
-							(eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event])(that, data);
+							setTimeout(function(){
+								(eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event])(that, data);
+							});
 					}
 				} catch (e) {
-					//console.log("VimeoPlayer error", e, e.stack);
+					console.log("VimeoPlayer error", e, e.stack);
 					that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception: e});
 				}
 			}
@@ -74,18 +76,12 @@ function VimeoPlayer(){
 	}
 
 	Player.prototype.post = USE_FLASH_VIMEO ? function(action, value) {
-		if (!this.element)
-			return console.warn("VIMEO: this.element not found");
-		if (!this.element["api_"+action])
-			return console.warn("VIMEO: action not found:", "api_"+action);
 		try {
-			if (value != undefined)
-				this.element["api_"+action](value);
-			else
-				this.element["api_"+action]();
+		    var args = Array.apply(null, arguments).slice(1) // exclude first arg
+		    return this.element["api_"+action].apply(this.element, args);
 		} catch (e) {
-			//console.log("vimeo api error", e, e.stack);
-			that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception:e});
+			console.log("VIMEO error", e, e.stack);
+			//that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception:e});
 		}
 	} : function(action, value) { // HTML 5 VERSION
 		var data = {method: action};
@@ -138,8 +134,8 @@ function VimeoPlayer(){
 						};
 						that.element.api_addEventListener('on'+evt[0].toUpperCase()+evt.substr(1), "vimeoHandlers." + evt);
 					})(evt);
-				if (this.eventHandlers.onEmbedReady)
-					this.eventHandlers.onEmbedReady();
+				if (that.eventHandlers.onEmbedReady)
+					that.eventHandlers.onEmbedReady();
 			}
 
 			// CHROME: ready called from here
@@ -157,7 +153,7 @@ function VimeoPlayer(){
 				//console.log("vimeo embed is ready (embed element)");
 				that.otherElement = that.element;
 				that.otherElement.setAttribute("id", that.embedVars.playerId + "_");
-				that.element = that.otherElement.getElementsByTagName("embed")[0];
+				that.element = that.otherElement.parentNode.getElementsByTagName("embed")[0];
 				that.element.setAttribute("id", that.embedVars.playerId);
 				setHandlers();
 			}
