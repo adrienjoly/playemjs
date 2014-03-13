@@ -60,7 +60,7 @@ function PlayemLoader() {
 
 function PlayemLogger() {
 
-	var LOG_PLAYER_EVENTS = true;
+	var LOG_PLAYER_EVENTS = false;
 
 	var EVENTS = [
 		"onError",
@@ -112,8 +112,12 @@ function PlayemLogger() {
 	this.getLastTypedEvent = function(evt){
 		return lastTypedEvent[evt];
 	};
-	this.once = function(evtName, cb, timeoutDelay, timeoutCb){
-		var listenerId, timeout, that = this;
+	this.until = function(evtNameList, cb, timeoutDelay, timeoutCb){
+		var listenerId, timeout, that = this, evtNames = {}, i;
+		if (typeof evtNameList == "string")
+			evtNameList = [evtNameList];
+		for(i in evtNameList)
+			evtNames[evtNameList[i]] = true;
 		function clean(){
 			clearTimeout(timeout);
 			that.removeListener(listenerId);
@@ -123,10 +127,9 @@ function PlayemLogger() {
 			(timeoutCb || cb)();
 		}, timeoutDelay);
 		listenerId = this.addListener(function(evt, data){
-			if (evt == evtName) {
-				clean();
-				cb(data);
-			}
+			if (evtNames[evt])
+				if (!cb(evt, data))
+					clean();
 		});
 	};
 }
@@ -142,7 +145,7 @@ function TestRunner() {
 			testFct(function(res){
 				console.log('%c[TEST]=> ' + (!!res ? "OK" : "FAIL: " + title), "color:" + (!!res ? "green" : "red"));
 				if (!!res)
-					nextTestFct();
+					setTimeout(nextTestFct);
 				else
 					finalCallback({ok: false, title: title});
 			});

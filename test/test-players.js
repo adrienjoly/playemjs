@@ -32,13 +32,13 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	var commonTests = {
 		"automatic switch to next track": function(cb){
-			eventLogger.once("onTrackChange", function(args){
+			eventLogger.until("onTrackChange", function(evt, args){
 				var index = ((args && args[0]) || {}).index;
 				cb(index === nextIndex++);
 			}, 5000);
 		},
 		"track starts playing in less than 10 seconds": function(cb){
-			eventLogger.once("onPlay", cb, 10000);
+			eventLogger.until("onPlay", cb, 10000);
 		},
 		"set volume to 10%": function(cb){
 			playem.setVolume(0.1);
@@ -47,7 +47,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"get track duration": function(cb){
 			var retries = 3;
 			(function waitForDuration(){
-				eventLogger.once("onTrackInfo", function(args){
+				eventLogger.until("onTrackInfo", function(evt, args){
 					var trackDuration = ((args && args[0]) || {}).trackDuration;
 					if(!trackDuration && --retries)
 						waitForDuration();
@@ -59,10 +59,13 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"skip to middle of track": function(cb){
 			var targetPos = 0.5;
 			playem.seekTo(targetPos);
-			eventLogger.once("onTrackInfo", function(args){
+			eventLogger.until("onTrackInfo", function(evt, args){
 				var trackPosition = ((args && args[0]) || {}).trackPosition;
-				cb(trackPosition && trackPosition >= targetPos);
-			}, 1000);
+				if (trackPosition && trackPosition >= targetPos)
+					cb(true);
+				else
+					return true; // keep waiting...
+			}, 5000);
 		},
 		"set volume to 50%": function(cb){
 			playem.setVolume(0.5);
@@ -71,9 +74,9 @@ new PlayemLoader().loadAllPlayers(function(playem){
 			}, 1000);
 		},
 		"skip to end of track": function(cb){
-			var targetPos = 0.998;
-			cb(true);
+			var targetPos = 0.997;
 			playem.seekTo(targetPos);
+			cb(true);
 		},
 	};
 
@@ -98,11 +101,16 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	runner.addTests({
 		"video container is clean": function(cb){
-			cb(!document.getElementById("container").innerHTML.length);
+			setTimeout(function(){
+				cb(!document.getElementById("container").innerHTML.length);
+			}, 2000);
 		}
 	});
 
 	runner.run(function(res){
+		res = res || {};
+		console.log('END OF TESTS => ' + (!!res.ok ? "OK" : "FAIL: " + res.title));
+		playem.pause();
 		playem.stop();
 	});
 });
