@@ -141,7 +141,7 @@ function VimeoPlayer(){
 			// CHROME: ready called from here
 			embedAttrs = {
 			//	id: this.embedVars.playerId,
-				src: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
+				src: '//vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
 				allowscriptaccess: "always",
@@ -170,7 +170,7 @@ function VimeoPlayer(){
 				AllowScriptAccess: "always",
 				WMode: "opaque",
 				FlashVars: $.param(flashvars).replace(/\&/g, "&amp;"),
-				Movie: "http://vimeo.com/moogaloop.swf?" + $.param(flashvars) //"http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0&amp;time=1350388628283"
+				Movie: "//vimeo.com/moogaloop.swf?" + $.param(flashvars) //"http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0&amp;time=1350388628283"
 			};
 
 			innerHTML = "";
@@ -179,7 +179,7 @@ function VimeoPlayer(){
 
 			objectAttrs = {
 				id: this.embedVars.playerId,
-				src: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
+				src: '//vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 			//	data: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
@@ -212,7 +212,7 @@ function VimeoPlayer(){
 				mozallowfullscreen: true,
 				allowScriptAccess: "always",
 				allowFullScreen: true,
-				src: 'http://player.vimeo.com/video/' + vars.videoId + "?" + $.param({
+				src: '//player.vimeo.com/video/' + vars.videoId + "?" + $.param({
 					api: 1,
 					js_api: 1,
 					player_id: this.embedVars.playerId,
