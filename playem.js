@@ -313,12 +313,13 @@ function Playem(playemPrefs) {
 				return addTrack(metadata);
 			},
 			addTrackByUrl: function(url, metadata, cb) {
-				for (var p=0; p<players.length; ++p) {
-					var player = players[p];
+				var p, player, eid, track;
+				for (p=0; p<players.length; ++p) {
+					player = players[p];
 					//console.log("test ", player.label, eid);
-					var eid = player.getEid(url);
+					eid = player.getEid(url);
 					if (eid) {
-						var track = addTrackById(eid, player, metadata);
+						track = addTrackById(eid, player, metadata);
 						cb && cb(track);
 						return track;
 					}
