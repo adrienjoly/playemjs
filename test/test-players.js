@@ -10,10 +10,9 @@ new PlayemLoader().loadAllPlayers(function(playem){
 
 	var tracks = [
 		//"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // same as next
-		"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
+		//"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
 		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
 		//"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // does not pass test... too short?
-		//];  /*
 		"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 		"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
 		"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
@@ -25,7 +24,6 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
 		"http://www.deezer.com/track/73414915",
 		//"//youtube.com/watch?v=xxx", // should not work
-		//*/
 	];
 
 	var nextIndex = 0;

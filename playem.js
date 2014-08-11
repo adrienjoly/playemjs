@@ -130,17 +130,21 @@ function Playem(playemPrefs) {
 				interval = setInterval(poll, 1000);
 		}
 
+		function addTrack(metadata) {
+			var track = {
+				index: trackList.length,
+				metadata: metadata || {}
+			};
+			trackList.push(track);
+			return track;
+		}
+
 		function addTrackById(id, player, metadata) {
 			if (id) {
-				var track = {
-					index: trackList.length,
-					trackId: id,
-					//img: img,
-					player: player,
-					playerName: player.label.replace(/ /g, "_"),
-					metadata: metadata || {}
-				};
-				trackList.push(track);
+				var track = addTrack(metadata);
+				track.trackId = id;
+				track.player = player;
+				track.playerName = player.label.replace(/ /g, "_");
 				return track;
 				//console.log("added:", player.label, "track", id, track/*, metadata*/);
 			}
@@ -305,21 +309,21 @@ function Playem(playemPrefs) {
 			clearQueue: function() {
 				trackList = [];
 			},
+			addTrack: function(metadata) {
+				return addTrack(metadata);
+			},
 			addTrackByUrl: function(url, metadata, cb) {
-				var p, remaining = players.length;
-				for (p=0; p<players.length; ++p)
-					players[p].getEid(url, function(eid, player){
-						//console.log("test ", player.label, eid);
-						if (eid) {
-							var track = addTrackById(eid, player, metadata);
-							//console.log("added track", track);
-							cb && cb(track);
-						}
-						else if (--remaining == 0) {
-							metadata && $(metadata.post).addClass("disabled");
-							throw new Error("unrecognized track: " + url);
-						}
-					});
+				for (var p=0; p<players.length; ++p) {
+					var player = players[p];
+					//console.log("test ", player.label, eid);
+					var eid = player.getEid(url);
+					if (eid) {
+						var track = addTrackById(eid, player, metadata);
+						cb && cb(track);
+						return track;
+					}
+				}
+				throw new Error("unrecognized track: " + url);
 			},
 			play: function(i) {
 				playTrack(i != undefined ? trackList[i] : currentTrack || trackList[0]);

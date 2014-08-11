@@ -57,8 +57,8 @@ function DeezerPlayer(){
   }
   
   //============================================================================
-  Player.prototype.getEid = function(url, cb) {
-    cb(URL_REG.test(url) ? RegExp.$1 : null, this);
+  Player.prototype.getEid = function(url) {
+    return URL_REG.test(url) && RegExp.$1;
   }
   
   //============================================================================

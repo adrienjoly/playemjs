@@ -75,8 +75,8 @@ function BandcampPlayer(){
   }
   
   //============================================================================
-  Player.prototype.getEid = function(url, cb) {
-    cb(isBandcampUrl(url) && url, this);
+  Player.prototype.getEid = function(url) {
+    return isBandcampUrl(url) && url;
   }
 
   Player.prototype.playStreamUrl = function(url) {

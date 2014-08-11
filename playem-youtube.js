@@ -123,9 +123,9 @@ function YoutubePlayer(){
 		//this.isReady = true;
 	}
 
-	Player.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url) {
 		var matches = url.match(regex);
-		cb(matches ? matches.pop() : null, this);
+		return matches ? matches.pop() : null;
 	}
 
 	Player.prototype.play = function(id) {

@@ -72,15 +72,12 @@ function AudioFilePlayer(){
 		}, 200);
 	}
 
-	Player.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url) {
 		url = (url || "").split("#").pop();
 		if (!url)
-			return cb(null, this);
-		var ext = url.split("#").pop().toLowerCase().split(".").pop().toLowerCase();
-		if (ext == "mp3" || ext == "ogg")
-			cb(url, this);
-		else
-			cb(null, this);
+			return null;
+		var ext = url.split(".").pop().toLowerCase();
+		return (ext == "mp3" || ext == "ogg") ? url : null;
 	}
 	
 	Player.prototype.getTrackInfo = function(callback) {

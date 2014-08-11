@@ -133,8 +133,8 @@ function DailymotionPlayer(){
 		this.safeClientCall("onEmbedReady");
 	}
 
-	Player.prototype.getEid = function(url, cb) {
-		cb((url.match(regex) || []).pop(), this);
+	Player.prototype.getEid = function(url) {
+		return (url.match(regex) || []).pop();
 	}
 
 	Player.prototype.play = function(id) {

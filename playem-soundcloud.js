@@ -76,9 +76,9 @@ function SoundCloudPlayer(){
 		}
 	}
 
-	Player.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url) {
 		var matches = /(?:https?:)?\/\/(?:www\.)?soundcloud\.com\/([\w-_\/]+)/.exec(url);
-		cb(matches ? url.substr(url.lastIndexOf("/")+1) : null, this);
+		return matches ? url.substr(url.lastIndexOf("/")+1) : null;
 	}
 
 	Player.prototype.getTrackPosition = function(callback) {

@@ -90,9 +90,9 @@ function VimeoPlayer(){
 		this.element.contentWindow.postMessage(JSON.stringify(data), this.element.src.split("?")[0]);
 	}
 
-	Player.prototype.getEid = function(url, cb) {
+	Player.prototype.getEid = function(url) {
 		var matches = /(?:https?:\/\/(?:www\.)?)?vimeo\.com\/(clip\:)?(\d+)/.exec(url);
-		cb(matches ? matches.pop() : null, this);
+		return matches ? matches.pop() : null;
 	}
 
 	Player.prototype.setTrackPosition = function(pos) {
