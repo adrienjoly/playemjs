@@ -168,14 +168,14 @@ function Playem(playemPrefs) {
 		}
 
 		function playTrack(track) {
+			//console.log("playTrack", track);
+			stopTrack();
+			currentTrack = track;
+			delete currentTrack.trackPosition; // = null;
+			delete currentTrack.trackDuration; // = null;
 			if (!track.player)
 				return that.emit("onError", {code:"unrecognized_track", source:"Playem", track:track});
-			//console.log("playTrack", track);
 			doWhenReady(track.player, function() {
-				stopTrack();
-				currentTrack = track;
-				delete currentTrack.trackPosition; // = null;
-				delete currentTrack.trackDuration; // = null;
 				that.emit("onTrackChange", track);
 				//console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
 				callPlayerFct("play", track.trackId);
