@@ -130,11 +130,13 @@ function Playem(playemPrefs) {
 				interval = setInterval(poll, 1000);
 		}
 
-		function addTrack(metadata) {
+		function addTrack(metadata, url) {
 			var track = {
 				index: trackList.length,
 				metadata: metadata || {}
 			};
+			if (url)
+				track.url = url;
 			trackList.push(track);
 			return track;
 		}
@@ -309,22 +311,16 @@ function Playem(playemPrefs) {
 			clearQueue: function() {
 				trackList = [];
 			},
-			addTrack: function(metadata) {
-				return addTrack(metadata);
-			},
-			addTrackByUrl: function(url, metadata, cb) {
-				var p, player, eid, track;
+			addTrackByUrl: function(url, metadata) {
+				var p, player, eid;
 				for (p=0; p<players.length; ++p) {
 					player = players[p];
 					//console.log("test ", player.label, eid);
 					eid = player.getEid(url);
-					if (eid) {
-						track = addTrackById(eid, player, metadata);
-						cb && cb(track);
-						return track;
-					}
+					if (eid)
+						return addTrackById(eid, player, metadata);
 				}
-				throw new Error("unrecognized track: " + url);
+				return addTrack(metadata, url);
 			},
 			play: function(i) {
 				playTrack(i != undefined ? trackList[i] : currentTrack || trackList[0]);
