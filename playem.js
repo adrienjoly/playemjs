@@ -168,6 +168,8 @@ function Playem(playemPrefs) {
 		}
 
 		function playTrack(track) {
+			if (!track.player)
+				return that.emit("onError", {code:"unrecognized_track", source:"Playem", track:track});
 			//console.log("playTrack", track);
 			doWhenReady(track.player, function() {
 				stopTrack();
