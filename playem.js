@@ -173,10 +173,10 @@ function Playem(playemPrefs) {
 			currentTrack = track;
 			delete currentTrack.trackPosition; // = null;
 			delete currentTrack.trackDuration; // = null;
+			that.emit("onTrackChange", track);
 			if (!track.player)
 				return that.emit("onError", {code:"unrecognized_track", source:"Playem", track:track});
 			doWhenReady(track.player, function() {
-				that.emit("onTrackChange", track);
 				//console.log("playTrack #" + track.index + " (" + track.playerName+ ")", track);
 				callPlayerFct("play", track.trackId);
 				setVolume(volume);

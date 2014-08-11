@@ -82,13 +82,14 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"playem initializes without error": function(cb){
 			cb(!!playem);
 		},
-		"all tracks load within 1 second": function(cb){
+		"all tracks load synchronously": function(cb){
 			tracks.map(function(tr){
 				console.info("loading", tr, "...")
 				playem.addTrackByUrl(tr);
 			});
+			cb(playem.getQueue().length == tracks.length);
+			// give time for onTrackChange to be listened by first test
 			setTimeout(function(){
-				cb(playem.getQueue().length == tracks.length);
 				playem.play();
 			}, 1000);
 		},
