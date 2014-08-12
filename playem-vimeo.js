@@ -13,6 +13,7 @@ function VimeoPlayer(){
 (function() {
 
 	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
+		MOOGALOOP = '//vimeo.com/moogaloop.swf?',  // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 		EVENT_MAP = {
 			"play": "onPlaying",
 			"resume": "onPlaying",
@@ -80,7 +81,7 @@ function VimeoPlayer(){
 		    var args = Array.apply(null, arguments).slice(1) // exclude first arg
 		    return this.element["api_"+action].apply(this.element, args);
 		} catch (e) {
-			console.log("VIMEO error", e, e.stack);
+			console.log("VIMEO error", e);
 			//that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception:e});
 		}
 	} : function(action, value) { // HTML 5 VERSION
@@ -91,8 +92,7 @@ function VimeoPlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		var matches = /(?:https?:\/\/(?:www\.)?)?vimeo\.com\/(clip\:)?(\d+)/.exec(url);
-		return matches ? matches.pop() : null;
+		return /(vimeo\.com\/(clip\:|video\/)?|\/vi\/)(\d+)/.test(url) && RegExp.lastParen;
 	}
 
 	Player.prototype.setTrackPosition = function(pos) {
@@ -141,7 +141,7 @@ function VimeoPlayer(){
 			// CHROME: ready called from here
 			embedAttrs = {
 			//	id: this.embedVars.playerId,
-				src: '//vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
+				src: MOOGALOOP + $.param(flashvars).replace(/\&/g, "&amp;"),
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
 				allowscriptaccess: "always",
@@ -170,7 +170,7 @@ function VimeoPlayer(){
 				AllowScriptAccess: "always",
 				WMode: "opaque",
 				FlashVars: $.param(flashvars).replace(/\&/g, "&amp;"),
-				Movie: "//vimeo.com/moogaloop.swf?" + $.param(flashvars) //"http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0&amp;time=1350388628283"
+				Movie: MOOGALOOP + $.param(flashvars)
 			};
 
 			innerHTML = "";
@@ -179,8 +179,8 @@ function VimeoPlayer(){
 
 			objectAttrs = {
 				id: this.embedVars.playerId,
-				src: '//vimeo.com/moogaloop.swf?' + $.param(flashvars).replace(/\&/g, "&amp;"), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
-			//	data: 'http://vimeo.com/moogaloop.swf?' + $.param(flashvars), // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
+				src: MOOGALOOP + $.param(flashvars).replace(/\&/g, "&amp;"),
+			//	data: MOOGALOOP + $.param(flashvars),
 				type: 'application/x-shockwave-flash',
 				classid: "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",
 				allowscriptaccess: "always",
