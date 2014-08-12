@@ -2,6 +2,15 @@
 
 window.$ = window.$ || function(){return window.$};
 $.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
+$.getJSON = $.getJSON || function(url, cb){
+  var cbName = "_cb_" + Date.now();
+  url = url.replace("callback=?", "callback=" + cbName);
+  window[cbName] = function(){
+    cb.apply(window, arguments);
+    delete window[cbName];
+  };
+  loader.includeJS(url);
+};
 
 function SoundCloudPlayer(){
 	return SoundCloudPlayer.super_.apply(this, arguments);
@@ -77,8 +86,16 @@ function SoundCloudPlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		var matches = /(?:https?:)?\/\/(?:www\.)?soundcloud\.com\/([\w-_\/]+)/.exec(url);
-		return matches ? url.substr(url.lastIndexOf("/")+1) : null;
+		if (/(soundcloud\.com)\/player\/\?.*url\=(.+)/.test(url))
+			url = decodeURIComponent(RegExp.lastParen);
+		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url))
+			return RegExp.lastParen; //url.substr(url.lastIndexOf("/")+1);
+		else if (/snd\.sc\/([\w-_]+)/.test(url))
+			return RegExp.lastMatch;
+		// => returns:
+		// - /tracks/<number> (ready to stream)
+		// - or /<artistname>/<tracktitle>
+		// - or snd.sc/<hash>
 	}
 
 	Player.prototype.getTrackPosition = function(callback) {
@@ -94,15 +111,25 @@ function SoundCloudPlayer(){
 	};
 
 	Player.prototype.play = function(id) {
+		console.log("sc PLAY id:", id)
 		this.trackInfo = {};
-		this.embedVars.trackId = id;
-		//console.log("soundcloud play", this.embedVars);
 		var that = this;
-
-		SC.stream("/tracks/"+id, this.soundOptions, function(sound){
-			that.widget = sound;
-			that.callHandler("onEmbedReady", that);
-			//that.safeCall("play");
+		function playId(id){
+			console.log("=> sc PLAY id:", id)
+			that.embedVars.trackId = id;
+			//console.log("soundcloud play", this.embedVars);
+			SC.stream(id, that.soundOptions, function(sound){
+				that.widget = sound;
+				that.callHandler("onEmbedReady", that);
+				//that.safeCall("play");
+			});
+		}
+		if (id.indexOf("/tracks/") == 0)
+			return playId(id);
+		id = "http://" + (!id.indexOf("/") ? "soundcloud.com" : "") + id;
+		console.log("sc resolve url:", id);
+		$.getJSON("https://api.soundcloud.com/resolve.json?client_id=" + SOUNDCLOUD_CLIENT_ID + "&url=" + encodeURIComponent(id) + "&callback=?", function(data){
+			playId(data.id);
 		});
 	}
 
