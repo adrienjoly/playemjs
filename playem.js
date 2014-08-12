@@ -294,7 +294,7 @@ function Playem(playemPrefs) {
 				eventHandlers[evt] = function(player, x){
 					if (player == currentTrack.player)
 						return fct(player, x);
-					else
+					else if (evt != "onEmbedReady")
 						console.warn("ignore event:", evt, "from", player, "instead of:", currentTrack.player);
 				};
 			});
