@@ -20,7 +20,7 @@ function DeezerPlayer(){
   var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js',
       SDK_LOADED = false,
       IS_LOGGED = false,
-      URL_REG = /(?:https?:)?\/\/(?:www\.)deezer\.com\/track\/(\d+)/i,
+      URL_REG = /(deezer\.com\/track|\/dz)\/(\d+)/,
       EVENT_MAP = {
         player_play: 'onPlaying',
         player_paused: 'onPaused',
@@ -58,7 +58,7 @@ function DeezerPlayer(){
   
   //============================================================================
   Player.prototype.getEid = function(url) {
-    return URL_REG.test(url) && RegExp.$1;
+    return URL_REG.test(url) && RegExp.lastParen;
   }
   
   //============================================================================

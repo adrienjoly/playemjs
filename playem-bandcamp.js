@@ -24,12 +24,12 @@ function BandcampPlayer(){
     return url.indexOf("/bc/") == 0 || url.indexOf("bandcamp.com") != -1;
   }
 
-  function extractStreamUrl(eId) {
-    var parts = eId.split("#");
-    return parts.length < 2 || eId.indexOf("/bc/") ? null : parts.pop();
+  function isStreamUrl(url) {
+    return url.indexOf("bandcamp.com/download/track") != -1;
   }
 
   function fetchStreamUrl(url, cb){
+    url = "http://" + url.split("//").pop();
     $.getJSON(API_PREFIX + '/url/1/info?url=' + encodeURIComponent(url) + API_SUFFIX, function(data) {
       var trackId = (data || {}).track_id;
       if (!trackId)
@@ -76,10 +76,12 @@ function BandcampPlayer(){
   
   //============================================================================
   Player.prototype.getEid = function(url) {
-    return isBandcampUrl(url) && url;
+    return isBandcampUrl(url) && url.split("//").pop();
   }
 
   Player.prototype.playStreamUrl = function(url) {
+    url = "http://" + url.split("//").pop();
+    console.log("bc PLAY stream url:", url);
     var self = this;
     self.sound = soundManager.createSound({
       id: '_playem_bc_' + Date.now(),
@@ -106,13 +108,11 @@ function BandcampPlayer(){
 
   //============================================================================
   Player.prototype.play = function(id) {
-    var self = this, stream = extractStreamUrl(id);
-    if (stream)
-      this.playStreamUrl(stream);
+    var playStream = this.playStreamUrl.bind(this);
+    if (isStreamUrl(id))
+      playStream(id);
     else
-      fetchStreamUrl(id, function(stream){
-        self.playStreamUrl(stream);
-      });
+      fetchStreamUrl(id, playStream);
   }
   
   //============================================================================

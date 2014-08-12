@@ -124,8 +124,8 @@ function YoutubePlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		var matches = url.match(regex);
-		return matches ? matches.pop() : null;
+		if (regex.test(url) || /\/yt\/([a-zA-Z0-9_\-]+)/.test(url) || /youtube\.com\/attribution_link\?.*v\%3D([^ \%]+)/.test(url))
+			return RegExp.lastParen;
 	}
 
 	Player.prototype.play = function(id) {

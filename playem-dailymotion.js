@@ -4,7 +4,7 @@ function DailymotionPlayer(){
 
 (function() {
 
-	var regex = /https?:\/\/(?:www\.)?dailymotion.com(?:\/embed)?\/video\/([\w-]+)/,
+	var regex = /(dailymotion.com(?:\/embed)?\/video\/|\/dm\/)([\w-]+)/,
 		ignoreEnded = 0;
 		EVENT_MAP = {
 			0: "onEnded",
@@ -134,7 +134,7 @@ function DailymotionPlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		return (url.match(regex) || []).pop();
+		return regex.test(url) && RegExp.lastParen;
 	}
 
 	Player.prototype.play = function(id) {
