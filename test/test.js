@@ -119,11 +119,12 @@ function PlayemLogger() {
 			clearTimeout(timeout);
 			that.removeListener(listenerId);
 		}
-		timeout = setTimeout(function(){
-			// if the callbacks returns true, keeping waiting for the event
-			if (!(timeoutCb || cb)())
-				clean();
-		}, timeoutDelay);
+		if (timeoutDelay)
+			timeout = setTimeout(function(){
+				// if the callbacks returns true, keeping waiting for the event
+				if (!(timeoutCb || cb)())
+					clean();
+			}, timeoutDelay);
 		listenerId = this.addListener(function(evt, data){
 			if (evtNames[evt])
 				// if the callbacks returns true, keeping waiting for the event

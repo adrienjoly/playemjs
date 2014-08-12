@@ -1,29 +1,37 @@
 new PlayemLoader().loadAllPlayers(function(playem){
 
-	playem.setPref("loop", false);
-
-	var runner = new TestRunner();
-	var eventLogger = new PlayemLogger().listenTo(playem);
-	playem.on("onTrackChange", function(t){
-		console.log("-> track", t.index, t.playerName, t.trackId);
-	})
-
 	var tracks = [
-		//"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // same as next
-		//"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
-		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
-		//"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // does not pass test... too short?
+		// VIMEO
 		"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
+		"http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0",
+		"/vi/46314116", // whyd eId
+		// BANDCAMP
+		"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
+		"//manisnotabird.bandcamp.com/track/the-sound-of-spring",
+		"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // whyd eId
+		// SOUNDCLOUD
+		"//soundcloud.com/manisnotabird/sounds-of-spring", // canonical url
+		"//snd.sc/GEOIEA", // short url
+		"//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true", // embed url
+		"/sc/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483", // whyd eId
+		// YOUTUBE
+		"//www.youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
+		"//youtube.com/watch?v=femWm-FtfXs",
+		"//youtube.com/v/ifAtvI48R_0",
+		"//youtu.be/l1TcJKFB0sY", // short url
+		"//www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare",
+		"/yt/l1TcJKFB0sY", // whyd eId
+		// MP3
+		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
+		"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // used to not pass (too short?)
+		// DAILYMOTION
 		"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
-		"//youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
-		"https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483",
-		//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
-		//"//youtube.com/v/kvHbAmGkBtI", // "RUSH in Rio" concert, WMG => not authorized on whyd
-		//"https://youtube.com/watch?v=jmRI3Ew4BvA", // Yeah Yeah Yeahs - Sacrilege
-		//"//soundcloud.com/manisnotabird/sounds-of-spring", // /!\ you need to append the stream URL using ContentEmbed class first
-		//"http://soundcloud.com/manisnotabird/sounds-of-spring#http://api.soundcloud.com/tracks/90559805",
+		"//www.dailymotion.com/video/x142x6e_jean-jean-love_music",
+		"/dm/x142x6e_jean-jean-love_music", // whyd eId
+		// DEEZER
 		"http://www.deezer.com/track/73414915",
-		//"//youtube.com/watch?v=xxx", // should not work
+		"//deezer.com/track/73414915",
+		"/dz/73414915", // whyd eId
 	];
 
 	var nextIndex = 0;
@@ -33,7 +41,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 			eventLogger.until("onTrackChange", function(evt, args){
 				var index = ((args && args[0]) || {}).index;
 				cb(index === nextIndex++);
-			}, 5000);
+			});
 		},
 		"track starts playing in less than 10 seconds": function(cb){
 			eventLogger.until("onPlay", cb, 10000);
@@ -61,9 +69,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 				var trackPosition = ((args && args[0]) || {}).trackPosition;
 				if (trackPosition && trackPosition >= targetPos)
 					cb(true);
-				else
-					return true; // keep waiting...
-			}, 5000);
+			});
 		},
 		"set volume to 50%": function(cb){
 			playem.setVolume(0.5);
@@ -73,10 +79,23 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		},
 		"skip to end of track": function(cb){
 			var targetPos = 0.997;
-			playem.seekTo(targetPos);
+			// give time for onTrackChange to be listened by first test
+			setTimeout(function(){
+				playem.seekTo(targetPos);
+			}, 100);
 			cb(true);
 		},
 	};
+
+	// init testing environment
+	var testUI = new TestUI(tracks.length, Object.keys(commonTests).length);
+	playem = testUI.wrapPlayem(playem);
+	playem.setPref("loop", false);
+	var eventLogger = new PlayemLogger().listenTo(playem, testUI.onPlayerEvent);
+	var runner = new TestRunner({
+		onNewTest: testUI.onNewTest,
+		onTestResult: testUI.onNewResult,
+	});
 
 	runner.addTests({
 		"playem initializes without error": function(cb){
@@ -84,8 +103,8 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		},
 		"all tracks load synchronously": function(cb){
 			tracks.map(function(tr){
-				console.info("loading", tr, "...")
-				playem.addTrackByUrl(tr);
+				//console.info("loading", tr, "...")
+				playem.addTrackByUrl(tr, {url: tr});
 			});
 			cb(playem.getQueue().length == tracks.length);
 			// give time for onTrackChange to be listened by first test
@@ -102,7 +121,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		"video container is clean": function(cb){
 			setTimeout(function(){
 				cb(!document.getElementById("container").innerHTML.length);
-			}, 2000);
+			}, 8000);
 		}
 	});
 
