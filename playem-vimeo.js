@@ -1,5 +1,4 @@
 window.$ = window.$ || function(){return window.$};
-$.show = $.show || function(){return $};
 $.param = $.param || function(obj){
 	return Object.keys(obj).map(function(f){
 		return encodeURIComponent(f) + "=" + encodeURIComponent(obj[f]);
@@ -12,20 +11,13 @@ function VimeoPlayer(){
 
 (function() {
 
-	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
-		MOOGALOOP = '//vimeo.com/moogaloop.swf?',  // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
+	var USE_FLASH_VIMEO = false, // ... or "universal embed" (iframe), if false
+		MOOGALOOP = (window.location.protocol || "") + '//vimeo.com/moogaloop.swf?',  // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 		EVENT_MAP = {
 			"play": "onPlaying",
 			"resume": "onPlaying",
 			"pause": "onPaused",
 			"finish": "onEnded",
-			"playProgress": function(that, e) { // Html5 event
-				that.trackInfo = {
-					duration: Number(e.data.duration),
-					position: Number(e.data.seconds)
-				};
-				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
-			},
 			"progress": function(that, seconds) { // Flash event
 				that.trackInfo = {
 					duration: Number(that.element.api_getDuration()),
@@ -33,30 +25,55 @@ function VimeoPlayer(){
 				};
 				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
 			}
-		};
+		}, HTML5_EVENTS = ["play", "pause", "finish", "playProgress"];
+
+		if (!USE_FLASH_VIMEO){
+			EVENT_MAP.getDuration = function(that, duration){
+				that.trackInfo.duration = Number(duration);
+			};
+			EVENT_MAP.progress = function(that, seconds){
+				//console.log("progress", arguments, "=>", that.post("getDuration"));
+				that.trackInfo.position = Number(seconds);
+				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
+			};
+		}
 
 	function Player(eventHandlers, embedVars) {  
+		var that = this;
 		this.label = 'Vimeo';
 		this.element = null;
 		this.eventHandlers = eventHandlers || {};
 		this.embedVars = embedVars || {};
 		this.isReady = false;
 		this.trackInfo = {};
-		var i, that = this;
 		
 		if (!USE_FLASH_VIMEO) {
 			function onMessageReceived(e) {
-				//console.log("onMessageReceived", e, e.origin, e.data);
+				if (e.origin.indexOf("vimeo.com") == -1)
+					return;
 				try {
-					var data = JSON.parse(e.data);
+					//var data = JSON.parse(e.data); // new format: "method=onLoad&params=genericplayer"
+					var data = {};
+					e.data.split("&").map(function(keyval){
+						var s = keyval.split("=");
+						data[s[0]] = s[1];
+					});
+					data.params = (data.params || "").split(",");
+					data.player_id = data.player_id || data.params.pop();
 					if (data.player_id == that.embedVars.playerId) {
-						//console.log("VIMEO EVENT", data);
-						if (data.event == "ready")
-							for (i in EVENT_MAP)
-								that.post('addEventListener', i);
+						if (data.method == "onLoad") {
+							HTML5_EVENTS.map(that.post.bind(that, 'addEventListener'));
+							that.post("getDuration");
+						}
 						else
 							setTimeout(function(){
-								(eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event])(that, data);
+								data.event = data.method.replace(/^on/, "");
+								data.event = data.event.substr(0,1).toLowerCase() + data.event.substr(1);
+								var eventHandler = eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event];
+								if (eventHandler) {
+									data.params.unshift(that);
+									eventHandler.apply(that, data.params);
+								}
 							});
 					}
 				} catch (e) {
@@ -81,14 +98,18 @@ function VimeoPlayer(){
 		    var args = Array.apply(null, arguments).slice(1) // exclude first arg
 		    return this.element["api_"+action].apply(this.element, args);
 		} catch (e) {
-			console.log("VIMEO error", e);
+			console.log("VIMEO error: unable to call", action);
 			//that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception:e});
 		}
 	} : function(action, value) { // HTML 5 VERSION
 		var data = {method: action};
 		if (value)
 			data.value = value;
-		this.element.contentWindow.postMessage(JSON.stringify(data), this.element.src.split("?")[0]);
+		try{
+			return this.element.contentWindow.postMessage(JSON.stringify(data), this.element.src.split("?")[0]);
+		} catch(e){
+			console.log(e);
+		}
 	}
 
 	Player.prototype.getEid = function(url) {
@@ -110,8 +131,8 @@ function VimeoPlayer(){
 			var i, embedAttrs, params, innerHTML, objectAttrs, objectHtml, //$embed, $object, // = $(this.element);
 				that = this,
 				flashvars = {
-					server: 'vimeo.com',
-					player_server: 'player.vimeo.com',
+					server: (window.location.protocol || "") + '//vimeo.com',
+					player_server: (window.location.protocol || "") + '//player.vimeo.com',
 					api_ready: 'vimeo_ready',
 					player_id: this.embedVars.playerId,
 					clip_id: vars.videoId,
@@ -126,14 +147,11 @@ function VimeoPlayer(){
 			window.vimeoHandlers = {};
 
 			function setHandlers () {
-				for (var evt in EVENT_MAP)
-					(function(evt){
-						vimeoHandlers[evt] = function(data) {
-							//console.log("vimeo event", evt, '=> on'+evt[0].toUpperCase()+evt.substr(1));
-							(that.eventHandlers[EVENT_MAP[evt]] || EVENT_MAP[evt])(that, data);
-						};
-						that.element.api_addEventListener('on'+evt[0].toUpperCase()+evt.substr(1), "vimeoHandlers." + evt);
-					})(evt);
+				Object.keys(EVENT_MAP).map(function(evt){
+					var evtName = 'on' + evt[0].toUpperCase() + evt.substr(1);
+					vimeoHandlers[evt] = (that.eventHandlers[EVENT_MAP[evt]] || EVENT_MAP[evt]).bind(that, that);
+					that.element.api_addEventListener(evtName, "vimeoHandlers." + evt);
+				});
 				if (that.eventHandlers.onEmbedReady)
 					that.eventHandlers.onEmbedReady();
 			}
@@ -162,7 +180,6 @@ function VimeoPlayer(){
 				setHandlers();
 			}
 
-			//flashvars.api_ready = 'vimeo_ready_param';
 			flashvars.api_ready = 'vimeo_ready_object';
 
 			// IE9: ready called from here
@@ -203,7 +220,7 @@ function VimeoPlayer(){
 		}
 		else { // "universal embed" (iframe)
 			this.element = document.createElement("iframe");
-			$(this.element).attr({
+			var attributes = {
 				id: this.embedVars.playerId,
 				width: this.embedVars.width || '200',
 				height: this.embedVars.height || '200',
@@ -221,7 +238,11 @@ function VimeoPlayer(){
 					portrait: 0,
 					autoplay: 1
 				})
-			}).show();
+			};
+			for (i in attributes)
+				this.element.setAttribute(i, attributes[i]);
+			this.embedVars.playerContainer.appendChild(this.element);
+			// TODO: wait for this.element.contentWindow.postMessage to be ready to be called
 			if (this.eventHandlers.onEmbedReady)
 				this.eventHandlers.onEmbedReady();
 		}
