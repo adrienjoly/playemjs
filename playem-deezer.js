@@ -138,8 +138,8 @@ function DeezerPlayer(){
     } else {
       cb();
     }
-  }  
-  
+  }
+
   //============================================================================
   function init(onload) {
     DZ.init({
@@ -149,6 +149,8 @@ function DeezerPlayer(){
         onload: onload
       }
     });
+    if (window.location.protocol === "https:")
+      DZ.override_https();
   }
   
   //============================================================================
