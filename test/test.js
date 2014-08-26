@@ -197,7 +197,7 @@ function TestRunner(options) {
 	options = options || {};
 
 	function emit(evtName, p){
-		setTimeout(options[evtName] && options[evtName].bind(null, p));
+		options[evtName] && setTimeout(options[evtName].bind(null, p));
 	}
 
 	function wrapTest(testFct, title){
