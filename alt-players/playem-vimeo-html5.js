@@ -95,7 +95,9 @@ function VimeoPlayer(){
 	}
 
 	Player.prototype.setTrackPosition = function(pos) {
+		this.pause(); // hack to prevent freeze on firefox 31.0
 		this.post("seekTo", pos);
+		this.resume(); // hack to prevent freeze on firefox 31.0
 	};
 	
 	Player.prototype.embed = function(vars) {
