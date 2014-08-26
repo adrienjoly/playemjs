@@ -11,7 +11,7 @@ function VimeoPlayer(){
 
 (function() {
 
-	var USE_FLASH_VIMEO = false, // ... or "universal embed" (iframe), if false
+	var USE_FLASH_VIMEO = true, // ... or "universal embed" (iframe), if false
 		MOOGALOOP = (window.location.protocol || "") + '//vimeo.com/moogaloop.swf?',  // 'http://a.vimeocdn.com/p/flash/moogaloop/5.2.42/moogaloop.swf?v=1.0.0'
 		EVENT_MAP = {
 			"play": "onPlaying",
