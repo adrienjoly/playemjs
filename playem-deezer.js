@@ -132,6 +132,9 @@ function DeezerPlayer(){
       var dz = document.createElement('div'); dz.id = 'dz-root';
       document.getElementsByTagName("body")[0].appendChild(dz);
       $.getScript(SDK_URL, function() {
+        console.log("DZ.override_https()", window.location.protocol === "https:");
+        if (window.location.protocol === "https:")
+          DZ.override_https();
         SDK_LOADED = true;
         cb();
       });
@@ -149,8 +152,6 @@ function DeezerPlayer(){
         onload: onload
       }
     });
-    if (window.location.protocol === "https:")
-      DZ.override_https();
   }
   
   //============================================================================
