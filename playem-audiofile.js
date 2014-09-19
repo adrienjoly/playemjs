@@ -45,7 +45,7 @@ function AudioFilePlayer(){
 			autoPlay: true,
 			ontimeout: function(e) {
 				//console.log("AudioFilePlayer timeout event:", e);
-				that.eventHandlers.onError && that.eventHandlers.onError(that, {code:"timeout", source:"AudioFilePayer"});
+				that.eventHandlers.onError && that.eventHandlers.onError(that, {code:"timeout", source:"AudioFilePlayer"});
 			}
 		};
 
@@ -67,7 +67,7 @@ function AudioFilePlayer(){
 				}
 			}
 			catch (e) {
-				that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"AudioFilePayer", exception:e});
+				that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"AudioFilePlayer", exception:e});
 			};
 		}, 200);
 	}

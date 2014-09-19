@@ -46,7 +46,7 @@ function VimeoPlayer(){
 		    return this.element["api_"+action].apply(this.element, args);
 		} catch (e) {
 			console.log("VIMEO error: unable to call", action);
-			//that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPayer", exception:e});
+			//that.eventHandlers.onError && that.eventHandlers.onError(that, {source:"VimeoPlayer", exception:e});
 		}
 	}
 

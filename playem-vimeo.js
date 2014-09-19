@@ -57,7 +57,7 @@ function VimeoPlayer(){
 			}
 		} catch (e) {
 			console.log("VimeoPlayer error", e, e.stack);
-			this.eventHandlers.onError && this.eventHandlers.onError(this, {source:"VimeoPayer", exception: e});
+			this.eventHandlers.onError && this.eventHandlers.onError(this, {source:"VimeoPlayer", exception: e});
 		}
 	}
 
