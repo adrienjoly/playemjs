@@ -3,6 +3,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	var tracks = [
 		// JAMENDO
 		"//www.jamendo.com/en/track/1115147/get-momentum",
+		"http://jamendo.com/track/1115147",
 		// VIMEO
 		"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 		"http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0",
