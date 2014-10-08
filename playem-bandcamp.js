@@ -32,8 +32,10 @@ function BandcampPlayer(){
     url = "http://" + url.split("//").pop();
     $.getJSON(API_PREFIX + '/url/1/info?url=' + encodeURIComponent(url) + API_SUFFIX, function(data) {
       var trackId = (data || {}).track_id;
-      if (!trackId)
+      if (!trackId) {
+        console.error("bandcamp: unexpected result from /url/1/info:", data);
         return cb();
+      }
       $.getJSON(API_PREFIX + '/track/3/info?track_id=' + trackId + API_SUFFIX, function(data) {
         cb((data || {}).streaming_url);
       });
@@ -80,9 +82,11 @@ function BandcampPlayer(){
   }
 
   Player.prototype.playStreamUrl = function(url) {
+    var self = this;
+    if (!url)
+      return self.clientCall("onError", self, {source:"BandcampPlayer", code:"no_stream"}); // could be indirectly caused by "bad key" error from fetchStreamUrl()
     url = "http://" + url.split("//").pop();
     console.log("bc PLAY stream url:", url);
-    var self = this;
     self.sound = soundManager.createSound({
       id: '_playem_bc_' + Date.now(),
       url: url,
