@@ -1,6 +1,8 @@
 new PlayemLoader().loadAllPlayers(function(playem){
 
 	var tracks = [
+		// SPOTIFY
+		"//open.spotify.com/track/63wxaMojZaS69nYttu7Fh1",
 		// JAMENDO
 		"//www.jamendo.com/en/track/1115147/get-momentum",
 		"http://jamendo.com/track/1115147",

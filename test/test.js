@@ -25,6 +25,7 @@ function PlayemLoader() {
 		"AudioFile",
 		"Bandcamp",
 		"Jamendo",
+		"Spotify",
 	];
 
 	var DEFAULT_PLAYER_PARAMS = {
