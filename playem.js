@@ -17,6 +17,18 @@ loader = new (function Loader() {
 		head = document.getElementsByTagName("head")[0],
 		pending = {};
 	return {
+		loadJSON: function(src, cb){
+			if (pending[src]) return;
+			pending[src] = true;
+			// cross-domain ajax call
+			var xdr = new XMLHttpRequest();
+			xdr.onload = function() {
+				cb(JSON.parse(xdr.responseText));
+				delete pending[src];
+			}
+			xdr.open("GET", src, true);
+			xdr.send();
+		},
 		includeJS: function(src, cb){
 			if (pending[src]) return;
 			pending[src] = true;
