@@ -44,10 +44,10 @@ function DeezerPlayer(){
           DZ.player.setRepeat(0);
           IS_LOGGED = response.userID;
           self.isReady = true;
-          hookHandlers(self);          
+          hookHandlers(self);
         });
-      });       
-    });                
+      });
+    });
     
   }
   
@@ -72,9 +72,9 @@ function DeezerPlayer(){
           'This is a 30 secs preview. ' + 
           '<a href="javascript:DeezerPlayer.login()">' +
           'Connect to Deezer</a> to listen to the full track.'
-        );                  
+        );
         self.sound = createSound(self, data.preview)
-      });     
+      });
     }    
   }
   
@@ -169,14 +169,14 @@ function DeezerPlayer(){
             onTrackInfoHandler(self.currentTrack);
           }
           if ((duration - position <= 1.5) && onEndedHandler)
-            onEndedHandler(self);          
+            onEndedHandler(self);
         };
       }
       return function() {
         var handler = self.eventHandlers[EVENT_MAP[e]];
         handler && handler(self);
       };
-    }            
+    }
     
     for (var e in EVENT_MAP)
       DZ.Event.suscribe(e, createHandler(e));
@@ -184,17 +184,17 @@ function DeezerPlayer(){
   }
   
   //============================================================================
-  function createSound(self, url) {    
+  function createSound(self, url) {
     return soundManager.createSound({
       id: 'deezerSound' + Date.now(),
       url: url,
       autoLoad: true,
-      autoPlay: true,         
+      autoPlay: true,
       whileplaying: function() {
         self.currentTrack = {
           position: self.sound.position / 1000,
           duration: self.sound.duration / 1000
-        };            
+        };
         if (self.eventHandlers.onTrackInfo)
           self.eventHandlers.onTrackInfo(self.currentTrack);
       },
@@ -218,7 +218,7 @@ function DeezerPlayer(){
     DZ.login(function(response) {
       if (response.userID) {
         IS_LOGGED = true;
-        showMessage('Login successful. Your Deezer tracks will be full length from now on!');        
+        showMessage('Login successful. Your Deezer tracks will be full length from now on!');
       } else {
         showMessage('Deezer login unsuccesful.', true);
       }
