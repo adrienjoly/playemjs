@@ -24,7 +24,7 @@ function DeezerPlayer(){
       EVENT_MAP = {
         player_play: 'onPlaying',
         player_paused: 'onPaused',
-        player_position: 'onTrackInfo'
+        track_end: 'onEnded'
       };
 
   //============================================================================
@@ -156,28 +156,24 @@ function DeezerPlayer(){
   
   //============================================================================
   function hookHandlers(self) {
-    
-    function createHandler(e) {
-      if (e === 'player_position') {
-        return function(eventObject) {
-          var onTrackInfoHandler = self.eventHandlers.onTrackInfo, 
-              onEndedHandler = self.eventHandlers.onEnded,
-              position = eventObject[0],
-              duration = eventObject[1];
-          if (onTrackInfoHandler) {
-            self.currentTrack = {position: position, duration: duration};
-            onTrackInfoHandler(self.currentTrack);
-          }
-          if ((duration - position <= 1.5) && onEndedHandler)
-            onEndedHandler(self);
-        };
+    DZ.Event.subscribe('player_position', function(eventObject){
+      var onTrackInfoHandler = self.eventHandlers.onTrackInfo, 
+          onEndedHandler = self.eventHandlers.onEnded,
+          position = eventObject[0],
+          duration = eventObject[1];
+      if (onTrackInfoHandler) {
+        self.currentTrack = {position: position, duration: duration};
+        onTrackInfoHandler(self.currentTrack);
       }
+      if ((duration - position <= 1.5) && onEndedHandler)
+        onEndedHandler(self);
+    });
+    function createHandler(e) {
       return function() {
         var handler = self.eventHandlers[EVENT_MAP[e]];
         handler && handler(self);
       };
     }
-    
     for (var e in EVENT_MAP)
       DZ.Event.suscribe(e, createHandler(e));
     self.eventHandlers.onApiReady && self.eventHandlers.onApiReady(self);
