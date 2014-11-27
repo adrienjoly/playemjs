@@ -137,6 +137,27 @@ function DailymotionPlayer(){
 		return regex.test(url) && RegExp.lastParen;
 	}
 
+	function fetchMetadata(id, cb){
+		// specifying a HTTP/HTTPS protocol in the url provided as a parameter is mandatory
+		var url = encodeURIComponent("http://www.dailymotion.com/embed/video/" + id),
+			callbackFct = "dmCallback_" + id.replace(/[-\/]/g, "__");
+		window[callbackFct] = function(data) {
+			cb(!data || !data.title ? null : {
+				id: id,
+				title: data.title,
+				img: data.thumbnail_url,
+			});
+		};
+		loader.includeJS("//www.dailymotion.com/services/oembed?format=json&url=" + url + "&callback=" + callbackFct);
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb){
+		var id = this.getEid(url);
+		if (!id)
+			return cb();
+		fetchMetadata(id, cb);
+	}
+
 	Player.prototype.play = function(id) {
 		if (!this.currentId || this.currentId != id) {
 			this.embedVars.videoId = id;
