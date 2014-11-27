@@ -104,6 +104,30 @@ function SoundCloudPlayer(){
 		// - or snd.sc/<hash>
 	}
 
+	function fetchMetadata(url, id, cb){
+		var embed = {
+			id: id,
+			img: urlPrefix + "/images/cover-soundcloud.jpg",
+		};
+		loader.loadJSON('https://api.soundcloud.com/resolve.json?url='+encodeURIComponent(url)+'&client_id='+SOUNDCLOUD_CLIENT_ID/*+'&callback=' + callbackFct*/, function(data) {
+			if (data && data.kind == "track") {
+				embed.id = "" + data.id;
+				embed.img = data.artwork_url || embed.img;
+				embed.title = data.title;
+				if (embed.title.indexOf(" - ") == -1 && (data.user || {}).username)
+					embed.title = data.user.username + " - " + embed.title;
+			}
+			cb(embed);
+		});
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb){
+		var id = this.getEid(url);
+		if (!id)
+			return cb();
+		fetchMetadata(url, id, cb);
+	}
+
 	Player.prototype.getTrackPosition = function(callback) {
 		callback(this.trackInfo.position = this.widget.position / 1000);
 		if (this.widget.durationEstimate)
