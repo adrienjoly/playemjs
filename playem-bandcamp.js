@@ -81,6 +81,15 @@ function BandcampPlayer(){
     return isBandcampUrl(url) && url.split("//").pop();
   }
 
+  Player.prototype.fetchMetadata = function(url, cb) {
+    var match = url.match(/([a-zA-Z0-9_\-]+).bandcamp\.com\/track\/([a-zA-Z0-9_\-]+)/);
+    cb((match || []).length < 3 ? null : {
+      id: match[1] + "/" + match[2],
+      img: "//s0.bcbits.com/img/bclogo.png",
+      title: match[1].replace(/[\-_]+/g, " ") + " - " + match[2].replace(/[\-_]+/g, " ")
+    });
+  };
+
   Player.prototype.playStreamUrl = function(url) {
     var self = this;
     if (!url)
