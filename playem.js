@@ -23,7 +23,11 @@ loader = new (function Loader() {
 			// cross-domain ajax call
 			var xdr = new XMLHttpRequest();
 			xdr.onload = function() {
-				cb(JSON.parse(xdr.responseText));
+				var data = xdr.responseText;
+				try{
+					data = JSON.parse(data);
+				} catch(e){};
+				cb(data);
 				delete pending[src];
 			}
 			xdr.open("GET", src, true);
