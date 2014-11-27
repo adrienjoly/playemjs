@@ -60,7 +60,27 @@ function DeezerPlayer(){
   Player.prototype.getEid = function(url) {
     return URL_REG.test(url) && RegExp.lastParen;
   }
-  
+
+  function fetchMetadata(id, cb){
+    var callbackFct = "dzCallback_" + id.replace(/[-\/]/g, "__");
+    window[callbackFct] = function(data){
+      delete window[callbackFct];
+      cb(!data || !data.album ? null : {
+        id: id,
+        title: data.artist.name + ' - ' + data.title,
+        img: data.album.cover,
+      });
+    }
+    loader.includeJS("//api.deezer.com/track/" + id + "?output=jsonp&callback=" + callbackFct);
+  }
+
+  Player.prototype.fetchMetadata = function(url, cb){
+    var id = this.getEid(url);
+    if (!id)
+      return cb();
+    fetchMetadata(id, cb);
+  }
+
   //============================================================================
   Player.prototype.play = function(id) {
     var self = this;
