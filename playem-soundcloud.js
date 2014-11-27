@@ -59,9 +59,15 @@ function SoundCloudPlayer(){
 				};
 			});
 			that.isReady = true;
-			soundManager.onready(function() {
-				that.callHandler("onApiReady", that); // eventHandlers.onApiReady && eventHandlers.onApiReady(that);
-			});
+			try {
+				soundManager.onready(function() {
+					that.callHandler("onApiReady", that);
+				});
+			}
+			catch(e){
+				console.warn("warning: soundManager was not found => playem-soundcloud will not be able to stream music");
+				that.callHandler("onApiReady", that);
+			}
 		});
 
 		this.callHandler = function(name, params) {
