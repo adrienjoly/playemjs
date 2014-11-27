@@ -128,6 +128,28 @@ function YoutubePlayer(){
 			return RegExp.lastParen;
 	}
 
+	function fetchMetadata(id, cb){
+		var handlerId = 'youtubeHandler' + (new Date()).getTime(), embed = {
+			id: id,
+			img: "https://i.ytimg.com/vi/" + id + "/0.jpg",
+		};
+		window[handlerId] = function(data) {
+			console.log("youtube api response", data);
+			if (data && data.data)
+				embed.title = data.data.title;
+			cb(embed);
+		};
+		loader.includeJS("https://gdata.youtube.com/feeds/api/videos/"+id+"?v=2&alt=jsonc&callback="+handlerId);
+		// TODO: use loader.loadJSON()
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb){
+		var id = this.getEid(url);
+		if (!id)
+			return cb();
+		fetchMetadata(id, cb);
+	}
+
 	Player.prototype.play = function(id) {
 		//console.log("PLAY -> YoutubePlayer", this.currentId, id);
 		if (!this.currentId || this.currentId != id) {
