@@ -61,6 +61,25 @@ function JamendoPlayer(){
 	Player.prototype.getEid = function(url) {
 		return /jamendo.com\/.*track\/(\d+)/.test(url) ? RegExp.$1 : null;
 	}
+
+	function fetchMetadata(url, id, cb){
+		var callbackFct = "jaCallback_" + id.replace(/[-\/]/g, "__");
+		window[callbackFct] = function(data) {
+			delete window[callbackFct];
+			cb(!data || !data.results || !data.results.length ? null : {
+				img: data.results[0].album_image,
+				title: data.results[0].artist_name + ' - ' + data.results[0].name,
+			});
+		};
+		loader.includeJS('//api.jamendo.com/v3.0/tracks?client_id=' + JAMENDO_CLIENT_ID + '&id=' + id + '&callback=' + callbackFct);
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb) {
+		var id = this.getEid(url);
+		if (!id)
+			return cb();
+		fetchMetadata(url, id, cb);
+	};
 	
 	Player.prototype.getTrackInfo = function(callback) {
 		var that = this, i = setInterval(function() {
