@@ -94,6 +94,23 @@ function VimeoPlayer(){
 		return /(vimeo\.com\/(clip\:|video\/)?|\/vi\/)(\d+)/.test(url) && RegExp.lastParen;
 	}
 
+	function fetchMetadata(id, cb){
+		loader.loadJSON("https://vimeo.com/api/v2/video/" + id + ".json", function(data) {
+			cb(!data || !data.map ? null : {
+				id: id,
+				title: data[0].title,
+				img: data[0].thumbnail_medium,
+			});
+		});
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb){
+		var id = this.getEid(url);
+		if (!id)
+			return cb();
+		fetchMetadata(id, cb);
+	}
+
 	Player.prototype.setTrackPosition = function(pos) {
 		this.pause(); // hack to prevent freeze on firefox 31.0
 		this.post("seekTo", pos);
