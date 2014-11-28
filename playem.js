@@ -43,8 +43,14 @@ loader = new (function Loader() {
 					delete pending[src];
 				}
 			};
-			inc.src = src;
-			head.appendChild(inc);
+			try {
+				inc.src = src;
+				head.appendChild(inc);
+			}
+			catch(e){
+				console.error("Error while including", src, e);
+				cb(e);
+			}
 		}
 	};
 });
