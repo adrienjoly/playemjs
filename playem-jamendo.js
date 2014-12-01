@@ -67,6 +67,7 @@ function JamendoPlayer(){
 		window[callbackFct] = function(data) {
 			delete window[callbackFct];
 			cb(!data || !data.results || !data.results.length ? null : {
+				id: data.results[0].id,
 				img: data.results[0].album_image,
 				title: data.results[0].artist_name + ' - ' + data.results[0].name,
 			});

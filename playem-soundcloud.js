@@ -95,13 +95,14 @@ function SoundCloudPlayer(){
 		if (/(soundcloud\.com)\/player\/\?.*url\=(.+)/.test(url))
 			url = decodeURIComponent(RegExp.lastParen);
 		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url))
-			return RegExp.lastParen; //url.substr(url.lastIndexOf("/")+1);
+			return RegExp.lastParen.split("/").length === 3 && RegExp.lastParen;
 		else if (/snd\.sc\/([\w-_]+)/.test(url))
 			return RegExp.lastMatch;
 		// => returns:
 		// - /tracks/<number> (ready to stream)
 		// - or /<artistname>/<tracktitle>
 		// - or snd.sc/<hash>
+		// or null / false (if not a track)
 	}
 
 	function fetchMetadata(url, id, cb){
