@@ -107,7 +107,6 @@ function SoundCloudPlayer(){
 	function fetchMetadata(url, id, cb){
 		var embed = {
 			id: id,
-			img: urlPrefix + "/images/cover-soundcloud.jpg",
 		};
 		loader.loadJSON('https://api.soundcloud.com/resolve.json?url='+encodeURIComponent(url)+'&client_id='+SOUNDCLOUD_CLIENT_ID/*+'&callback=' + callbackFct*/, function(data) {
 			if (data && data.kind == "track") {
