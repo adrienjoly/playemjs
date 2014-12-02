@@ -64,14 +64,13 @@ loader = new (function Loader() {
 		},
 		loadJSONP: function(src, cb){
 			var callbackFct = "__loadjsonp__" + (counter++);
-			window[callbackFct] = function(data) {
-				//console.log("loadJSONP callback:", callbackFct);
+			window[callbackFct] = function(){
+				cb.apply(window, arguments);
 				delete window[callbackFct];
-				cb(data);
 			};
 			this.includeJS(src + (src.indexOf("?") == -1 ? "?" : "&") + "callback=" + callbackFct, function(){
 				// if http request fails (e.g. 404 error / no content)
-				setTimeout(window[callbackFct], 100);
+				setTimeout(window[callbackFct], 10);
 			});
 		},
 	};

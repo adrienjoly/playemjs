@@ -1,17 +1,5 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
-window.$ = window.$ || function(){return window.$};
-$.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
-$.getJSON = $.getJSON || function(url, cb){
-  var cbName = "_cb_" + Date.now();
-  url = url.replace("callback=?", "callback=" + cbName);
-  window[cbName] = function(){
-    cb.apply(window, arguments);
-    delete window[cbName];
-  };
-  loader.includeJS(url);
-};
-
 function SoundCloudPlayer(){
 	return SoundCloudPlayer.super_.apply(this, arguments);
 };
@@ -29,7 +17,8 @@ function SoundCloudPlayer(){
 			"ontimeout",
 			"onfailure",
 			"ondataerror"
-		];
+		],
+		RESOLVE_URL = "https://api.soundcloud.com/resolve.json";
 
 	function Player(eventHandlers, embedVars) {  
 		this.label = 'SoundCloud';
@@ -41,8 +30,10 @@ function SoundCloudPlayer(){
 		this.trackInfo = {};
 		this.soundOptions = {autoPlay:true};
 
+		RESOLVE_URL += "?client_id=" + SOUNDCLOUD_CLIENT_ID;
+
 		var that = this;
-		$.getScript("https://connect.soundcloud.com/sdk.js", function() {
+		loader.includeJS("https://connect.soundcloud.com/sdk.js", function() {
 			SC.initialize({client_id: SOUNDCLOUD_CLIENT_ID});
 			for (var i in EVENT_MAP)
 				(function(i) {
@@ -94,8 +85,10 @@ function SoundCloudPlayer(){
 	Player.prototype.getEid = function(url) {
 		if (/(soundcloud\.com)\/player\/\?.*url\=(.+)/.test(url))
 			url = decodeURIComponent(RegExp.lastParen);
-		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url))
-			return RegExp.lastParen.split("/").length === 3 && RegExp.lastParen;
+		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url)) {
+			var parts = RegExp.lastParen.split("/");
+			return parts.length === 3 && /*parts[1] !== "pages" &&*/ RegExp.lastParen;
+		}
 		else if (/snd\.sc\/([\w-_]+)/.test(url))
 			return RegExp.lastMatch;
 		// => returns:
@@ -105,9 +98,15 @@ function SoundCloudPlayer(){
 		// or null / false (if not a track)
 	}
 
-	function fetchMetadata(url, id, cb){
+	function fetchMetadata(url, cb){
+		loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent(url), cb);
+	}
+
+	Player.prototype.fetchMetadata = function(url, cb){
 		var embed = {};
-		loader.loadJSON('https://api.soundcloud.com/resolve.json?url='+encodeURIComponent(url)+'&client_id='+SOUNDCLOUD_CLIENT_ID/*+'&callback=' + callbackFct*/, function(data) {
+		if (!this.getEid(url))
+			return cb();
+		fetchMetadata(url, function(data) {
 			if (data && data.kind == "track") {
 				embed.id = "" + data.id;
 				embed.img = data.artwork_url || embed.img;
@@ -117,13 +116,6 @@ function SoundCloudPlayer(){
 			}
 			cb(embed);
 		});
-	}
-
-	Player.prototype.fetchMetadata = function(url, cb){
-		var id = this.getEid(url);
-		if (!id)
-			return cb();
-		fetchMetadata(url, id, cb);
 	}
 
 	Player.prototype.getTrackPosition = function(callback) {
@@ -156,7 +148,7 @@ function SoundCloudPlayer(){
 			return playId(id);
 		id = "http://" + (!id.indexOf("/") ? "soundcloud.com" : "") + id;
 		console.log("sc resolve url:", id);
-		$.getJSON("https://api.soundcloud.com/resolve.json?client_id=" + SOUNDCLOUD_CLIENT_ID + "&url=" + encodeURIComponent(id) + "&callback=?", function(data){
+		fetchMetadata(id, function(data){
 			playId(data.id);
 		});
 	}
