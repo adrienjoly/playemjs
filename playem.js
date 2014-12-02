@@ -15,11 +15,11 @@ if (undefined == window.console)
 loader = new (function Loader() {
 	var FINAL_STATES = {"loaded": true, "complete": true, 4: true},
 		head = document.getElementsByTagName("head")[0],
-		pending = {};
+		pending = {}, counter = 0;
 	return {
 		loadJSON: function(src, cb){
-			if (pending[src]) return;
-			pending[src] = true;
+			//if (pending[src]) return cb && cb();
+			//pending[src] = true;
 			// cross-domain ajax call
 			var xdr = new XMLHttpRequest();
 			xdr.onload = function() {
@@ -28,20 +28,30 @@ loader = new (function Loader() {
 					data = JSON.parse(data);
 				} catch(e){};
 				cb(data);
-				delete pending[src];
+				//delete pending[src];
 			}
 			xdr.open("GET", src, true);
 			xdr.send();
 		},
 		includeJS: function(src, cb){
-			if (pending[src]) return;
+			if (pending[src]) return cb && cb();
 			pending[src] = true;
 			var inc = document.createElement("script");
-			inc.onload = inc.onreadystatechange = function() {
-				if (pending[src] && (!inc.readyState || FINAL_STATES[inc.readyState])) {
-					cb && cb();
-					delete pending[src];
-				}
+			//inc.async = "async";
+			inc.onload = function(){
+				if (!pending[src])
+					return;
+				delete pending[src];
+				cb && cb();
+				delete inc.onload;
+			};
+			inc.onerror = function(e){
+				e.preventDefault();
+				inc.onload(e);
+			};
+			inc.onreadystatechange = function() {
+				if (!inc.readyState || FINAL_STATES[inc.readyState])
+					inc.onload();
 			};
 			try {
 				inc.src = src;
@@ -51,7 +61,19 @@ loader = new (function Loader() {
 				console.error("Error while including", src, e);
 				cb(e);
 			}
-		}
+		},
+		loadJSONP: function(src, cb){
+			var callbackFct = "__loadjsonp__" + (counter++);
+			window[callbackFct] = function(data) {
+				//console.log("loadJSONP callback:", callbackFct);
+				delete window[callbackFct];
+				cb(data);
+			};
+			this.includeJS(src + (src.indexOf("?") == -1 ? "?" : "&") + "callback=" + callbackFct, function(){
+				// if http request fails (e.g. 404 error / no content)
+				setTimeout(window[callbackFct], 100);
+			});
+		},
 	};
 });
 
