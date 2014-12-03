@@ -1,3 +1,12 @@
+# Deezer tracks
+
+/dz/73414915
+deezer.com/track/73414915
+//deezer.com/track/73414915
+http://www.deezer.com/track/73414915
+https://www.deezer.com/track/73414915
+https://www.deezer.com/track/73414915?test=1&pouet=0
+
 # MP3 tracks
 
 http://www.tonycuffe.com/mp3/tail%20toddle.mp3

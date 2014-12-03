@@ -19,6 +19,7 @@
 			new JamendoPlayer({}),
 			new BandcampPlayer({}),
 			new AudioFilePlayer({}),
+			new DeezerPlayer({}),
 		];
 	function reset(){
 		clearTimeout(timeout);
