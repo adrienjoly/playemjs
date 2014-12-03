@@ -29,21 +29,20 @@ http://theweakend.com/track/the-weakend-ft-chris-daddy-dave
 
 /sc/manisnotabird/bringer-of-rain-and-seed-good
 /sc/manisnotabird/bringer-of-rain-and-seed-good#http://soundcloud.com/tracks/53156756
+soundcloud.com/manisnotabird/sounds-of-spring # canonical url
+//soundcloud.com/manisnotabird/sounds-of-spring # canonical url with slashes
 https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good
 http://soundcloud.com/tracks/53156756
 http://snd.sc/GEOIEA # short url
-
-http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958
+http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958 # embed url
+//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true
 http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958&auto_play=false&show_artwork=false&color=00b4ff
-
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fdualtone%2Fshovels-rope-evil&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpolyvinyl-records%2Fgenerationals-black-lemon-1&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineusa%2Finfestation&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-records%2Fhome-leave-the-lights-on&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
-
 http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
-https://soundcloud.com/wildbelle/keep-you
 
 # Soundcloud sets (not supported)
 

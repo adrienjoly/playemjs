@@ -110,7 +110,7 @@ function SoundCloudPlayer(){
 		if (trackId)
 			loader.loadJSONP("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params + "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
 		else
-			loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent(url), cb);
+			loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
 	}
 
 	Player.prototype.fetchMetadata = function(url, cb){
