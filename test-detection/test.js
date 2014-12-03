@@ -16,6 +16,7 @@
 			new SoundCloudPlayer({}),
 			new VimeoPlayer({}, opts),
 			new DailymotionPlayer({}, opts),
+			new JamendoPlayer({}),
 			new BandcampPlayer({}),
 		];
 	function reset(){

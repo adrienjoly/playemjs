@@ -59,7 +59,7 @@ function JamendoPlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		return /jamendo.com\/.*track\/(\d+)/.test(url) ? RegExp.$1 : null;
+		return /jamendo.com\/.*track\/(\d+)/.test(url) || /\/ja\/(\d+)/.test(url) ? RegExp.$1 : null;
 	}
 
 	function fetchMetadata(url, id, cb){

@@ -1,3 +1,12 @@
+# Jamendo tracks
+
+/ja/1115147
+jamendo.com/track/1115147
+//jamendo.com/track/1115147
+http://jamendo.com/track/1115147
+https://jamendo.com/track/1115147
+//www.jamendo.com/en/track/1115147/get-momentum
+
 # Dailymotion tracks
 
 /dm/x142x6e_jean-jean-love_music
