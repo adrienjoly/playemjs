@@ -83,7 +83,7 @@ function SoundCloudPlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		if (/(soundcloud\.com)\/player\/\?.*url\=(.+)/.test(url))
+		if (/(soundcloud\.com)\/player\?.*url\=(.+)/.test(url))
 			url = decodeURIComponent(RegExp.lastParen);
 		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url)) {
 			var parts = RegExp.lastParen.split("/");
