@@ -18,6 +18,7 @@
 			new DailymotionPlayer({}, opts),
 			new JamendoPlayer({}),
 			new BandcampPlayer({}),
+			new AudioFilePlayer({}),
 		];
 	function reset(){
 		clearTimeout(timeout);
