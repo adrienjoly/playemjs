@@ -8,9 +8,7 @@ function YoutubePlayer(){
 
 (function() {
 	//includeJS("https://www.youtube.com/player_api");
-	var regex = // /https?\:\/\/(?:www\.)?youtu(?:\.)?be(?:\.com)?\/(?:(?:.*)?[\?\&]v=|v\/|embed\/|\/)?([a-zA-Z0-9_\-]+)/; //^https?\:\/\/(?:www\.)?youtube\.com\/[a-z]+\/([a-zA-Z0-9\-_]+)/
-			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/,
-		EVENT_MAP = {
+	var EVENT_MAP = {
 			/*YT.PlayerState.ENDED*/ 0: "onEnded",
 			/*YT.PlayerState.PLAYING*/ 1: "onPlaying",
 			/*YT.PlayerState.PAUSED*/ 2: "onPaused"
@@ -124,7 +122,11 @@ function YoutubePlayer(){
 	}
 
 	Player.prototype.getEid = function(url) {
-		if (regex.test(url) || /\/yt\/([a-zA-Z0-9_\-]+)/.test(url) || /youtube\.com\/attribution_link\?.*v\%3D([^ \%]+)/.test(url))
+		if (
+			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/.test(url)
+			|| /\/yt\/([a-zA-Z0-9_\-]+)/.test(url)
+			|| /youtube\.com\/attribution_link\?.*v\%3D([^ \%]+)/.test(url)
+		)
 			return RegExp.lastParen;
 	}
 
