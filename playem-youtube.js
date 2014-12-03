@@ -149,7 +149,12 @@ function YoutubePlayer(){
 		fetchMetadata(id, cb);
 	}
 
+	function cleanId(id){
+		return /([a-zA-Z0-9_\-]+)/.test(id) && RegExp.lastParen;
+	}
+
 	Player.prototype.play = function(id) {
+		id = cleanId(id);
 		//console.log("PLAY -> YoutubePlayer", this.currentId, id);
 		if (!this.currentId || this.currentId != id) {
 			this.embedVars.videoId = id;
