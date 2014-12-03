@@ -82,9 +82,12 @@ function SoundCloudPlayer(){
 		}
 	}
 
+	function unwrapUrl(url){
+		return /(soundcloud\.com)\/player\/?\?.*url\=([^\&\?]+)/.test(url) ? decodeURIComponent(RegExp.lastParen) : url;
+	}
+
 	Player.prototype.getEid = function(url) {
-		if (/(soundcloud\.com)\/player\?.*url\=(.+)/.test(url))
-			url = decodeURIComponent(RegExp.lastParen);
+		url = unwrapUrl(url);
 		if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url)) {
 			var parts = RegExp.lastParen.split("/");
 			return parts.length === 3 && /*parts[1] !== "pages" &&*/ RegExp.lastParen;
@@ -99,7 +102,15 @@ function SoundCloudPlayer(){
 	}
 
 	function fetchMetadata(url, cb){
-		loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent(url), cb);
+		var splitted, params, trackId;
+		url = unwrapUrl(url);
+		splitted = url.split("?");
+		params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
+		trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
+		if (trackId)
+			loader.loadJSONP("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params + "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
+		else
+			loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent(url), cb);
 	}
 
 	Player.prototype.fetchMetadata = function(url, cb){
@@ -149,7 +160,7 @@ function SoundCloudPlayer(){
 		id = "http://" + (!id.indexOf("/") ? "soundcloud.com" : "") + id;
 		console.log("sc resolve url:", id);
 		fetchMetadata(id, function(data){
-			playId(data.id);
+			playId((data || {}).id);
 		});
 	}
 
