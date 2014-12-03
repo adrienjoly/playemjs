@@ -128,7 +128,7 @@ function HtmlTable(id, rows, columns){
 	}
 }
 
-window.onload = function(){
+(function(){
 	var detectors = [
 		{ name: "getEid()",
 		  fct: PlayemWrapper.detect
@@ -162,4 +162,4 @@ window.onload = function(){
 				console.log("done.");
 		});
 	});
-}
+})();
