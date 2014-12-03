@@ -1,3 +1,12 @@
+# Dailymotion tracks
+
+/dm/x142x6e_jean-jean-love_music
+dailymotion.com/video/x142x6e_jean-jean-love_music
+//www.dailymotion.com/video/x142x6e_jean-jean-love_music
+http://www.dailymotion.com/video/x142x6e_jean-jean-love_music
+https://www.dailymotion.com/video/x142x6e_jean-jean-love_music
+https://www.dailymotion.com/video/x142x6e_jean-jean-love_music?test=1&pouet=0
+
 # Youtube tracks
 
 /yt/o4LBGitcvi8

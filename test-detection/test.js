@@ -5,6 +5,9 @@
 
  var PlayemWrapper = new (function(){
 	window.SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4";
+	window.DEEZER_APP_ID = 125765;
+	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
+	window.JAMENDO_CLIENT_ID = "c9cb2a0a";	
 	var PLAY_TIMEOUT = 6000,
 		timeout,
 		opts = { playerContainer: document.getElementById("videocontainer") },
@@ -12,6 +15,7 @@
 			new YoutubePlayer({}, opts),
 			new SoundCloudPlayer({}),
 			new VimeoPlayer({}, opts),
+			new DailymotionPlayer({}, opts),
 			new BandcampPlayer({}),
 		];
 	function reset(){
