@@ -17,14 +17,6 @@ http://www.youtube.com/watch?v=rGKfrgqWcv0&feature=share
 www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
 //www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare
 
-# Bandcamp tracks
-
-/bc/mambobertier/tokyo-tripot-2/3049024530
-/bc/mambobertier/tokyo-tripot-2/3049024530#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
-https://mambobertier.bandcamp.com/track/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
-https://manisnotabird.bandcamp.com/track/the-sounds-of-spring
-http://theweakend.com/track/the-weakend-ft-chris-daddy-dave
-
 # Soundcloud tracks
 
 /sc/manisnotabird/bringer-of-rain-and-seed-good
@@ -48,3 +40,20 @@ http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, accord
 
 https://soundcloud.com/bshq/sets/cory-branan-the-no-hit
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbshq%2Fsets%2Fcory-branan-the-no-hit&auto_play=false&show_comments=false&color=ff7e00
+
+# Vimeo tracks
+
+/vi/46314116
+vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
+//vimeo.com/46314116
+http://vimeo.com/46314116
+http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+
+# Bandcamp tracks
+
+/bc/mambobertier/tokyo-tripot-2/3049024530
+/bc/mambobertier/tokyo-tripot-2/3049024530#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
+https://mambobertier.bandcamp.com/track/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
+https://manisnotabird.bandcamp.com/track/the-sounds-of-spring
+http://theweakend.com/track/the-weakend-ft-chris-daddy-dave

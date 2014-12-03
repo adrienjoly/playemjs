@@ -7,10 +7,12 @@
 	window.SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4";
 	var PLAY_TIMEOUT = 6000,
 		timeout,
+		opts = { playerContainer: document.getElementById("videocontainer") },
 		players = [ // defined in /js/playem-all.js (loaded in index.html)
-			new BandcampPlayer({}),
+			new YoutubePlayer({}, opts),
 			new SoundCloudPlayer({}),
-			new YoutubePlayer({}, {playerContainer: document.getElementById("videocontainer")}),
+			new VimeoPlayer({}, opts),
+			new BandcampPlayer({}),
 		];
 	function reset(){
 		clearTimeout(timeout);
