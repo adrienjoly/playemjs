@@ -1,3 +1,13 @@
+# Spotify tracks
+
+/sp/63wxaMojZaS69nYttu7Fh1
+spotify.com/track/63wxaMojZaS69nYttu7Fh1
+open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+//open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+http://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1?test=1&pouet=0
+
 # Deezer tracks
 
 /dz/73414915

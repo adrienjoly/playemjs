@@ -20,6 +20,7 @@
 			new BandcampPlayer({}),
 			new AudioFilePlayer({}),
 			new DeezerPlayer({}),
+			new SpotifyPlayer({}),
 		];
 	function reset(){
 		clearTimeout(timeout);
