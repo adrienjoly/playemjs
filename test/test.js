@@ -3,6 +3,8 @@
  * @author adrienjoly
  **/
 
+var URL_PREFIX = "../../playem-";
+
 function forEachAsync(fcts, cb) {
 	fcts = fcts || [];
 	(function next(){
@@ -51,7 +53,7 @@ function PlayemLoader() {
 				if (window[pl+"Player"]) // check that class exists
 					initPlayer();
 				else
-					loader.includeJS("/playem-"+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
+					loader.includeJS(URL_PREFIX+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
 			};
 		}
 		forEachAsync(players.map(makePlayerLoader), function(){
