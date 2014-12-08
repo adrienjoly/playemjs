@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+
+<script src="../../lib/soundmanager2-nodebug-jsmin.js"></script>
+<!--<script src="../../lib/soundmanager2-jsmin.js"></script>-->
+<script>
+	soundManager.setup({
+		url: "/lib/",
+		flashVersion: 9,
+		onready: function() {
+			soundManager.isReady=true;
+		}
+	});
+</script>
+
+<script src="../test.js"></script>
+<script src="../../playem.js"></script>
+<!--<script src="../../dist/playem-min.js"></script>-->
+
+<style>
+	.info {
+		font-family: arial;
+		font-weight: bold;
+		font-size: 10px;
+	}
+	.info span, .info div {
+		margin-left: 10px;
+		font-weight: normal;
+	}
+</style>
+<div class="info">
+	<p>current track:<span id="progress"></span></p>
+	<p>url:<span id="trackUrl"></span></p>
+	<p>player+id:<span id="playerName"></span>&nbsp;<span id="trackId"></span></p>
+	<p>current test:<span id="testName"></span></p>
+	<p>duration:<span id="duration"></span></p>
+	<p>position:<span id="position"></span></p>
+</div>
+
+<div id="container"></div>
+
+<div class="info">
+	<p>events:</p>
+	<div id="eventLog"></div>
+</p>
+
+<script src="test-track.js"></script>
+
+</body>
+</html>

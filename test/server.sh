@@ -5,5 +5,5 @@ echo -n -e "\033]0;playemJS test server\007"
 cd `dirname "$0"`
 cd ..
 
-( sleep 1; open http://localhost:8000/test-detection; ) &
+( sleep 1; open http://localhost:8000/test; ) &
 python -m SimpleHTTPServer

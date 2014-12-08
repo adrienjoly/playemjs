@@ -1,42 +1,24 @@
 new PlayemLoader().loadAllPlayers(function(playem){
 
 	var tracks = [
-		// SPOTIFY
-		"//open.spotify.com/track/63wxaMojZaS69nYttu7Fh1",
-		// JAMENDO
-		"//www.jamendo.com/en/track/1115147/get-momentum",
-		"http://jamendo.com/track/1115147",
-		// VIMEO
-		"//vimeo.com/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
-		"http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0",
-		"/vi/46314116", // whyd eId
-		// BANDCAMP
-		"http://manisnotabird.bandcamp.com/track/the-sound-of-spring",
-		"//manisnotabird.bandcamp.com/track/the-sound-of-spring",
-		"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // whyd eId
-		// SOUNDCLOUD
-		"//soundcloud.com/manisnotabird/sounds-of-spring", // canonical url
-		"//snd.sc/GEOIEA", // short url
-		"//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true", // embed url
-		"/sc/manisnotabird/bringer-of-rain-and-seed-good#https://api.soundcloud.com/tracks/71480483", // whyd eId
 		// YOUTUBE
-		"//www.youtube.com/watch?v=iL3IYGgqaNU", // man is not a bird @ batofar
-		"//youtube.com/watch?v=femWm-FtfXs",
-		"//youtube.com/v/ifAtvI48R_0",
-		"//youtu.be/l1TcJKFB0sY", // short url
-		"//www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare",
-		"/yt/l1TcJKFB0sY", // whyd eId
+		"/yt/l1TcJKFB0sY",
+		// SOUNDCLOUD
+		"/sc/manisnotabird/bringer-of-rain-and-seed-good",
+		// VIMEO
+		"/vi/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
+		// DAILYMOTION
+		"/dm/x142x6e_jean-jean-love_music",
+		// JAMENDO
+		"/ja/1115147",
+		// BANDCAMP
+		"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // whyd eId
 		// MP3
 		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
-		"https://archive.org/download/testmp3testfile/mpthreetest.mp3", // used to not pass (too short?)
-		// DAILYMOTION
-		"http://www.dailymotion.com/video/x142x6e_jean-jean-love_music",
-		"//www.dailymotion.com/video/x142x6e_jean-jean-love_music",
-		"/dm/x142x6e_jean-jean-love_music", // whyd eId
 		// DEEZER
-		"http://www.deezer.com/track/73414915",
-		"//deezer.com/track/73414915",
-		"/dz/73414915", // whyd eId
+		"/dz/73414915",
+		// SPOTIFY
+		"/sp/63wxaMojZaS69nYttu7Fh1",
 	];
 
 	var nextIndex = 0;

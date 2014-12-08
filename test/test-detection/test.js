@@ -3,14 +3,11 @@
  * @author adrienjoly
  **/
 
- var PlayemWrapper = new (function(){
-	window.SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4";
-	window.DEEZER_APP_ID = 125765;
-	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
-	window.JAMENDO_CLIENT_ID = "c9cb2a0a";	
+// TODO: some parts of this class are redundant with PlayemLoader from ../test.js
+function PlayemWrapper(){
 	var PLAY_TIMEOUT = 6000,
 		timeout,
-		opts = { playerContainer: document.getElementById("videocontainer") },
+		opts = { playerContainer: document.getElementById("container") },
 		players = [ // defined in /js/playem-all.js (loaded in index.html)
 			new YoutubePlayer({}, opts),
 			new SoundCloudPlayer({}),
@@ -77,7 +74,7 @@
 			player.play(id);
 		});
 	};
-})();
+}
 
 function readFileLines(fileUrl, cb){
 	$.get(fileUrl, function(txt){
@@ -131,16 +128,18 @@ function HtmlTable(id, rows, columns){
 	}
 }
 
-(function(){
+//(function(){
+new PlayemLoader().loadAllPlayers(function(playem){
+	var playemWrapper = new PlayemWrapper();
 	var detectors = [
 		{ name: "getEid()",
-		  fct: PlayemWrapper.detect
+		  fct: playemWrapper.detect
 		},
 		{ name: "fetchMetadata()",
-		  fct: PlayemWrapper.fetch
+		  fct: playemWrapper.fetch
 		},
 		{ name: "play()",
-		  fct: PlayemWrapper.play
+		  fct: playemWrapper.play
 		},
 	];
 	readFileLines("urls.txt", function parseFileLines(lines){
@@ -165,4 +164,5 @@ function HtmlTable(id, rows, columns){
 				console.log("done.");
 		});
 	});
-})();
+});
+//})();

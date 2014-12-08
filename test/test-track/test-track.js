@@ -4,8 +4,8 @@ new PlayemLoader().loadAllPlayers(function(playem){
 	var eventLogger = new PlayemLogger().listenTo(playem);
 
 	playem.setPref("loop", false);
-	//playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb"); // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
-	playem.addTrackByUrl("http://manisnotabird.bandcamp.com/track/the-sound-of-spring");
+	playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb"); // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
+	//playem.addTrackByUrl("http://manisnotabird.bandcamp.com/track/the-sound-of-spring");
 	playem.play();
 
 	runner.addTests({
@@ -15,8 +15,8 @@ new PlayemLoader().loadAllPlayers(function(playem){
 				!done && cb(res);
 				done = true;
 			}
-			eventLogger.once("onBuffering", singleCb, 9000);
-			eventLogger.once("onPlay", singleCb, 10000);
+			eventLogger.until("onBuffering", singleCb, 9000);
+			eventLogger.until("onPlay", singleCb, 10000);
 		}
 	});
 

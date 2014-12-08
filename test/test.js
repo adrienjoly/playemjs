@@ -1,5 +1,5 @@
 /**
- * tests for playemjs
+ * common test helpers for playemjs
  * @author adrienjoly
  **/
 
@@ -15,6 +15,11 @@ function forEachAsync(fcts, cb) {
 }
 
 function PlayemLoader() {
+
+	window.SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4";
+	window.DEEZER_APP_ID = 125765;
+	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
+	window.JAMENDO_CLIENT_ID = "c9cb2a0a";	
 
 	var DEFAULT_PLAYERS = [
 		"Youtube",
@@ -46,7 +51,7 @@ function PlayemLoader() {
 				if (window[pl+"Player"]) // check that class exists
 					initPlayer();
 				else
-					loader.includeJS("../playem-"+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
+					loader.includeJS("/playem-"+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
 			};
 		}
 		forEachAsync(players.map(makePlayerLoader), function(){
