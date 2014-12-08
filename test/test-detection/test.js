@@ -77,9 +77,8 @@ function PlayemWrapper(){
 }
 
 function readFileLines(fileUrl, cb){
-	$.get(fileUrl, function(txt){
-		cb(txt.split("\n"));
-	});
+	var codeEl = document.getElementById("urls").contentDocument.childNodes[0];
+	cb((codeEl.innerText || codeEl.textContent).split("\n"));
 }
 
 function detectStream(url, detectors, handler){
