@@ -348,7 +348,9 @@ function Playem(playemPrefs) {
 		exportedMethods = {
 			addPlayer: function (playerClass, vars) {
 				playersToLoad++;
-				players.push(new playerClass(createEventHandlers(this), vars));
+				var player = new playerClass(createEventHandlers(this, vars));
+				players.push(player);
+				return player;
 			},
 			getQueue: function() {
 				return trackList;
