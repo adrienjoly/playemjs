@@ -348,7 +348,7 @@ function Playem(playemPrefs) {
 		exportedMethods = {
 			addPlayer: function (playerClass, vars) {
 				playersToLoad++;
-				var player = new playerClass(createEventHandlers(this, vars));
+				var player = new playerClass(createEventHandlers(this, vars), vars);
 				players.push(player);
 				return player;
 			},
