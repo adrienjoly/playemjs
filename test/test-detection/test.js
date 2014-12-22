@@ -127,7 +127,7 @@ function HtmlTable(id, rows, columns){
 	}
 }
 
-//(function(){
+(function(){
 new PlayemLoader().loadAllPlayers(function(playem){
 	var playemWrapper = new PlayemWrapper();
 	var detectors = [
@@ -164,4 +164,4 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		});
 	});
 });
-//})();
+})();
