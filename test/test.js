@@ -43,7 +43,7 @@ function PlayemLoader() {
 		playerContainer: document.getElementById("container")
 	};
 
-	var playem;
+	var playem, whenReadyQueue = [];
 
 	function loadSoundManager(cb){
 		if (window.soundManager)
@@ -99,14 +99,31 @@ function PlayemLoader() {
 			};
 		}
 		loadPlayem(function(){
-			forEachAsync(players.map(makePlayerLoader), cb);
+			forEachAsync(players.map(makePlayerLoader), function(){
+				playem.on("onReady", function(){
+					whenReadyQueue = whenReadyQueue || [];
+					for(var i in whenReadyQueue)
+						whenReadyQueue[i](playem);
+					whenReadyQueue = null;
+				});
+				cb(playem);
+			});
 		});
 	}
 
 	this.loadAllPlayers = function(cb){
 		load(DEFAULT_PLAYERS, DEFAULT_PLAYER_PARAMS, function(){
-			cb(playem);
+			if (cb)
+				cb(playem);
 		});
+		return this;
+	}
+
+	this.whenReady = function(cb){
+		if (whenReadyQueue)
+			whenReadyQueue.push(cb);
+		else
+			cb(playem);
 		return this;
 	}
 }

@@ -126,7 +126,7 @@ function HtmlTable(id, rows, columns){
 	}
 }
 
-new PlayemLoader().loadAllPlayers(function(playem){
+new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	var toHide = document.getElementById("toHide");
 	toHide.parentElement.removeChild(toHide);
 	var playemWrapper = new PlayemWrapper(playem);
