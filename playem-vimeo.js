@@ -166,7 +166,8 @@ function VimeoPlayer(){
 	}
 
 	Player.prototype.stop = function() {
-		this.post("unload");
+		if (this.element)
+			this.post("unload");
 		if ((this.element || {}).parentNode)
 			this.element.parentNode.removeChild(this.element);
 		if ((this.otherElement || {}).parentNode)

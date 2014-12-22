@@ -114,7 +114,7 @@ function SpotifyPlayer(){
 	}
 
 	Player.prototype.stop = function() {
-		this.widget.stop();
+		this.widget && this.widget.stop();
 	}
 
 	Player.prototype.setVolume = function(vol) {
