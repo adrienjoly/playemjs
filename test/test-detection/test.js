@@ -55,7 +55,7 @@
 			reset();
 			player.setTrackPosition(20);
 			setTimeout(function(){
-				player.stop();
+				playem.stop();
 				cb(true);
 			}, PLAY_DURATION);
 		}
