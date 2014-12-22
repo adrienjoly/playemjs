@@ -6,6 +6,7 @@
 // TODO: some parts of this class are redundant with PlayemLoader from ../test.js
 function PlayemWrapper(){
 	var PLAY_TIMEOUT = 6000,
+		METADATA_TIMEOUT = 6000,
 		timeout,
 		opts = { playerContainer: document.getElementById("container") },
 		players = [ // defined in /js/playem-all.js (loaded in index.html)
@@ -43,9 +44,14 @@ function PlayemWrapper(){
 		var player = getPlayer(url);
 		if (!player || !player.fetchMetadata)
 			return cb();
-		player.fetchMetadata(url, function(track){
-			cb((track || {}).id);
-		});
+		timeout = setTimeout(metaCallback, METADATA_TIMEOUT);
+		function metaCallback(track){
+			if (!timeout) return;
+			clearTimeout(timeout);
+			timeout = null;
+			cb((track || {}).id);				
+		}
+		player.fetchMetadata(url, metaCallback);
 	};
 	this.play = function(url, cb){
 		reset();
