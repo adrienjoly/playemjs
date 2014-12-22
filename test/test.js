@@ -3,7 +3,7 @@
  * @author adrienjoly
  **/
 
-var URL_PREFIX = "../../playem-";
+var URL_PREFIX = "../../playem";
 
 function forEachAsync(fcts, cb) {
 	fcts = fcts || [];
@@ -42,7 +42,7 @@ function PlayemLoader() {
 	};
 
 	function load(players, playerParams, cb){
-		var playem = new Playem();
+		var playem;
 		function makePlayerLoader(pl){
 			return function(next) {
 				function initPlayer(){
@@ -53,12 +53,25 @@ function PlayemLoader() {
 				if (window[pl+"Player"]) // check that class exists
 					initPlayer();
 				else
-					loader.includeJS(URL_PREFIX+pl.toLowerCase()+".js?_t="+Date.now(), initPlayer);
+					loader.includeJS(URL_PREFIX + "-" + pl.toLowerCase() + ".js?_t=" + Date.now(), initPlayer);
 			};
 		}
-		forEachAsync(players.map(makePlayerLoader), function(){
-			cb(playem);
-		});
+		if (!window.Playem) {
+			console.log("Loading Playem.js...");
+			var inc = document.createElement("script");
+			inc.src = URL_PREFIX + ".js";
+			document.getElementsByTagName("head")[0].appendChild(inc);
+		}
+		var loadInt = setInterval(function(){
+			if (!window.Playem)
+				return;
+			else
+				clearInterval(loadInt);
+			playem = new Playem();
+			forEachAsync(players.map(makePlayerLoader), function(){
+				cb(playem);
+			});
+		}, 200);
 	}
 
 	this.loadAllPlayers = function(cb){
