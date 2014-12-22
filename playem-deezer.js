@@ -109,6 +109,8 @@ function DeezerPlayer(){
   
   //============================================================================
   Player.prototype.stop = function() {
+    if (!this.isReady)
+      return;
     if (this.sound) {
       this.sound.stop();
       this.sound.destruct();
@@ -207,10 +209,11 @@ function DeezerPlayer(){
       autoLoad: true,
       autoPlay: true,
       whileplaying: function() {
-        self.currentTrack = {
-          position: self.sound.position / 1000,
-          duration: self.sound.duration / 1000
-        };
+        if (self.sound)
+          self.currentTrack = {
+            position: self.sound.position / 1000,
+            duration: self.sound.duration / 1000
+          };
         if (self.eventHandlers.onTrackInfo)
           self.eventHandlers.onTrackInfo(self.currentTrack);
       },
