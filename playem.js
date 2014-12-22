@@ -354,6 +354,9 @@ function Playem(playemPrefs) {
 				players.push(player);
 				return player;
 			},
+			getPlayers: function(){
+				return players;
+			},
 			getQueue: function() {
 				return trackList;
 			},
