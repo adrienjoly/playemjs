@@ -127,8 +127,9 @@ function HtmlTable(id, rows, columns){
 	}
 }
 
-(function(){
 new PlayemLoader().loadAllPlayers(function(playem){
+	var toHide = document.getElementById("toHide");
+	toHide.parentElement.removeChild(toHide);
 	var playemWrapper = new PlayemWrapper();
 	var detectors = [
 		{ name: "getEid()",
@@ -164,4 +165,3 @@ new PlayemLoader().loadAllPlayers(function(playem){
 		});
 	});
 });
-})();
