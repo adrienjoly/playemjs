@@ -205,11 +205,12 @@ function Playem(playemPrefs) {
 		function stopTrack() {
 			if (progress)
 				clearInterval(progress);
-			for (var i in players)
-				try {
-					(players[i].stop || players[i].pause)();
-				}
-				catch(e) {}
+			for (var i in players) {
+				if (players[i].stop)
+					players[i].stop();
+				else
+					players[i].pause();
+			}
 		}
 
 		function playTrack(track) {
