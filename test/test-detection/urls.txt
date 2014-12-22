@@ -74,6 +74,7 @@ www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
 
 # Soundcloud tracks
 
+http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
 /sc/manisnotabird/bringer-of-rain-and-seed-good
 /sc/manisnotabird/bringer-of-rain-and-seed-good#http://soundcloud.com/tracks/53156756
 soundcloud.com/manisnotabird/sounds-of-spring # canonical url
