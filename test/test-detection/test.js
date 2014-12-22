@@ -1,25 +1,14 @@
 /**
- * tests for playemjs
+ * playemjs track detection tests
  * @author adrienjoly
  **/
 
-// TODO: some parts of this class are redundant with PlayemLoader from ../test.js
-function PlayemWrapper(){
-	var PLAY_TIMEOUT = 6000,
-		METADATA_TIMEOUT = 6000,
+ function PlayemWrapper(playem){
+	var PLAY_TIMEOUT = 2000,
+		METADATA_TIMEOUT = 2000,
+		PLAY_DURATION = 10,
 		timeout,
-		opts = { playerContainer: document.getElementById("container") },
-		players = [ // defined in /js/playem-all.js (loaded in index.html)
-			new YoutubePlayer({}, opts),
-			new SoundCloudPlayer({}),
-			new VimeoPlayer({}, opts),
-			new DailymotionPlayer({}, opts),
-			new JamendoPlayer({}),
-			new BandcampPlayer({}),
-			new AudioFilePlayer({}),
-			new DeezerPlayer({}),
-			new SpotifyPlayer({}),
-		];
+		players = playem.getPlayers();
 	function reset(){
 		clearTimeout(timeout);
 		for (var i in players) {
@@ -68,11 +57,14 @@ function PlayemWrapper(){
 			setTimeout(function(){
 				player.stop();
 				cb(true);
-			}, 1000);
+			}, PLAY_DURATION);
 		}
-		player.eventHandlers.onError = function(player){
+		player.eventHandlers.onError = function(player, err){
 			reset();
-			console.log(player ? "error" : "timeout");
+			if (player)
+				console.warn("player error:", err);
+			else
+				console.warn("player timeout");
 			setTimeout(cb);
 		}
 		window.soundManager.onready(function(){
@@ -101,6 +93,7 @@ function detectStream(url, detectors, handler){
 }
 
 function detectStreams(urls, detectors, handler){
+	var number = 1;
 	(function nextUrl(i){
 		if (i == urls.length)
 			return handler();
@@ -108,7 +101,7 @@ function detectStreams(urls, detectors, handler){
 		if (!url)
 			nextUrl(i + 1);
 		else {
-			console.info("url:", url);
+			console.info("url #" + (number++), ":", url);
 			//handler(i, detectorIndex, 1); // loading
 			detectStream(url, detectors, function(detectorIndex, state){
 				//handler(i, detectorIndex, 0); // clear
@@ -136,7 +129,7 @@ function HtmlTable(id, rows, columns){
 new PlayemLoader().loadAllPlayers(function(playem){
 	var toHide = document.getElementById("toHide");
 	toHide.parentElement.removeChild(toHide);
-	var playemWrapper = new PlayemWrapper();
+	var playemWrapper = new PlayemWrapper(playem);
 	var detectors = [
 		{ name: "getEid()",
 		  fct: playemWrapper.detect
@@ -167,7 +160,7 @@ new PlayemLoader().loadAllPlayers(function(playem){
 			if (arguments.length)
 				table.getCell(r + 1, c + 1).innerHTML = SYMBOLS[result];
 			else
-				console.log("done.");
+				console.info("=> all tests: done.");
 		});
 	});
 });
