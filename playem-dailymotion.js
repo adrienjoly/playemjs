@@ -22,7 +22,6 @@ function DailymotionPlayer(){
 		var that = this;
 
 		window.onDailymotionStateChange = function(newState) {
-			console.log("DM new state", newState);
 			if (newState > 0 || !ignoreEnded)
 				that.safeClientCall(EVENT_MAP[newState], that);
 			else
@@ -39,7 +38,6 @@ function DailymotionPlayer(){
 		}
 
 		window.onDailymotionAdStart = function(){
-			console.log("DM AD START");
 			that.safeClientCall("onBuffering", that);
 		}
 

@@ -144,11 +144,11 @@ function SoundCloudPlayer(){
 	};
 
 	Player.prototype.play = function(id) {
-		console.log("sc PLAY id:", id)
+		//console.log("sc PLAY id:", id)
 		this.trackInfo = {};
 		var that = this;
 		function playId(id){
-			console.log("=> sc PLAY id:", id)
+			//console.log("=> sc PLAY id:", id)
 			that.embedVars.trackId = id;
 			//console.log("soundcloud play", this.embedVars);
 			SC.stream(id, that.soundOptions, function(sound){
@@ -160,7 +160,7 @@ function SoundCloudPlayer(){
 		if (id.indexOf("/tracks/") == 0)
 			return playId(id);
 		id = "http://" + (!id.indexOf("/") ? "soundcloud.com" : "") + id;
-		console.log("sc resolve url:", id);
+		//console.log("sc resolve url:", id);
 		fetchMetadata(id, function(data){
 			playId((data || {}).id);
 		});

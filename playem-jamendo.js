@@ -111,7 +111,6 @@ function JamendoPlayer(){
 			return;
 		this.embedVars = vars = vars || {};
 		this.soundOptions.id = vars.playerId = vars.playerId || 'mp3Player' + (new Date()).getTime();
-		console.log("trackid", vars.trackId)
 		this.soundOptions.url = "//api.jamendo.com/v3.0/tracks/file?client_id=" + JAMENDO_CLIENT_ID + "&action=stream&audioformat=mp32&id=" + vars.trackId;
 		this.trackInfo = {};
 		if (this.widget) {
@@ -138,7 +137,7 @@ function JamendoPlayer(){
 			this.isReady && this.widget && this.widget.pause();
 		}
 		catch(e) {
-			console.error(e.stack);
+			console.error("jamendo error:", e, e.stack);
 		}
 	}
 
