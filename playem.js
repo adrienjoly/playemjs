@@ -42,7 +42,7 @@ loader = new (function Loader() {
 				if (!pending[src])
 					return;
 				delete pending[src];
-				cb && setTimeout(cb, 0);
+				cb && setTimeout(cb, 1);
 				delete inc.onload;
 			};
 			inc.onerror = function(e){
