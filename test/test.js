@@ -104,7 +104,9 @@ function PlayemLoader() {
 	}
 
 	this.loadAllPlayers = function(cb){
-		load(DEFAULT_PLAYERS, DEFAULT_PLAYER_PARAMS, cb);
+		load(DEFAULT_PLAYERS, DEFAULT_PLAYER_PARAMS, function(){
+			cb(playem);
+		});
 		return this;
 	}
 }
