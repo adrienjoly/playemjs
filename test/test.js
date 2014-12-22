@@ -5,6 +5,8 @@
 
 var URL_PREFIX = "../../playem";
 
+var DEBUG = false;
+
 function forEachAsync(fcts, cb) {
 	fcts = fcts || [];
 	(function next(){
@@ -41,8 +43,48 @@ function PlayemLoader() {
 		playerContainer: document.getElementById("container")
 	};
 
+	var playem;
+
+	function loadSoundManager(cb){
+		if (window.soundManager)
+			return cb();
+		console.info("Loading soundmanager2...");
+		loader.includeJS("/lib/soundmanager2" + (DEBUG ? ".js" : "-nodebug-jsmin.js"), function(){
+			soundManager.setup({debugMode: DEBUG, url: "/lib/soundmanager2_xdomain.swf", flashVersion: 9, onready: function() {
+				soundManager.isReady = true;
+				cb();
+			}});
+			soundManager.beginDelayedInit();
+		});
+	}
+
+	function loadSwfObject(cb){
+		if (window.swfobject)
+			return cb();
+		console.info("Loading swfobject...");
+		loader.includeJS("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js", cb);
+	}
+
+	function loadPlayem(cb){
+		if (playem)
+			return cb();
+		if (!window.Playem) {
+			console.info("Loading Playem.js...");
+			var inc = document.createElement("script");
+			inc.src = URL_PREFIX + ".js";
+			document.getElementsByTagName("head")[0].appendChild(inc);
+		}
+		var loadInt = setInterval(function(){
+			if (!window.Playem)
+				return;
+			else
+				clearInterval(loadInt);
+			playem = new Playem();
+			forEachAsync([ loadSoundManager, loadSwfObject ], cb);
+		}, 200);
+	}
+
 	function load(players, playerParams, cb){
-		var playem;
 		function makePlayerLoader(pl){
 			return function(next) {
 				function initPlayer(){
@@ -56,22 +98,9 @@ function PlayemLoader() {
 					loader.includeJS(URL_PREFIX + "-" + pl.toLowerCase() + ".js?_t=" + Date.now(), initPlayer);
 			};
 		}
-		if (!window.Playem) {
-			console.log("Loading Playem.js...");
-			var inc = document.createElement("script");
-			inc.src = URL_PREFIX + ".js";
-			document.getElementsByTagName("head")[0].appendChild(inc);
-		}
-		var loadInt = setInterval(function(){
-			if (!window.Playem)
-				return;
-			else
-				clearInterval(loadInt);
-			playem = new Playem();
-			forEachAsync(players.map(makePlayerLoader), function(){
-				cb(playem);
-			});
-		}, 200);
+		loadPlayem(function(){
+			forEachAsync(players.map(makePlayerLoader), cb);
+		});
 	}
 
 	this.loadAllPlayers = function(cb){
