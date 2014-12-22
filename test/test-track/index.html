@@ -1,25 +1,10 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<title>Track Tests</title>
+	<script src="../test.js"></script>
+</head>
 <body>
-
-<script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-
-<script src="../../lib/soundmanager2-nodebug-jsmin.js"></script>
-<!--<script src="../../lib/soundmanager2-jsmin.js"></script>-->
-<script>
-	soundManager.setup({
-		url: "/lib/",
-		flashVersion: 9,
-		onready: function() {
-			soundManager.isReady=true;
-		}
-	});
-</script>
-
-<script src="../test.js"></script>
-<script src="../../playem.js"></script>
-<!--<script src="../../dist/playem-min.js"></script>-->
-
 <style>
 	.info {
 		font-family: arial;
@@ -31,6 +16,12 @@
 		font-weight: normal;
 	}
 </style>
+
+<div id="toHide">
+	<p>Loading tests...</p>
+	<p>If nothing shows up, please open this page using the incognito/private mode of your browser</p>
+</div>
+
 <div class="info">
 	<p>current track:<span id="progress"></span></p>
 	<p>url:<span id="trackUrl"></span></p>

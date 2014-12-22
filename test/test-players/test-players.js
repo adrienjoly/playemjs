@@ -1,4 +1,7 @@
-new PlayemLoader().loadAllPlayers(function(playem){
+new PlayemLoader().loadAllPlayers().whenReady(function(playem){
+
+	var toHide = document.getElementById("toHide");
+	toHide.parentElement.removeChild(toHide);
 
 	var tracks = [
 		// YOUTUBE
