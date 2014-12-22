@@ -80,7 +80,7 @@ function SpotifyPlayer(){
 			return;
 		this.embedVars = vars = vars || {};
 		this.soundOptions.id = vars.playerId = vars.playerId || 'mp3Player' + (new Date()).getTime();
-		console.log("trackid", vars.trackId)
+		//console.log("trackid", vars.trackId)
 		loader.loadJSON("https://api.spotify.com/v1/tracks/" + vars.trackId, function(data){
 			that.soundOptions.url = data.preview_url;
 			that.trackInfo = {};
@@ -109,7 +109,7 @@ function SpotifyPlayer(){
 			this.isReady && this.widget && this.widget.pause();
 		}
 		catch(e) {
-			console.error(e.stack);
+			console.error("spotify error:", e, e.stack);
 		}
 	}
 
