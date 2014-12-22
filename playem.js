@@ -337,10 +337,12 @@ function Playem(playemPrefs) {
 			["onEmbedReady", "onBuffering", "onPlaying", "onPaused", "onEnded", "onError"].map(function (evt){
 				var fct = eventHandlers[evt];
 				eventHandlers[evt] = function(player, x){
-					if (player == currentTrack.player)
+					if (currentTrack && player == currentTrack.player)
 						return fct(player, x);
+					/*
 					else if (evt != "onEmbedReady")
 						console.warn("ignore event:", evt, "from", player, "instead of:", currentTrack.player);
+					*/
 				};
 			});
 			return eventHandlers;
