@@ -1,5 +1,7 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
+//please set SOUNDCLOUD_CLIENT_ID before instanciation
+
 function SoundCloudPlayer(){
 	return SoundCloudPlayer.super_.apply(this, arguments);
 };
@@ -29,8 +31,6 @@ function SoundCloudPlayer(){
 		this.isReady = false;
 		this.trackInfo = {};
 		this.soundOptions = {autoPlay:true};
-
-		RESOLVE_URL += "?client_id=" + SOUNDCLOUD_CLIENT_ID;
 
 		var that = this;
 		loader.includeJS("https://connect.soundcloud.com/sdk.js", function() {
@@ -108,9 +108,11 @@ function SoundCloudPlayer(){
 		params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
 		trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
 		if (trackId)
-			loader.loadJSONP("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params + "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
+			loader.loadJSONP("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
+				+ "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
 		else
-			loader.loadJSONP(RESOLVE_URL + "&url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
+			loader.loadJSONP(RESOLVE_URL + "?client_id=" + SOUNDCLOUD_CLIENT_ID
+				+ "&url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
 	}
 
 	Player.prototype.fetchMetadata = function(url, cb){
