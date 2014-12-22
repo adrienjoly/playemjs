@@ -6,7 +6,7 @@
  function PlayemWrapper(playem){
 	var PLAY_TIMEOUT = 2000,
 		METADATA_TIMEOUT = 2000,
-		PLAY_DURATION = 10,
+		PLAY_DURATION = 1000,
 		timeout,
 		players = playem.getPlayers();
 	function reset(){
