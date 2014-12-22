@@ -18,7 +18,7 @@ function forEachAsync(fcts, cb) {
 
 function PlayemLoader() {
 
-	window.SOUNDCLOUD_CLIENT_ID = "9d5bbaf9df494a4c23475d9fde1f69b4";
+	window.SOUNDCLOUD_CLIENT_ID = "94f7290349b7801c04969260c4433fed"; // playemjs api key
 	window.DEEZER_APP_ID = 125765;
 	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
 	window.JAMENDO_CLIENT_ID = "c9cb2a0a";	
