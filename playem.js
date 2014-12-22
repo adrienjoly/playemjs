@@ -203,11 +203,13 @@ function Playem(playemPrefs) {
 		}
 
 		function stopTrack() {
-			if (currentTrack) {
-				callPlayerFct("stop");
-				if (progress)
-					clearInterval(progress);
-			}
+			if (progress)
+				clearInterval(progress);
+			for (var i in players)
+				try {
+					(players[i].stop || players[i].pause)();
+				}
+				catch(e) {}
 		}
 
 		function playTrack(track) {
