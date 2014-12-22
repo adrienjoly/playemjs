@@ -3,10 +3,6 @@
  * @author adrienjoly
  **/
 
-var URL_PREFIX = "../../playem";
-
-var DEBUG = false;
-
 function forEachAsync(fcts, cb) {
 	fcts = fcts || [];
 	(function next(){
@@ -20,6 +16,9 @@ function forEachAsync(fcts, cb) {
 
 function PlayemLoader() {
 
+	// constants / configuration
+	var URL_PREFIX = "../..",
+		DEBUG = false;
 	window.SOUNDCLOUD_CLIENT_ID = "94f7290349b7801c04969260c4433fed"; // playemjs api key
 	window.DEEZER_APP_ID = 125765;
 	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
@@ -49,7 +48,7 @@ function PlayemLoader() {
 		if (window.soundManager)
 			return cb();
 		console.info("Loading soundmanager2...");
-		loader.includeJS("/lib/soundmanager2" + (DEBUG ? ".js" : "-nodebug-jsmin.js"), function(){
+		loader.includeJS(URL_PREFIX + "/lib/soundmanager2" + (DEBUG ? ".js" : "-nodebug-jsmin.js"), function(){
 			soundManager.setup({debugMode: DEBUG, url: "/lib/soundmanager2_xdomain.swf", flashVersion: 9, onready: function() {
 				soundManager.isReady = true;
 				cb();
@@ -71,7 +70,7 @@ function PlayemLoader() {
 		if (!window.Playem) {
 			console.info("Loading Playem.js...");
 			var inc = document.createElement("script");
-			inc.src = URL_PREFIX + ".js";
+			inc.src = URL_PREFIX + "/playem.js";
 			document.getElementsByTagName("head")[0].appendChild(inc);
 		}
 		var loadInt = setInterval(function(){
@@ -95,7 +94,7 @@ function PlayemLoader() {
 				if (window[pl+"Player"]) // check that class exists
 					initPlayer();
 				else
-					loader.includeJS(URL_PREFIX + "-" + pl.toLowerCase() + ".js?_t=" + Date.now(), initPlayer);
+					loader.includeJS(URL_PREFIX + "/playem-" + pl.toLowerCase() + ".js?_t=" + Date.now(), initPlayer);
 			};
 		}
 		loadPlayem(function(){
