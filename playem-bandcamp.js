@@ -37,11 +37,11 @@ function BandcampPlayer(){
     $.getJSON(API_PREFIX + '/url/1/info?url=' + encodeURIComponent(url) + API_SUFFIX, function(data) {
       var trackId = (data || {}).track_id;
       if (!trackId) {
-        console.error("bandcamp: unexpected result from /url/1/info:", data);
-        return cb();
+        //console.error("bandcamp: unexpected result from /url/1/info:", data);
+        return cb(data);
       }
       $.getJSON(API_PREFIX + '/track/3/info?track_id=' + trackId + API_SUFFIX, function(data) {
-        cb((data || {}).streaming_url);
+        cb(null, (data || {}).streaming_url);
       });
     });
   }
@@ -86,7 +86,6 @@ function BandcampPlayer(){
   }
 
   Player.prototype.fetchMetadata = function(url, cb) {
-    console.info("fetchMetadata", url);
     var match = url.match(isBandcampEid(url) ? (/\/bc\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9_\-]+)/) : /([a-zA-Z0-9_\-]+).bandcamp\.com\/track\/([a-zA-Z0-9_\-]+)/);
     cb((match || []).length < 3 ? null : {
       id: [ match[1] + "/" + match[2] , url.split("#")[1] ].join("#"),
@@ -98,9 +97,8 @@ function BandcampPlayer(){
   Player.prototype.playStreamUrl = function(url) {
     var self = this;
     if (!url)
-      return self.clientCall("onError", self, {source:"BandcampPlayer", code:"no_stream"}); // could be indirectly caused by "bad key" error from fetchStreamUrl()
+      return self.clientCall("onError", self, {source:"BandcampPlayer", code:"no_stream"});
     url = "http://" + url.split("//").pop();
-    console.log("bc PLAY stream url:", url);
     self.sound = soundManager.createSound({
       id: '_playem_bc_' + Date.now(),
       url: url,
@@ -126,11 +124,16 @@ function BandcampPlayer(){
 
   //============================================================================
   Player.prototype.play = function(id) {
-    var playStream = this.playStreamUrl.bind(this);
+    var self = this;
     if (isStreamUrl(id))
-      playStream(id);
+      this.playStreamUrl(id);
     else
-      fetchStreamUrl(id, playStream);
+      fetchStreamUrl(id, function(err, url){
+        if (err || !url)
+          self.clientCall("onError", self, { source: "BandcampPlayer", error: (err || {}).error_message }); // e.g. "bad api key"
+        else
+          this.playStreamUrl(url);
+      });
   }
   
   //============================================================================
