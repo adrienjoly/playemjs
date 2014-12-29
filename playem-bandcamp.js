@@ -21,11 +21,11 @@ function BandcampPlayer(){
       API_SUFFIX = '&key=' + API_KEY + '&callback=?';
 
   function isBandcampEid(url) {
-    return url.indexOf("/bc/") == 0;
+    return url.indexOf("/bc/") == 0 && url;
   }
 
   function isBandcampUrl(url) {
-    return isBandcampEid(url) || url.indexOf("bandcamp.com") != -1;
+    return url.indexOf("bandcamp.com") != -1 && url;
   }
 
   function isStreamUrl(url) {
@@ -82,7 +82,7 @@ function BandcampPlayer(){
   
   //============================================================================
   Player.prototype.getEid = function(url) {
-    return isBandcampUrl(url) && url.split("#")[0].replace(/^\/bc\//, "").split("//").pop();
+    return isBandcampEid(url) || isBandcampUrl(url) && url.split("#")[0].split("//").pop();
   }
 
   Player.prototype.fetchMetadata = function(url, cb) {
