@@ -1,3 +1,10 @@
+# MP3 tracks
+
+//www.tonycuffe.com/mp3/tail%20toddle.mp3
+http://www.tonycuffe.com/mp3/tail%20toddle.mp3
+/fi/http://www.tonycuffe.com/mp3/tail%20toddle.mp3
+https://archive.org/download/testmp3testfile/mpthreetest.mp3 # used to not pass (too short?)
+
 # Bandcamp tracks
 
 /bc/3260779883
@@ -29,11 +36,6 @@ deezer.com/track/73414915
 http://www.deezer.com/track/73414915
 https://www.deezer.com/track/73414915
 https://www.deezer.com/track/73414915?test=1&pouet=0
-
-# MP3 tracks
-
-http://www.tonycuffe.com/mp3/tail%20toddle.mp3
-https://archive.org/download/testmp3testfile/mpthreetest.mp3 # used to not pass (too short?)
 
 # Jamendo tracks
 
