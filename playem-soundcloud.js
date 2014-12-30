@@ -83,7 +83,7 @@ function SoundCloudPlayer(){
 	}
 
 	function unwrapUrl(url){
-		return /(soundcloud\.com)\/player\/?\?.*url\=([^\&\?]+)/.test(url) ? decodeURIComponent(RegExp.lastParen) : url.replace(/^\/sc\//g, "http://soundcloud.com/");
+		return /(soundcloud\.com)\/player\/?\?.*url\=([^\&\?]+)/.test(url) ? decodeURIComponent(RegExp.lastParen) : url.replace(/^\/sc\//, "http://soundcloud.com/");
 	}
 
 	Player.prototype.getEid = function(url) {
@@ -122,6 +122,8 @@ function SoundCloudPlayer(){
 		fetchMetadata(url, function(data) {
 			if (data && data.kind == "track") {
 				embed.id = "" + data.id;
+				embed.eId = "/sc/" + data.permalink_url.substr(data.permalink_url.indexOf("/", 10) + 1)
+					+ /*"/" + data.id +*/ "#" + data.stream_url;
 				embed.img = data.artwork_url || embed.img;
 				embed.title = data.title;
 				if (embed.title.indexOf(" - ") == -1 && (data.user || {}).username)
