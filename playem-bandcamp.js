@@ -21,11 +21,18 @@ function BandcampPlayer(){
       API_SUFFIX = '&key=' + API_KEY + '&callback=?';
 
   function isBandcampEid(url) {
-    return url.indexOf("/bc/") == 0 && url;
+    return url.indexOf("/bc/") == 0 && url.substr(4);
   }
 
-  function isBandcampUrl(url) {
-    return url.indexOf("bandcamp.com") != -1 && url;
+  function extractArtistAndTrackFromUrl(url){
+    var match = url.match(isBandcampEid(url) ? (/\/bc\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9_\-]+)/) : /([a-zA-Z0-9_\-]+).bandcamp\.com\/track\/([a-zA-Z0-9_\-]+)/);
+    return (match || []).length === 3 && match.slice(1);
+  }
+
+  function makeEidFromUrl(url){
+    var match = extractArtistAndTrackFromUrl(url),
+        streamUrl = url.split("#")[1];
+    return match && (match[0] + "/" + match[1] + (streamUrl ? "#" + streamUrl : ""));
   }
 
   function isStreamUrl(url) {
@@ -82,15 +89,15 @@ function BandcampPlayer(){
   
   //============================================================================
   Player.prototype.getEid = function(url) {
-    return isBandcampEid(url) || isBandcampUrl(url) && url.split("#")[0].split("//").pop();
+    return isBandcampEid(url) || makeEidFromUrl(url);
   }
 
   Player.prototype.fetchMetadata = function(url, cb) {
-    var match = url.match(isBandcampEid(url) ? (/\/bc\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9_\-]+)/) : /([a-zA-Z0-9_\-]+).bandcamp\.com\/track\/([a-zA-Z0-9_\-]+)/);
-    cb((match || []).length < 3 ? null : {
-      id: [ match[1] + "/" + match[2] , url.split("#")[1] ].join("#"),
-      img: "//s0.bcbits.com/img/bclogo.png",
-      title: match[1].replace(/[\-_]+/g, " ") + " - " + match[2].replace(/[\-_]+/g, " ")
+    var match = extractArtistAndTrackFromUrl(url);
+    cb(!match ? null : {
+      id: makeEidFromUrl(url),
+      img: "//s0.bcbits.com/img/bclogo.png", // TODO: fetch actual cover art and other metadata
+      title: match[0].replace(/[\-_]+/g, " ") + " - " + match[1].replace(/[\-_]+/g, " ")
     });
   };
 
