@@ -80,6 +80,16 @@ function AudioFilePlayer(){
 		return (ext == "mp3" || ext == "ogg") ? url : null;
 	}
 	
+	Player.prototype.fetchMetadata = function(url, cb){
+		url = this.getEid(url);
+		if (!url)
+			return cb();
+		cb({
+			title: url.split("/").pop()
+		});
+		// TODO : also use getTrackInfo()
+	}
+
 	Player.prototype.getTrackInfo = function(callback) {
 		var that = this, i = setInterval(function() {
 			//console.log("info", that.widget.duration)
