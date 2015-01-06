@@ -123,7 +123,7 @@ function AudioFilePlayer(){
 		//console.log("AudioFilePlayer embed vars:", vars);
 		this.embedVars = vars = vars || {};
 		this.soundOptions.id = vars.playerId = vars.playerId || 'mp3Player' + (new Date()).getTime();
-		this.soundOptions.url = vars.trackId;
+		this.soundOptions.url = vars.trackId.replace(/^\/fi\//, ""); // remove eId prefix /fi/ if necessary
 		this.trackInfo = {};
 		if (this.widget) {
 			this.pause();
