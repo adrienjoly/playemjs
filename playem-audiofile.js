@@ -76,8 +76,8 @@ function AudioFilePlayer(){
 		url = (url || "").split("#").pop();
 		if (!url)
 			return null;
-		var ext = url.split(".").pop().toLowerCase();
-		return (ext == "mp3" || ext == "ogg") ? url : null;
+		var ext = url.split("?")[0].split(".").pop().toLowerCase();
+		return (ext == "mp3" || ext == "ogg") ? url.replace(/^\/fi\//, "") : null;
 	}
 	
 	Player.prototype.fetchMetadata = function(url, cb){
