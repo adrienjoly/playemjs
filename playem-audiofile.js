@@ -85,7 +85,8 @@ function AudioFilePlayer(){
 		if (!url)
 			return cb();
 		cb({
-			title: url.split("/").pop()
+			id: url.replace(/^\/fi\//, ""),
+			title: url.split("/").pop().split("?")[0]
 		});
 		// TODO : also use getTrackInfo()
 	}
