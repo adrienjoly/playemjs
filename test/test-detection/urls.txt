@@ -57,6 +57,7 @@ https://www.dailymotion.com/video/x142x6e_jean-jean-love_music?test=1&pouet=0
 
 # Youtube tracks
 
+https://youtube.googleapis.com/v/PinTAGbIsV4&source=uds # found on http://spiritiflauticos.blogspot.fr/2014/08/angel-olsen-burn-your-fire-for-no.html
 /yt/o4LBGitcvi8
 http://youtu.be/LHcP4MWABGY # short url
 //youtube.com/v/ifAtvI48R_0
