@@ -4,8 +4,8 @@ var USE_SWFOBJECT = true, //!!window.swfobject; // ... to embed youtube flash pl
 	PLAY_TIMEOUT = 10000;
 
 window.$ = window.$ || function(){return window.$};
-$.html = $.html || function(){return $};
-$.remove = $.remove || function(){return $};
+//$.html = $.html || function(){return $};
+//$.remove = $.remove || function(){return $};
 
 // utility functions
 
