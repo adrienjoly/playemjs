@@ -47,12 +47,10 @@ function VimeoPlayer(){
 				else
 					setTimeout(function(){
 						var eventHandler = that.eventHandlers[EVENT_MAP[data.method]] || EVENT_MAP[data.method];
-						if (eventHandler) {
-							data.params.unshift(that);
-							eventHandler.apply(that, data.params);
-						}
+						if (typeof eventHandler == "function")
+							eventHandler.apply(that, [that].concat(data.params));
 						else
-							console.log("missing handler for event", data.method);
+							console.warn("vimeo missing handler for event", data.method);
 					});
 			}
 		} catch (e) {
