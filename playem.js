@@ -211,6 +211,11 @@ function Playem(playemPrefs) {
 				else
 					players[i].pause();
 			}
+			try {
+				soundManager.stopAll();
+			} catch(e) {
+				console.error("playem tried to stop all soundManager sounds =>", e);
+			}
 		}
 
 		function playTrack(track) {
