@@ -1,12 +1,5 @@
 // "universal embed" / iframe version of Vimeo Player
 
-window.$ = window.$ || function(){return window.$};
-$.param = $.param || function(obj){
-	return Object.keys(obj).map(function(f){
-		return encodeURIComponent(f) + "=" + encodeURIComponent(obj[f]);
-	}).join("&");
-};
-
 function VimeoPlayer(){
 	return VimeoPlayer.super_.apply(this, arguments);
 }
@@ -26,6 +19,13 @@ function VimeoPlayer(){
 				that.trackInfo.duration = Number(duration);
 			}
 		}, HTML5_EVENTS = ["play", "pause", "finish", "playProgress"];
+
+	// utility function
+	function param(obj){
+		return Object.keys(obj).map(function(f){
+			return encodeURIComponent(f) + "=" + encodeURIComponent(obj[f]);
+		}).join("&");
+	}
 
 	function onMessageReceived(e) {
 		if (e.origin.indexOf("vimeo.com") == -1)
@@ -132,7 +132,7 @@ function VimeoPlayer(){
 			mozallowfullscreen: true,
 			allowScriptAccess: "always",
 			allowFullScreen: true,
-			src: '//player.vimeo.com/video/' + vars.videoId + "?" + $.param({
+			src: '//player.vimeo.com/video/' + vars.videoId + "?" + param({
 				api: 1,
 				js_api: 1,
 				player_id: this.embedVars.playerId,
