@@ -107,11 +107,14 @@ function SoundCloudPlayer(){
 		splitted = url.split("?");
 		params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
 		trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
+		// rely on CORS if possible, because JSONP call from soundcloud API was malformed in some cases
+		// but soundcloud apparently does not support CORS calls from localhost...
+		var method = /localhost\:/.test(window.location.href) ? "loadJSONP" : "loadJSON";
 		if (trackId)
-			loader.loadJSONP("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
+			loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
 				+ "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
 		else
-			loader.loadJSONP(RESOLVE_URL + "?client_id=" + SOUNDCLOUD_CLIENT_ID
+			loader[method](RESOLVE_URL + "?client_id=" + SOUNDCLOUD_CLIENT_ID
 				+ "&url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
 	}
 
