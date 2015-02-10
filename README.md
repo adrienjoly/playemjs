@@ -13,3 +13,7 @@ Readme-TODO
  - INSTALL
  - Usage example
  - Screenshot
+
+In the mean time, you can clone the project, read the sources of the 3 test directories, and run them locally.
+
+Any help in documenting/fixing/developing this project is welcome! :-)
