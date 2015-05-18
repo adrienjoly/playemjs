@@ -101,6 +101,41 @@ function SoundCloudPlayer(){
 		// or null / false (if not a track)
 	}
 
+    function searchTracks(query, limit, cb){
+        function waitFor(objName, cb){
+            setTimeout(function(){
+                if (window[objName])
+                    cb(window[objName]);
+                else
+                    waitFor(objName, cb);
+            }, 200);
+        }
+
+        function translateResult(r){
+            r.title = r.title || r.name;
+            return {
+                eId: "/sc" + r.permalink_url.substr(r.permalink_url.indexOf("/", 10)) + "#" + r.uri,
+                img: r.img || r.artwork_url || "/images/cover-soundcloud.jpg",
+                url: r.url || r.permalink_url + "#" + r.uri,
+                name: (r.title.indexOf(" - ") == -1 ? r.user.username + " - " : "") + r.title,
+                playerLabel: 'Soundcloud'
+            };
+        }
+
+        waitFor("SC", function(SC){
+            SC.get('/tracks', {q: query, limit: limit}, function(results) {
+                if ( results instanceof Array) {
+                    var tracks = results.map(translateResult);
+                    cb(tracks);
+                };
+            });
+        });
+    }
+
+    Player.prototype.searchTracks = function(query, limit, cb){
+        searchTracks(query, limit, cb); 
+    }
+
 	function fetchMetadata(url, cb){
 
 		var splitted, params, trackId;

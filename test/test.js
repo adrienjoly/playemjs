@@ -19,6 +19,8 @@ function PlayemLoader() {
 	// constants / configuration
 	var URL_PREFIX = "../..",
 		DEBUG = false;
+
+	window.YOUTUBE_API_KEY = "AIzaSyBpH5Y_xqCk3xByTKfgIf0TrrRL5rt-gbg"; 
 	window.SOUNDCLOUD_CLIENT_ID = "94f7290349b7801c04969260c4433fed"; // playemjs api key
 	window.DEEZER_APP_ID = 125765;
 	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
@@ -35,7 +37,6 @@ function PlayemLoader() {
 		"Jamendo",
 		"Spotify",
 	];
-
 	var DEFAULT_PLAYER_PARAMS = {
 		playerId: "genericplayer",
 		origin: window.location.host || window.location.hostname,
@@ -111,6 +112,8 @@ function PlayemLoader() {
 	}
 
 	this.loadAllPlayers = function(cb){
+			console.log(DEFAULT_PLAYERS);
+
 		load(DEFAULT_PLAYERS, DEFAULT_PLAYER_PARAMS, function(){
 			if (cb)
 				cb(playem);

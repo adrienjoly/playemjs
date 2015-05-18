@@ -197,6 +197,28 @@ function Playem(playemPrefs) {
 				throw new Error("no id provided");
 		}
 
+        function searchTracks(query, handleResult){
+
+            var expected = 0,
+            currentPlayer;
+            for (var i = 0; i < players.length; i++) {
+                currentPlayer = players[i];
+
+                //Search for player extending the "searchTracks" method.
+                if (typeof currentPlayer.searchTracks == 'function') {
+                    expected ++;
+                    currentPlayer.searchTracks(query, 5, function(results) {
+                            for (var i in results){
+                                handleResult(results[i]);
+                            }
+                            if (--expected === 0)
+                                handleResult(); // means: "i have no (more) results to provide for this request"
+                    });
+                };
+            };
+
+        };
+
 		function setVolume(vol) {
 			volume = vol;
 			callPlayerFct("setVolume", vol);
@@ -404,7 +426,8 @@ function Playem(playemPrefs) {
 				if ((currentTrack || {}).trackDuration)
 					callPlayerFct("setTrackPosition", pos * currentTrack.trackDuration);
 			},
-			setVolume: setVolume
+			setVolume: setVolume,
+			searchTracks : searchTracks
 		};
 		//return exportedMethods;
 		for (i in exportedMethods)

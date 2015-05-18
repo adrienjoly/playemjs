@@ -1,6 +1,7 @@
 window.$ = window.$ || function(){return window.$};
 $.show = $.show || function(){return $};
 $.attr = $.attr || function(){return $};
+$.getScript = $.getScript || function(js,cb){loader.includeJS(js,cb);};
 
 function YoutubePlayer(){
 	return YoutubePlayer.super_.apply(this, arguments);
@@ -14,6 +15,22 @@ function YoutubePlayer(){
 			/*YT.PlayerState.PAUSED*/ 2: "onPaused"
 		};
 
+    var SDK_URL = 'https://apis.google.com/js/client.js?onload=initYT',
+        SDK_LOADED = false;
+
+    var apiReady = false,
+        part = 'id,snippet',
+        callback;
+
+    window.initYT = function() {
+        gapi.client.setApiKey(YOUTUBE_API_KEY);
+        gapi.client.load('youtube', 'v3', function() {
+          apiReady = true;
+          if (callback)
+            callback();
+        });
+    };
+
 	function Player(eventHandlers, embedVars) {
 		this.eventHandlers = eventHandlers || {};
 		this.embedVars = embedVars || {};
@@ -21,7 +38,7 @@ function YoutubePlayer(){
 		this.isReady = false;
 		this.trackInfo = {};
 		var that = this;
-
+ 		loadSDK();
 		window.onYoutubeStateChange = function(newState) {
 			//console.log("YT state:", newState);
 			if (newState == 1)
@@ -131,17 +148,55 @@ function YoutubePlayer(){
 			return RegExp.lastParen;
 	}
 
-	function fetchMetadata(id, cb){
-		var embed = {
-			id: id,
-			img: "https://i.ytimg.com/vi/" + id + "/0.jpg",
-		};
-		loader.loadJSON("https://gdata.youtube.com/feeds/api/videos/"+id+"?v=2&alt=jsonc", function(data) {
-			if (data && data.data)
-				embed.title = data.data.title;
-			cb(embed);
+
+    function searchTracks(query, limit, cb){
+
+		function waitFor(cb){
+            setTimeout(function(){
+                if (apiReady){
+                    cb();
+                }else{
+                    waitFor(cb);
+                }
+            }, 200);
+        }
+        
+        function translateResult(r){
+        	var track = {
+                eId: "/yt/" + r.id.videoId,
+                img: r.snippet.thumbnails["default"].url,
+                url: "https://www.youtube.com/watch?v=" + r.id.videoId,
+                name: r.snippet.title,
+                playerLabel: 'Youtube'
+            }
+            return track;
+        }
+
+        if (!cb) return;
+		waitFor(function(){
+			gapi.client.youtube.search.list({
+				part: 'snippet', 
+				q: query,
+				type : "video",
+				maxResults : limit,
+			}).execute(function(res){
+				results = res.items.map(translateResult);
+				cb(results);
+			});  
 		});
+    }
+
+    Player.prototype.searchTracks = function(query, limit, cb){
+        searchTracks(query, limit, cb); 
+    }
+
+
+	function fetchMetadata(id, cb){
+        searchTracks(id, 1, function(tracks) {
+            cb(tracks[0]);
+        });
 	}
+
 
 	Player.prototype.fetchMetadata = function(url, cb){
 		var id = this.getEid(url);
@@ -195,6 +250,15 @@ function YoutubePlayer(){
 		if (this.element && this.element.setVolume)
 			this.element.setVolume(vol * 100);
 	};
+
+    //============================================================================  
+    function loadSDK() {
+        if (!SDK_LOADED) {
+          $.getScript(SDK_URL, function() {
+            SDK_LOADED = true;
+          });
+        } 
+    }
 
 	//return Player;
 	//inherits(YoutubePlayer, Player);
