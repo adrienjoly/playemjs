@@ -117,7 +117,7 @@ function SoundCloudPlayer(){
                 eId: "/sc" + r.permalink_url.substr(r.permalink_url.indexOf("/", 10)) + "#" + r.uri,
                 img: r.img || r.artwork_url || "/images/cover-soundcloud.jpg",
                 url: r.url || r.permalink_url + "#" + r.uri,
-                name: (r.title.indexOf(" - ") == -1 ? r.user.username + " - " : "") + r.title,
+                title: (r.title.indexOf(" - ") == -1 ? r.user.username + " - " : "") + r.title,
                 playerLabel: 'Soundcloud'
             };
         }

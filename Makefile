@@ -1,8 +1,9 @@
 # inspired by: https://gist.github.com/rgrove/1116056
 
 # PLAYERS = playem-dailymotion.js playem-soundcloud.js playem-youtube.js playem-audiofile.js playem-deezer.js playem-vimeo.js
-PLAYERS = $(filter-out %-TODO.js,$(wildcard \
-	./playem*.js \
+PLAYERS = playem.js
+PLAYERS += $(filter-out %-TODO.js,$(wildcard \
+	./playem-*.js \
 ))
 
 # Command to run to execute the YUI Compressor.
