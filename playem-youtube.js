@@ -145,7 +145,7 @@ function YoutubePlayer(){
 	Player.prototype.getEid = function(url) {
 		if (
 			/(youtube\.com\/(v\/|embed\/|(?:.*)?[\?\&]v=)|youtu\.be\/)([a-zA-Z0-9_\-]+)/.test(url)
-			//|| /\/yt\/([a-zA-Z0-9_\-]+)/.test(url)
+			|| /^\/yt\/([a-zA-Z0-9_\-]+)/.test(url)
 			|| /youtube\.com\/attribution_link\?.*v\%3D([^ \%]+)/.test(url)
 			|| /youtube.googleapis.com\/v\/([a-zA-Z0-9_\-]+)/.test(url)
 		)
