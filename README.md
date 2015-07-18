@@ -7,8 +7,45 @@ PlayemJS is a javascript component that manages a music/video track queue and pl
 
 PlayemJS powers the music curation service [Whyd.com](http://whyd.com). That's the best demonstration of its capabilities.
 
-Install
--------
+Usage with npm & browserify
+------------------------------------------
+
+    npm install playemjs
+
+Then use it that way in your front-end code:
+
+    <html>
+    <body>
+      <div id="container"></div>
+      <script src="your-browserify-bundle.js"></script>
+      <script>
+        // your app's API KEYS here
+        window.SOUNDCLOUD_CLIENT_ID = "11f9999111b5555c22227777c3333fed"; // your api key
+        window.DEEZER_APP_ID = 123456789;
+        window.DEEZER_CHANNEL_URL = "http://mysite.com/deezer-channel.html";
+        window.JAMENDO_CLIENT_ID = "f9ff9f0f";
+
+        var playerParams = {
+          playerId: "genericplayer",
+          origin: window.location.host || window.location.hostname,
+          playerContainer: document.getElementById("container")
+        };
+
+        window.makePlayem(null, playerParams, function onLoaded(playem){
+          playem.on("onTrackChange", function(track){
+            console.log("streaming track " + track.trackId + " from " + track.playerName);
+          });
+          playem.addTrackByUrl("https://www.youtube.com/watch?v=fuhHU_BZXSk");
+          playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb");
+          playem.play();
+        });
+      </script>
+    </body>
+    </html>
+
+
+Install using Bower
+-------------------
 
     bower install playemjs
     make install
