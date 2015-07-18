@@ -153,3 +153,7 @@ function JamendoPlayer(){
 	JamendoPlayer.prototype = Player.prototype;
 	JamendoPlayer.super_ = Player;
 })();
+
+try{
+	module.exports = JamendoPlayer;
+}catch(e){};

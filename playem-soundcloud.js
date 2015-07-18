@@ -193,3 +193,7 @@ function SoundCloudPlayer(){
 	// this method exports Player under the name "SoundCloudPlayer", even after minification
 	// so that SoundCloudPlayer.name == "SoundCloudPlayer" instead of SoundCloudPlayer.name == "Player"
 })();
+
+try{
+	module.exports = SoundCloudPlayer;
+}catch(e){};

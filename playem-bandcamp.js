@@ -178,3 +178,7 @@ function BandcampPlayer(){
   BandcampPlayer.prototype = Player.prototype;
   BandcampPlayer.super_ = Player;
 })('vatnajokull');
+
+try{
+  module.exports = BandcampPlayer;
+}catch(e){};

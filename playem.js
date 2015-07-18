@@ -1,6 +1,6 @@
 // configuration
 
-var USE_SWFOBJECT = true, //!!window.swfobject; // ... to embed youtube flash player
+var USE_SWFOBJECT = window.USE_SWFOBJECT = true, //!!window.swfobject; // ... to embed youtube flash player
 	PLAY_TIMEOUT = 10000;
 
 window.$ = window.$ || function(){return window.$};
@@ -416,3 +416,6 @@ function Playem(playemPrefs) {
 	return new Playem();
 };
 
+try{
+	module.exports = Playem;
+}catch(e){};

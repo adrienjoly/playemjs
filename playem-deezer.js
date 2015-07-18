@@ -250,3 +250,7 @@ function DeezerPlayer(){
   DeezerPlayer.prototype = Player.prototype;
   DeezerPlayer.super_ = Player;
 })();
+
+try{
+  module.exports = DeezerPlayer;
+}catch(e){};

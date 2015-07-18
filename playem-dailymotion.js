@@ -197,3 +197,7 @@ function DailymotionPlayer(){
 	DailymotionPlayer.prototype = Player.prototype;
 	DailymotionPlayer.super_ = Player;
 })();
+
+try{
+	module.exports = DailymotionPlayer;
+}catch(e){};

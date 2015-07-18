@@ -171,3 +171,7 @@ function AudioFilePlayer(){
 	AudioFilePlayer.prototype = Player.prototype;
 	AudioFilePlayer.super_ = Player;
 })();
+
+try{
+	module.exports = AudioFilePlayer;
+}catch(e){};

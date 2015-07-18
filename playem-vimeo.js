@@ -181,3 +181,7 @@ function VimeoPlayer(){
 	VimeoPlayer.prototype = Player.prototype;
 	VimeoPlayer.super_ = Player;
 })();
+
+try{
+	module.exports = VimeoPlayer;
+}catch(e){};

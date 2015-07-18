@@ -201,3 +201,7 @@ function YoutubePlayer(){
 	YoutubePlayer.prototype = Player.prototype;
 	YoutubePlayer.super_ = Player;
 })();
+
+try{
+	module.exports = YoutubePlayer;
+}catch(e){};

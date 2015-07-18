@@ -125,3 +125,7 @@ function SpotifyPlayer(){
 	SpotifyPlayer.prototype = Player.prototype;
 	SpotifyPlayer.super_ = Player;
 })();
+
+try{
+	module.exports = SpotifyPlayer;
+}catch(e){};
