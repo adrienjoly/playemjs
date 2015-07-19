@@ -33,8 +33,8 @@ function SoundCloudPlayer(){
 		this.soundOptions = {autoPlay:true};
 
 		var that = this;
-		loader.includeJS("https://connect.soundcloud.com/sdk.js", function() {
-			SC.initialize({client_id: SOUNDCLOUD_CLIENT_ID});
+
+		function init() {
 			for (var i in EVENT_MAP)
 				(function(i) {
 					that.soundOptions[i] = function() {
@@ -51,7 +51,7 @@ function SoundCloudPlayer(){
 			});
 			that.isReady = true;
 			try {
-				soundManager.onready(function() {
+				window.soundManager.onready(function() {
 					that.callHandler("onApiReady", that);
 				});
 			}
@@ -59,7 +59,16 @@ function SoundCloudPlayer(){
 				console.warn("warning: soundManager was not found => playem-soundcloud will not be able to stream music");
 				that.callHandler("onApiReady", that);
 			}
-		});
+		}
+
+		if (window.SC)
+			init();
+		else {
+			loader.includeJS("https://connect.soundcloud.com/sdk.js", function(){
+				window.SC.initialize({client_id: window.SOUNDCLOUD_CLIENT_ID});
+				init();
+			});
+		}
 
 		this.callHandler = function(name, params) {
 			try {
@@ -156,7 +165,7 @@ function SoundCloudPlayer(){
 			//console.log("=> sc PLAY id:", id)
 			that.embedVars.trackId = id;
 			//console.log("soundcloud play", this.embedVars);
-			SC.stream(id, that.soundOptions, function(sound){
+			window.SC.stream(id, that.soundOptions, function(sound){
 				that.widget = sound;
 				that.callHandler("onEmbedReady", that);
 				//that.safeCall("play");
