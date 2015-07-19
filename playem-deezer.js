@@ -18,7 +18,6 @@ function DeezerPlayer(){
 
   // CONSTANTS
   var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js',
-      SDK_LOADED = false,
       IS_LOGGED = false,
       URL_REG = /(deezer\.com\/track|\/dz)\/(\d+)/,
       EVENT_MAP = {
@@ -37,18 +36,16 @@ function DeezerPlayer(){
     this.currentTrack = {position: 0, duration: 0};
         
     loadSDK(function() {
-      init(function() { 
-        //console.log('DeezerPlayer ready');
-        //DZ.getLoginStatus = function(cb) {cb && cb({userID: null})}
-        DZ.getLoginStatus(function(response) {
-          DZ.player.setRepeat(0);
-          IS_LOGGED = response.userID;
-          self.isReady = true;
-          hookHandlers(self);
-        });
+      DZ.getLoginStatus(function(response) {
+        IS_LOGGED = response.userID;
       });
+      DZ.player.setRepeat(0);
+      hookHandlers(self);
+      self.isReady = true;
+      try {
+        eventHandlers.onApiReady(self);
+      } catch(e) {};
     });
-    
   }
   
   //============================================================================
@@ -149,20 +146,24 @@ function DeezerPlayer(){
     
   //============================================================================  
   function loadSDK(cb) {
-    if (!SDK_LOADED) {
-      //$('body').append('<div id="dz-root"></div>');
-      var dz = document.createElement('div'); dz.id = 'dz-root';
+    if (window.DZ)
+      return cb();
+    if (!document.getElementById('dz-root')) {
+      var dz = document.createElement('div');
+      dz.id = 'dz-root';
       document.getElementsByTagName("body")[0].appendChild(dz);
-      $.getScript(SDK_URL, function() {
-        console.log("DZ.override_https()", window.location.protocol === "https:");
-        if (window.location.protocol === "https:")
-          DZ.override_https();
-        SDK_LOADED = true;
+    }
+    var alreadyInit = false;
+    loader.includeJS(SDK_URL, function(){
+      if (window.location.protocol === "https:")
+        DZ.override_https();
+      init(function() {
+        if (alreadyInit)
+          return;
+        alreadyInit = true;
         cb();
       });
-    } else {
-      cb();
-    }
+    });
   }
 
   //============================================================================
@@ -198,7 +199,6 @@ function DeezerPlayer(){
     }
     for (var e in EVENT_MAP)
       DZ.Event.suscribe(e, createHandler(e));
-    self.eventHandlers.onApiReady && self.eventHandlers.onApiReady(self);
   }
   
   //============================================================================
