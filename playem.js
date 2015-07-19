@@ -34,7 +34,17 @@ loader = new (function Loader() {
 			xdr.send();
 		},
 		includeJS: function(src, cb){
-			if (pending[src]) return cb && cb();
+			if (pending[src]) {
+				if (cb) {
+					var nt = setInterval(function(){
+						if (pending[src])
+							return console.log("still loading", src, "...");
+						clearInterval(nt);
+						cb();
+					}, 50);
+				}
+				return;
+			}
 			pending[src] = true;
 			var inc = document.createElement("script");
 			//inc.async = "async";
