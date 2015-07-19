@@ -24,22 +24,26 @@ var DEFAULT_PLAYER_PARAMS = {
 };
 
 function initSoundManager(cb){
-  soundManager.setup({debugMode: DEBUG, url: "/lib/soundmanager2_xdomain.swf", flashVersion: 9, onready: function() {
-    soundManager.isReady = true;
-    window.soundManager = soundManager;
+  if (window.soundManager && window.soundManager.isReady)
+    return cb();
+  window.soundManager.setup({debugMode: DEBUG, url: "/lib/soundmanager2_xdomain.swf", flashVersion: 9, onready: function() {
+    window.soundManager.isReady = true;
     cb();
   }});
-  soundManager.beginDelayedInit();
+  window.soundManager.beginDelayedInit();
 }
 
 function loadPlayem(players, playerParams, cb){
-  console.log("browserify is loading and initializing playemjs...")
   var players = players || DEFAULT_PLAYERS;
   var playem = new Playem();
   initSoundManager(function(){
     for (var playerId in players) {
-      console.log("- loading player:", playerId);
-      playem.addPlayer(players[playerId], playerParams || DEFAULT_PLAYER_PARAMS); // instanciates player class
+      try{
+        playem.addPlayer(players[playerId], playerParams || DEFAULT_PLAYER_PARAMS); // instanciates player class  
+      }
+      catch(e){
+        console.error("PlayemJS error while loading", playerId, ":", e);
+      }
     }
     if (cb)
       //playem.on("onReady", cb);
@@ -47,6 +51,4 @@ function loadPlayem(players, playerParams, cb){
   });
 }
 
-window.makePlayem = loadPlayem;
-
-console.log("Browserify has loaded window.makePlayem()");
+module.exports.makePlayem = loadPlayem;
