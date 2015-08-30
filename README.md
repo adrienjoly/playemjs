@@ -79,6 +79,11 @@ Install using Bower
 
 ... or download the javascript files (playem.js and player files you need) into your public directory of your web project.
 
+React component
+---------------
+
+(Work in progress) Check out [react-music-player](https://github.com/adrienjoly/react-music-player).
+
 Tests and further development
 -----------------------------
     
