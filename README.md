@@ -68,6 +68,17 @@ The following lines of HTML and Javascript create a container and play two video
     });
     </script>
     
+Demos
+-----
+
+1. [Playing a Vimeo video](http://codepen.io/adrienjoly/pen/QjLRXa?editors=101)
+2. [Playing video from a combined file](http://codepen.io/adrienjoly/pen/bVbPbo?editors=101)
+3. [Playing two videos in sequence](https://jsfiddle.net/adrienjoly/0xqoo0s0/)
+4. [Playing two Youtube videos in sequence](http://rawgit.com/adrienjoly/playemjs/master/test/sample.html)
+
+Tests and further development
+-----------------------------
+    
 You can run tests from that page: [PlayemJS Video Player Tests](http://rawgit.com/adrienjoly/playemjs/master/test/index.html)
 
 If they don't work from there, you can clone the project, and run them locally.
