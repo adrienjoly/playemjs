@@ -1,0 +1,35 @@
+<html>
+<h1>PlayemJS Sample</h1>
+<ul>
+  <li>Loading PlayemJS files individually from github</li>
+  <li>Playing two Youtube videos in sequence, with log</li>
+</ul>
+<div id="playem_video"></div>
+<div id="log"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2-jsmin.js"></script>
+<script src="https://rawgit.com/adrienjoly/playemjs/master/playem.js"></script>
+<script src="https://rawgit.com/adrienjoly/playemjs/master/playem-youtube.js"></script>
+<script>
+var log = document.getElementById("log"), vars = {
+    playerContainer: document.getElementById("playem_video"),
+};
+
+function playVideos(){
+  var playem = new Playem();
+  ["onPlay", "onReady", "onTrackChange", "onEnd", "onPause", "onTrackInfo", "onError"].map(function(evtName){
+    playem.on(evtName, function(){
+      log.innerHTML = "<p>event: " + evtName + "</p>" + log.innerHTML;
+    });
+  });
+  playem.addPlayer(YoutubePlayer, vars);
+  playem.addTrackByUrl("https://www.youtube.com/watch?v=YVgc2PQd_bo");
+  playem.addTrackByUrl("https://www.youtube.com/watch?v=2m5K5jxME18");
+  playem.play();
+}
+
+soundManager.setup({onready: playVideos});
+soundManager.beginDelayedInit();
+
+</script>
+<html>
