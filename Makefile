@@ -1,4 +1,5 @@
 # inspired by: https://gist.github.com/rgrove/1116056
+#make compile to launch
 
 # PLAYERS = playem-dailymotion.js playem-soundcloud.js playem-youtube.js playem-audiofile.js playem-deezer.js playem-vimeo.js
 PLAYERS = playem.js
