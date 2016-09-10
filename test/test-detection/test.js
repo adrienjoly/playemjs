@@ -16,6 +16,7 @@
 			delete player.eventHandlers.onError;
 			delete player.eventHandlers.onPlaying;
 		}
+		playem.stop();
 	}
 	function getPlayer(url){
 		for (var i in players) {
