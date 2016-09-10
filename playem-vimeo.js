@@ -7,18 +7,15 @@ function VimeoPlayer(){
 (function() {
 
 	var EVENT_MAP = {
-			"onPlay": "onPlaying",
-			"onResume": "onPlaying",
-			"onPause": "onPaused",
-			"onFinish": "onEnded",
-			"onProgress": function(that, seconds){
-				that.trackInfo.position = Number(seconds);
+			"playProgress": function(that, data){
+				that.trackInfo.position = Number(data.seconds);
+				that.trackInfo.duration = Number(data.duration);
+				that.eventHandlers.onPlaying && that.eventHandlers.onPlaying(that);
 				that.eventHandlers.onTrackInfo && that.eventHandlers.onTrackInfo(that.trackInfo);
 			},
-			"getDuration": function(that, duration){
-				that.trackInfo.duration = Number(duration);
-			}
-		}, HTML5_EVENTS = ["play", "pause", "finish", "playProgress"];
+			"pause": "onPaused",
+			"finish": "onEnded",
+		};
 
 	// utility function
 	function param(obj){
@@ -31,24 +28,26 @@ function VimeoPlayer(){
 		if (e.origin.indexOf("vimeo.com") == -1)
 			return;
 		try {
-			//var data = JSON.parse(e.data); // new format: "method=onLoad&params=genericplayer"
 			var that = this, data = {};
-			e.data.split("&").map(function(keyval){
-				var s = keyval.split("=");
-				data[s[0]] = s[1];
-			});
+			if (e.data.charAt(0) === '{') {
+				data = JSON.parse(e.data);
+			} else {
+				e.data.split("&").map(function(keyval){
+					var s = keyval.split("=");
+					data[s[0]] = s[1];
+				});
+			}
 			data.params = (data.params || "").split(",");
 			data.player_id = data.player_id || data.params.pop();
 			if (data.player_id == this.embedVars.playerId) {
 				if (data.method == "onLoad") {
-					HTML5_EVENTS.map(this.post.bind(this, 'addEventListener'));
-					this.post("getDuration");
+					Object.keys(EVENT_MAP).map(this.post.bind(this, 'addEventListener'));
 				}
 				else
 					setTimeout(function(){
-						var eventHandler = that.eventHandlers[EVENT_MAP[data.method]] || EVENT_MAP[data.method];
+						var eventHandler = that.eventHandlers[EVENT_MAP[data.event]] || EVENT_MAP[data.event];
 						if (typeof eventHandler == "function")
-							eventHandler.apply(that, [that].concat(data.params));
+							eventHandler.apply(that, [that].concat(data.data));
 						else
 							console.warn("vimeo missing handler for event", data.method);
 					});
@@ -130,7 +129,7 @@ function VimeoPlayer(){
 			mozallowfullscreen: true,
 			allowScriptAccess: "always",
 			allowFullScreen: true,
-			src: '//player.vimeo.com/video/' + vars.videoId + "?" + param({
+			src: 'https://player.vimeo.com/video/' + vars.videoId + "?" + param({
 				api: 1,
 				js_api: 1,
 				player_id: this.embedVars.playerId,
