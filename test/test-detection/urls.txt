@@ -87,12 +87,12 @@ www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
 # Soundcloud tracks
 
 http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
-/sc/manisnotabird/bringer-of-rain-and-seed-good
-/sc/manisnotabird/bringer-of-rain-and-seed-good#http://soundcloud.com/tracks/53156756
-soundcloud.com/manisnotabird/sounds-of-spring # canonical url
-//soundcloud.com/manisnotabird/sounds-of-spring # canonical url with slashes
-https://soundcloud.com/manisnotabird/bringer-of-rain-and-seed-good
-http://soundcloud.com/tracks/53156756
+/sc/adrienjoly/wolfentrap-3d
+/sc/adrienjoly/wolfentrap-3d#http://soundcloud.com/tracks/245733345
+soundcloud.com/adrienjoly/wolfentrap-3d # canonical url
+//soundcloud.com/adrienjoly/wolfentrap-3d # canonical url with slashes
+https://soundcloud.com/adrienjoly/wolfentrap-3d
+http://soundcloud.com/tracks/245733345
 http://snd.sc/GEOIEA # short url
 http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958 # embed url
 //w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true

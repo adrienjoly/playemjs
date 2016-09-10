@@ -7,7 +7,7 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		// YOUTUBE
 		"/yt/l1TcJKFB0sY",
 		// SOUNDCLOUD
-		"/sc/manisnotabird/bringer-of-rain-and-seed-good",
+		"/sc/adrienjoly/wolfentrap-3d",
 		// VIMEO
 		"/vi/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
 		// DAILYMOTION
