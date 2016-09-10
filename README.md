@@ -87,7 +87,12 @@ React component
 Tests and further development
 -----------------------------
     
-You can run tests from that page: [PlayemJS Video Player Tests](http://rawgit.com/adrienjoly/playemjs/master/test/index.html)
+You can run tests from that page:
+
+- [PlayemJS Youtube Video Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/sample.html)
+- [PlayemJS Video Players Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/test-players/index.html)
+- [PlayemJS URL Detection Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/test-detection/index.html)
+
 
 If they don't work from there, you can clone the project, and run them locally.
 
