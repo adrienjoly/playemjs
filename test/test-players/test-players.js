@@ -4,6 +4,9 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	toHide.parentElement.removeChild(toHide);
 
 	var tracks = [
+		// BANDCAMP
+		//"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // whyd eId
+		"/bc/mambobertier/tokyo-tripot-2/3049024530#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0",
 		// YOUTUBE
 		"/yt/l1TcJKFB0sY",
 		// SOUNDCLOUD
