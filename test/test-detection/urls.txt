@@ -16,16 +16,16 @@ https://archive.org/download/testmp3testfile/mpthreetest.mp3 # used to not pass 
 
 # Bandcamp tracks
 
-/bc/3260779883
-/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0
-/bc/mambo/tokyo-tripot-2
-/bc/mambo/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0
-mambobertier.bandcamp.com/track/tokyo-tripot-2
-//mambobertier.bandcamp.com/track/tokyo-tripot-2
-http://mambobertier.bandcamp.com/track/tokyo-tripot-2
-https://manisnotabird.bandcamp.com/track/the-sounds-of-spring
 https://mambobertier.bandcamp.com/track/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
-http://theweakend.com/track/the-weakend-ft-chris-daddy-dave
+/bc/mambo/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0
+/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0
+/bc/3260779883 # missing stream URL
+/bc/mambo/tokyo-tripot-2 # missing stream URL
+mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
+//mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
+http://mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
+https://manisnotabird.bandcamp.com/track/the-sounds-of-spring # missing stream URL
+http://theweakend.com/track/the-weakend-ft-chris-daddy-dave # bandcamp track with custom domain
 
 # Spotify tracks
 
