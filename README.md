@@ -5,7 +5,7 @@ PlayemJS
 
 PlayemJS is a javascript component that manages a music/video track queue and plays a sequence of songs by embedding several players in a HTML DIV including Youtube, Soundcloud and Vimeo.
 
-PlayemJS powers the music curation service [Whyd.com](http://whyd.com). That's the best demonstration of its capabilities.
+PlayemJS powers the music curation service [Openwhyd.org](http://openwhyd.org) (formerly whyd.com). That's the best demonstration of its capabilities.
 
 Usage example
 -------------
