@@ -9,9 +9,9 @@ player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
 
 # MP3 tracks
 
-//www.tonycuffe.com/mp3/tail%20toddle.mp3
-http://www.tonycuffe.com/mp3/tail%20toddle.mp3
-/fi/http://www.tonycuffe.com/mp3/tail%20toddle.mp3
+//fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
+http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
+/fi/http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
 https://archive.org/download/testmp3testfile/mpthreetest.mp3 # used to not pass (too short?)
 
 # Bandcamp tracks

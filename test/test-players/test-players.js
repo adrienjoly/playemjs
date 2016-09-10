@@ -17,7 +17,7 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		// BANDCAMP
 		"/bc/3260779883#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0", // whyd eId
 		// MP3
-		"http://www.tonycuffe.com/mp3/tail%20toddle.mp3",
+		"http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3",
 		// DEEZER
 		"/dz/73414915",
 		// SPOTIFY
