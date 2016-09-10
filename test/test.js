@@ -20,7 +20,7 @@ function PlayemLoader() {
 	var URL_PREFIX = "../..",
 		DEBUG = false;
 
-	window.YOUTUBE_API_KEY = "AIzaSyBpH5Y_xqCk3xByTKfgIf0TrrRL5rt-gbg"; 
+	window.YOUTUBE_API_KEY = "AIzaSyAHcfP2XwN1HmvwYRp8mr1yvYn1l1WE0-A"; 
 	window.SOUNDCLOUD_CLIENT_ID = "94f7290349b7801c04969260c4433fed"; // playemjs api key
 	window.DEEZER_APP_ID = 125765;
 	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
