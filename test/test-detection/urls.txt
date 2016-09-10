@@ -1,12 +1,3 @@
-# Vimeo tracks
-
-/vi/46314116
-vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
-//vimeo.com/46314116
-http://vimeo.com/46314116
-http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
-player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
-
 # MP3 tracks
 
 //fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
@@ -27,63 +18,6 @@ http://mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 https://manisnotabird.bandcamp.com/track/the-sounds-of-spring # missing stream URL
 http://theweakend.com/track/the-weakend-ft-chris-daddy-dave # bandcamp track with custom domain
 
-# Spotify tracks
-
-/sp/63wxaMojZaS69nYttu7Fh1
-spotify.com/track/63wxaMojZaS69nYttu7Fh1
-open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
-//open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
-http://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
-https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
-https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1?test=1&pouet=0
-
-# Deezer tracks
-
-/dz/73414915
-deezer.com/track/73414915
-//deezer.com/track/73414915
-http://www.deezer.com/track/73414915
-https://www.deezer.com/track/73414915
-https://www.deezer.com/track/73414915?test=1&pouet=0
-
-# Jamendo tracks
-
-/ja/1115147
-jamendo.com/track/1115147
-//jamendo.com/track/1115147
-http://jamendo.com/track/1115147
-https://jamendo.com/track/1115147
-//www.jamendo.com/en/track/1115147/get-momentum
-
-# Dailymotion tracks
-
-/dm/x142x6e_jean-jean-love_music
-dailymotion.com/video/x142x6e_jean-jean-love_music
-//www.dailymotion.com/video/x142x6e_jean-jean-love_music
-http://www.dailymotion.com/video/x142x6e_jean-jean-love_music
-https://www.dailymotion.com/video/x142x6e_jean-jean-love_music
-https://www.dailymotion.com/video/x142x6e_jean-jean-love_music?test=1&pouet=0
-
-# Youtube tracks
-
-https://youtube.googleapis.com/v/PinTAGbIsV4&source=uds # found on http://spiritiflauticos.blogspot.fr/2014/08/angel-olsen-burn-your-fire-for-no.html
-/yt/o4LBGitcvi8
-http://youtu.be/LHcP4MWABGY # short url
-//youtube.com/v/ifAtvI48R_0
-//youtube.com/watch?v=femWm-FtfXs
-http://www.youtube.com/v/c3sBBRxDAqk
-https://www.youtube.com/v/c3sBBRxDAqk
-http://www.youtube.com/embed/c3sBBRxDAqk
-http://www.youtube.com/watch?v=Bx2guCyfLXo
-http://www.youtube.com/watch?v=Bx2guCyfLXo&feature=share
-http://www.youtube.com/watch?feature=share&v=Bx2guCyfLXo
-http://www.youtube.com/watch?feature=player_embedded&v=EXFhuAbYXBk
-https://www.youtube.com/watch?feature=player_embedded&v=rGKfrgqWcv0#! # by clicking on the youtube logo from a facebook embed
-http://www.youtube.com/watch?v=rGKfrgqWcv0&feature=share
-//www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
-www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
-//www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare
-
 # Soundcloud tracks
 
 http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
@@ -103,6 +37,72 @@ https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineu
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-records%2Fhome-leave-the-lights-on&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
 http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
+
+# Deezer tracks
+
+/dz/73414915
+deezer.com/track/73414915
+//deezer.com/track/73414915
+http://www.deezer.com/track/73414915
+https://www.deezer.com/track/73414915
+https://www.deezer.com/track/73414915?test=1&pouet=0
+
+# Jamendo tracks
+
+/ja/1115147
+jamendo.com/track/1115147
+//jamendo.com/track/1115147
+http://jamendo.com/track/1115147
+https://jamendo.com/track/1115147
+//www.jamendo.com/en/track/1115147/get-momentum
+
+# Youtube tracks
+
+https://youtube.googleapis.com/v/PinTAGbIsV4&source=uds # VEVO for http://spiritiflauticos.blogspot.fr/2014/08/angel-olsen-burn-your-fire-for-no.html
+/yt/o4LBGitcvi8
+http://youtu.be/LHcP4MWABGY # short url
+//youtube.com/v/ifAtvI48R_0
+//youtube.com/watch?v=femWm-FtfXs
+http://www.youtube.com/v/c3sBBRxDAqk
+https://www.youtube.com/v/c3sBBRxDAqk
+http://www.youtube.com/embed/c3sBBRxDAqk
+http://www.youtube.com/watch?v=Bx2guCyfLXo
+http://www.youtube.com/watch?v=Bx2guCyfLXo&feature=share
+http://www.youtube.com/watch?feature=share&v=Bx2guCyfLXo
+http://www.youtube.com/watch?feature=player_embedded&v=EXFhuAbYXBk
+https://www.youtube.com/watch?feature=player_embedded&v=rGKfrgqWcv0#! # by clicking on the youtube logo from a facebook embed
+http://www.youtube.com/watch?v=rGKfrgqWcv0&feature=share
+//www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
+www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
+//www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare
+
+# Vimeo tracks
+
+/vi/46314116
+vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
+//vimeo.com/46314116
+http://vimeo.com/46314116
+http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+
+# Dailymotion tracks (currently broken)
+
+/dm/x142x6e_jean-jean-love_music
+dailymotion.com/video/x142x6e_jean-jean-love_music
+//www.dailymotion.com/video/x142x6e_jean-jean-love_music
+http://www.dailymotion.com/video/x142x6e_jean-jean-love_music
+https://www.dailymotion.com/video/x142x6e_jean-jean-love_music
+https://www.dailymotion.com/video/x142x6e_jean-jean-love_music?test=1&pouet=0
+
+# Spotify tracks (partially supported)
+
+/sp/63wxaMojZaS69nYttu7Fh1
+spotify.com/track/63wxaMojZaS69nYttu7Fh1
+open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+//open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+http://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1
+https://open.spotify.com/track/63wxaMojZaS69nYttu7Fh1?test=1&pouet=0
 
 # Soundcloud sets (not supported)
 
