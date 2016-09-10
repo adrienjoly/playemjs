@@ -19,10 +19,10 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		"http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3",
 		// DEEZER
 		"/dz/73414915",
-		// SPOTIFY
-		"/sp/63wxaMojZaS69nYttu7Fh1",
 		// DAILYMOTION
 		"/dm/x142x6e_jean-jean-love_music", // /!\ not working because of pre-roll add (TODO)
+		// SPOTIFY
+		// "/sp/63wxaMojZaS69nYttu7Fh1",
 	];
 
 	var nextIndex = 0;
