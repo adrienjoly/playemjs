@@ -13,8 +13,6 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		"/sc/adrienjoly/wolfentrap-3d",
 		// VIMEO
 		"/vi/46314116", // Man is not a Bird - IV - Live at le Klub, Paris
-		// DAILYMOTION
-		"/dm/x142x6e_jean-jean-love_music",
 		// JAMENDO
 		"/ja/1115147",
 		// MP3
@@ -23,6 +21,8 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		"/dz/73414915",
 		// SPOTIFY
 		"/sp/63wxaMojZaS69nYttu7Fh1",
+		// DAILYMOTION
+		"/dm/x142x6e_jean-jean-love_music", // /!\ not working because of pre-roll add (TODO)
 	];
 
 	var nextIndex = 0;
