@@ -3,14 +3,22 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	var toHide = document.getElementById("toHide");
 	toHide.parentElement.removeChild(toHide);
 
-	var runner = new TestRunner();
-	var eventLogger = new PlayemLogger().listenTo(playem);
+	var TRACK =
+		// "/yt/o4LBGitcvi8"; // youtube video
+		"/vi/35982411"; // very short vimeo video
+		// "https://www.dailymotion.com/video/x25ohb"; // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
+		// "http://manisnotabird.bandcamp.com/track/the-sound-of-spring";
 
+	// init testing environment
+	var testUI = new TestUI(1, 1);
+	playem = testUI.wrapPlayem(playem);
 	playem.setPref("loop", false);
-	playem.addTrackByUrl("https://www.dailymotion.com/video/x25ohb"); // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
-	//playem.addTrackByUrl("http://manisnotabird.bandcamp.com/track/the-sound-of-spring");
+	var eventLogger = new PlayemLogger().listenTo(playem, testUI.onPlayerEvent);
+
+	playem.addTrackByUrl(TRACK);
 	playem.play();
 
+	var runner = new TestRunner();
 	runner.addTests({
 		"track starts playing (or buffering) in less than 10 seconds": function(cb){
 			var done = false;
