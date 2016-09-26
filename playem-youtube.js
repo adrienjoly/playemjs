@@ -10,9 +10,11 @@ function YoutubePlayer(){
 (function() {
 	//includeJS("https://www.youtube.com/player_api");
 	var EVENT_MAP = {
-			/*YT.PlayerState.ENDED*/ 0: "onEnded",
-			/*YT.PlayerState.PLAYING*/ 1: "onPlaying",
-			/*YT.PlayerState.PAUSED*/ 2: "onPaused"
+			0: "onEnded",
+			1: "onPlaying",
+			2: "onPaused",
+//      3: "onBuffering", // youtube state: buffering
+//      5: "onBuffering", // youtube state: cued
 		};
 
     var SDK_URL = 'https://apis.google.com/js/client.js?onload=initYT',
