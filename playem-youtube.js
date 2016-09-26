@@ -20,6 +20,7 @@ function YoutubePlayer(){
     var SDK_URL = 'https://apis.google.com/js/client.js?onload=initYT',
         SDK_LOADED = false,
         PLAYER_API_SCRIPT = 'https://www.youtube.com/iframe_api',
+		PLAYER_API_LOADED = false,
 		DEFAULT_PARAMS = {
 						    width: '200',
 						    height: '200',
@@ -36,22 +37,42 @@ function YoutubePlayer(){
 						    }
 						  };
 
-    var apiReady = false,
-        part = 'id,snippet',
-        callback;
+    var apiReady = false;
 
+	function whenApiReady(cb){
+		setTimeout(function(){
+			if (SDK_URL && apiReady && PLAYER_API_LOADED){
+				cb();
+			}else{
+				whenApiReady(cb);
+			}
+		}, 200);
+	}
+	
+	window.onYouTubeIframeAPIReady = function() {
+		PLAYER_API_LOADED = true;
+	}
+
+	// called by $.getScript(SDK_URL)
     window.initYT = function() {
         gapi.client.setApiKey(YOUTUBE_API_KEY);
         gapi.client.load('youtube', 'v3', function() {
-          apiReady = true;
-          if (callback)
-            callback();
+			apiReady = true;
+			$.getScript(PLAYER_API_SCRIPT, function() {
+				// will call window.onYouTubeIframeAPIReady()
+
+			});
         });
     };
  	
- 	if (typeof YOUTUBE_API_KEY !== 'undefined') {
- 		loadSDK();	
- 	};
+	if (!SDK_LOADED) {
+		$.getScript(SDK_URL, function() {
+			// will call window.initYT()
+			SDK_LOADED = true;
+		});
+	} else if (!apiReady) {
+		window.initYT();
+	}
 
 	function Player(eventHandlers, embedVars) {
 		this.eventHandlers = eventHandlers || {};
@@ -77,20 +98,11 @@ function YoutubePlayer(){
 			eventHandlers.onError && eventHandlers.onError(that, {source:"YoutubePlayer", code: error});
 		}
 
-		window.onYouTubeIframeAPIReady = function() {
-			that.player = new YT.Player(that.embedVars.playerId || 'ytplayer', DEFAULT_PARAMS);
-		 	that.player.addEventListener("onStateChange", "onYoutubeStateChange");
-			that.player.addEventListener("onError", "onYoutubeError");
-		    that.element = that.player.getIframe();
-			that.player.addEventListener('onReady', function(event) {
-				that.safeClientCall("onEmbedReady");
-				that.player.loadVideoById(that.embedVars.videoId);				
-			});
-		}
-
-		that.isReady = true;
-		if (that.eventHandlers.onApiReady)
-			that.eventHandlers.onApiReady(that);
+		whenApiReady(function(){
+			that.isReady = true;
+			if (that.eventHandlers.onApiReady)
+				that.eventHandlers.onApiReady(that);
+		});
 	}
 
 	Player.prototype.safeCall = function(fctName, param) {
@@ -119,13 +131,21 @@ function YoutubePlayer(){
 		this.embedVars = vars = vars || {};
 		this.embedVars.playerId = this.embedVars.playerId || 'ytplayer';
 		this.trackInfo = {};
+		this.embedVars.playerContainer.innerHTML = '';
 		this.element = document.createElement("div");
 		this.element.id = this.embedVars.playerId;
 		this.embedVars.playerContainer.appendChild(this.element);
 		$(this.element).show();
-		var script = document.createElement('script');
-	    script.src = PLAYER_API_SCRIPT;
-	    document.body.appendChild(script);
+
+		var that = this;
+		that.player = new YT.Player(that.embedVars.playerId || 'ytplayer', DEFAULT_PARAMS);
+		that.player.addEventListener("onStateChange", "onYoutubeStateChange");
+		that.player.addEventListener("onError", "onYoutubeError");
+		that.element = that.player.getIframe();
+		that.player.addEventListener('onReady', function(event) {
+			that.safeClientCall("onEmbedReady");
+			that.player.loadVideoById(that.embedVars.videoId);				
+		});
 	}
 
 	Player.prototype.getEid = function(url) {
@@ -141,16 +161,6 @@ function YoutubePlayer(){
 
     function searchTracks(query, limit, cb){
 
-		function waitFor(cb){
-            setTimeout(function(){
-                if (apiReady){
-                    cb();
-                }else{
-                    waitFor(cb);
-                }
-            }, 200);
-        }
-        
         function translateResult(r){
         	var id = r.id.videoId;
         	var track = {
@@ -165,7 +175,7 @@ function YoutubePlayer(){
         }
 
         if (!cb) return;
-		waitFor(function(){
+		whenApiReady(function(){
 			gapi.client.youtube.search.list({
 				part: 'snippet', 
 				q: query,
@@ -243,15 +253,6 @@ function YoutubePlayer(){
 		if (this.player && this.player.setVolume)
 			this.player.setVolume(vol * 100);
 	};
-
-    //============================================================================  
-    function loadSDK() {
-        if (!SDK_LOADED) {
-          $.getScript(SDK_URL, function() {
-            SDK_LOADED = true;
-          });
-        } 
-    }
 
 	//return Player;
 	//inherits(YoutubePlayer, Player);
