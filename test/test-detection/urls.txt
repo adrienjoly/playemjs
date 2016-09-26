@@ -1,3 +1,16 @@
+# Youtube tracks
+
+/yt/o4LBGitcvi8
+
+# Vimeo tracks
+
+/vi/46314116
+vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
+//vimeo.com/46314116
+http://vimeo.com/46314116
+http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
+
 # MP3 tracks
 
 //fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
@@ -75,15 +88,6 @@ http://www.youtube.com/watch?v=rGKfrgqWcv0&feature=share
 //www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
 www.youtube.com/watch?feature=player_embedded&v=o4LBGitcvi8
 //www.youtube.com/attribution_link?a=1CrQmQgWWKo&u=%2Fwatch%3Fv%3DjccW-xudoD8%26feature%3Dshare
-
-# Vimeo tracks
-
-/vi/46314116
-vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
-//vimeo.com/46314116
-http://vimeo.com/46314116
-http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
-player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
 
 # Dailymotion tracks (currently broken)
 

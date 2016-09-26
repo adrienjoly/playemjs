@@ -141,6 +141,7 @@ function VimeoPlayer(){
 		};
 		for (i in attributes)
 			this.element.setAttribute(i, attributes[i]);
+		this.embedVars.playerContainer.innerHTML = '';
 		this.embedVars.playerContainer.appendChild(this.element);
 		// TODO: wait for this.element.contentWindow.postMessage to be ready to be called
 		if (this.eventHandlers.onEmbedReady)

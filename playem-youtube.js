@@ -234,8 +234,9 @@ function YoutubePlayer(){
 	}
 	
 	Player.prototype.stop = function() {
-		if (this.player && this.player.stopVideo)
+		try {
 			this.player.stopVideo();
+		} catch(e) {}
 	}
 	
 	Player.prototype.getTrackPosition = function(callback) {
