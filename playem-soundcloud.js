@@ -146,12 +146,12 @@ function SoundCloudPlayer(){
   }
 
   function fetchMetadata(url, cb){
-    var splitted, params, trackId;
+    var splitted, params, trackId, method;
     url = unwrapUrl(url);
     splitted = url.split("?");
     params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
     trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
-    var method = (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) ? "loadJSONP" : "loadJSON";
+    method = (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) ? "loadJSONP" : "loadJSON";
     if (trackId)
       loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
         + "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);

@@ -146,14 +146,14 @@ function DeezerPlayer(){
     
   //============================================================================  
   function loadSDK(cb) {
+    var alreadyInit = false, dz;
     if (window.DZ)
       return cb();
     if (!document.getElementById('dz-root')) {
-      var dz = document.createElement('div');
+      dz = document.createElement('div');
       dz.id = 'dz-root';
       document.getElementsByTagName("body")[0].appendChild(dz);
     }
-    var alreadyInit = false;
     loader.includeJS(SDK_URL, function(){
       if (window.location.protocol === "https:")
         DZ.override_https();

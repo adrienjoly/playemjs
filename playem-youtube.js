@@ -158,15 +158,14 @@ function YoutubePlayer(){
   function searchTracks(query, limit, cb){
     function translateResult(r){
       var id = r.id.videoId;
-      var track = {
+      return {
         id : id,
         eId: "/yt/" + id,
         img: r.snippet.thumbnails["default"].url,
         url: "https://www.youtube.com/watch?v=" + r.id.videoId,
         title: r.snippet.title,
         playerLabel: 'Youtube'
-      }
-      return track;
+      };
     }
     if (!cb) return;
     whenApiReady(function(){

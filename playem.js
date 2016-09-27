@@ -34,9 +34,10 @@ loader = new (function Loader() {
       xdr.send();
     },
     includeJS: function(src, cb){
+      var inc, nt;
       if (pending[src]) {
         if (cb) {
-          var nt = setInterval(function(){
+          nt = setInterval(function(){
             if (pending[src])
               return console.log("still loading", src, "...");
             clearInterval(nt);
@@ -46,7 +47,7 @@ loader = new (function Loader() {
         return;
       }
       pending[src] = true;
-      var inc = document.createElement("script");
+      inc = document.createElement("script");
       //inc.async = "async";
       inc.onload = function(){
         if (!pending[src])
@@ -208,9 +209,8 @@ function Playem(playemPrefs) {
     }
 
     function searchTracks(query, handleResult){
-      var expected = 0,
-      currentPlayer;
-      for (var i = 0; i < players.length; i++) {
+      var expected = 0, i, currentPlayer;
+      for (i = 0; i < players.length; i++) {
         currentPlayer = players[i];
         //Search for player extending the "searchTracks" method.
         if (typeof currentPlayer.searchTracks == 'function') {
