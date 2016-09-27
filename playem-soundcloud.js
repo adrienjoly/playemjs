@@ -110,15 +110,49 @@ function SoundCloudPlayer(){
 		// or null / false (if not a track)
 	}
 
+    function searchTracks(query, limit, cb){
+        function waitFor(objName, cb){
+            setTimeout(function(){
+                if (window[objName])
+                    cb(window[objName]);
+                else
+                    waitFor(objName, cb);
+            }, 200);
+        }
+
+        function translateResult(r){
+            r.title = r.title || r.name;
+            return {
+                eId: "/sc" + r.permalink_url.substr(r.permalink_url.indexOf("/", 10)) + "#" + r.uri,
+                img: r.img || r.artwork_url || "/images/cover-soundcloud.jpg",
+                url: r.url || r.permalink_url + "#" + r.uri,
+                title: (r.title.indexOf(" - ") == -1 ? r.user.username + " - " : "") + r.title,
+                playerLabel: 'Soundcloud'
+            };
+        }
+
+        waitFor("SC", function(SC){
+            SC.get('/tracks', {q: query, limit: limit}, function(results) {
+                if ( results instanceof Array) {
+                    var tracks = results.map(translateResult);
+                    cb(tracks);
+                };
+            });
+        });
+    }
+
+    Player.prototype.searchTracks = function(query, limit, cb){
+        searchTracks(query, limit, cb); 
+    }
+
 	function fetchMetadata(url, cb){
+
 		var splitted, params, trackId;
 		url = unwrapUrl(url);
 		splitted = url.split("?");
 		params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
 		trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
-		// rely on CORS if possible, because JSONP call from soundcloud API was malformed in some cases
-		// but soundcloud apparently does not support CORS calls from localhost...
-		var method = /localhost\:/.test(window.location.href) ? "loadJSONP" : "loadJSON";
+		var method = (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) ? "loadJSONP" : "loadJSON";
 		if (trackId)
 			loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
 				+ "client_id=" + SOUNDCLOUD_CLIENT_ID, cb);
