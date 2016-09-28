@@ -13,15 +13,13 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 
 	playem.addTrackByUrl(TRACK);
 	playem.play();
-	/*
+
 	// this is necessary to show the deezer login URL, in order to play the track in full
+	var div = document.getElementById('eventLog');
 	window.showMessage = function(msg) {
-		document.body.innerHTML = document.body.innerHTML
-			+ "<pre><code>[showMessage] " + msg + "</code></pre>";
+		div.innerHTML = div.innerHTML + "[showMessage] " + msg + "<br/>";
 	};
-	// ... BUT altering innerHTML breaks the Deezer player!
-	// cf http://stackoverflow.com/a/39724214/592254
-	*/
+
 	window.showMessage('deezer app id: ' + DEEZER_APP_ID);
 	window.showMessage('deezer channel url: ' + DEEZER_CHANNEL_URL);
 
