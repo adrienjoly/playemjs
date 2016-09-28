@@ -168,9 +168,9 @@ function DeezerPlayer(){
             DZ.override_https();
           DZ.getLoginStatus(function(response) {
             IS_LOGGED = response.userID;
+            hookHandlers(self);
+            onload.call(null, arguments);
           });
-          hookHandlers(self);
-          onload.call(null, arguments);
         }
       }
     });
