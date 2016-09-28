@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Deezer Track Tests</title>
+	<script src="../test.js"></script>
+</head>
+<body>
+<style>
+	.info {
+		font-family: arial;
+		font-weight: bold;
+		font-size: 10px;
+	}
+	.info span, .info div {
+		margin-left: 10px;
+		font-weight: normal;
+	}
+</style>
+
+<div id="toHide">
+	<p>Loading tests...</p>
+	<p>If nothing shows up, please open this page using the incognito/private mode of your browser</p>
+</div>
+
+<div class="info">
+	<p>current track:<span id="progress"></span></p>
+	<p>url:<span id="trackUrl"></span></p>
+	<p>player+id:<span id="playerName"></span>&nbsp;<span id="trackId"></span></p>
+	<p>current test:<span id="testName"></span></p>
+	<p>duration:<span id="duration"></span></p>
+	<p>position:<span id="position"></span></p>
+</div>
+
+<div id="container"></div>
+
+<div class="info">
+	<p>events:</p>
+	<div id="eventLog"></div>
+</p>
+
+<script src="test-track.js"></script>
+
+</body>
+</html>
