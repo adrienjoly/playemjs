@@ -61,6 +61,16 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 				cb(!res);
 			}, 5000);
 		},
+		"we can play the track again": function(cb){
+			var done = false;
+			function singleCb(res){
+				!done && cb(res);
+				done = true;
+			}
+			eventLogger.until("onBuffering", singleCb, 9000);
+			eventLogger.until("onPlay", singleCb, 10000);
+			playem.play();
+		},
 	});
 
 	runner.run(function(res){
