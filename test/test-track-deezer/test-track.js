@@ -34,15 +34,24 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 			eventLogger.until("onBuffering", singleCb, 9000);
 			eventLogger.until("onPlay", singleCb, 10000);
 		},
+		"get track duration": function(cb){
+			var retries = 3;
+			(function waitForDuration(){
+				eventLogger.until("onTrackInfo", function(evt, args){
+					var trackDuration = ((args && args[0]) || {}).trackDuration;
+					if(!trackDuration && --retries)
+						waitForDuration();
+					else
+						cb(!!trackDuration);
+				}, 1000);
+			})()
+		},
 		"skip to end of track": function(cb){
-			var targetPos = 0.997;
+			var targetPos = 0.98; // <10 seconds before end of track
 			// give time for onTrackChange to be listened by first test
 			setTimeout(function(){
 				playem.seekTo(targetPos);
 			}, 100);
-			cb(true);
-		},
-		"reaching the end of track": function(cb){
 			eventLogger.until("onEnd", function(){
 				cb(true);
 			});
