@@ -34,6 +34,15 @@ function SoundCloudPlayer(){
 
     var that = this;
 
+    this.callHandler = function(name, params) {
+      try {
+        eventHandlers[name] && eventHandlers[name](params);//.apply(null, params);
+      }
+      catch (e) {
+        console.error("SC error:", e, e.stack);
+      }
+    };
+
     function init() {
       for (var i in EVENT_MAP)
         (function(i) {
@@ -68,15 +77,6 @@ function SoundCloudPlayer(){
         window.SC.initialize({client_id: window.SOUNDCLOUD_CLIENT_ID});
         init();
       });
-    }
-
-    this.callHandler = function(name, params) {
-      try {
-        eventHandlers[name] && eventHandlers[name](params);//.apply(null, params);
-      }
-      catch (e) {
-        console.error("SC error:", e, e.stack);
-      }
     }
   }
 
