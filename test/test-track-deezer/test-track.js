@@ -56,8 +56,8 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 				cb(true);
 			});
 		},
-		"track does not repeat": function(cb){
-			eventLogger.until("onPlay", function(res){
+		"does not keep playing": function(cb){
+			eventLogger.until("onTrackInfo", function(res){
 				cb(!res);
 			}, 5000);
 		},
