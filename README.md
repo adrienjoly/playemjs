@@ -22,7 +22,7 @@ PlayemJS powers the music curation service [Openwhyd.org](http://openwhyd.org) (
 Examples
 -----
 
-### Play just a Vimeo videos
+### 1. Play just a Vimeo video
 
 ```html
 <div id="playem_video"></div>
@@ -39,9 +39,9 @@ Examples
 </script>
 ```
 
-[Watch it work live on Codepen](http://codepen.io/adrienjoly/pen/QjLRXa?editors=101)
+▶️ [Watch it work live on Codepen](http://codepen.io/adrienjoly/pen/QjLRXa?editors=101)
 
-### Play Vimeo and Youtube videos
+### 2. Play Vimeo and Youtube videos
 
 Using a playlist, multiple players and Event logging.
 
@@ -69,9 +69,9 @@ Using a playlist, multiple players and Event logging.
 </script>
 ```
 
-[Watch it work live on Codepen](https://codepen.io/adrienjoly/pen/EXXEXq?editors=1011)
+▶️ [Watch it work live on Codepen](https://codepen.io/adrienjoly/pen/EXXEXq?editors=1011)
 
-### Play Video and Audio streams
+### 3. Play Video and Audio streams
 
 Relies on soundmanager2.
 
@@ -105,7 +105,7 @@ Relies on soundmanager2.
 </script>
 ```
 
-[Watch it work live on Codepen](https://codepen.io/adrienjoly/pen/bRRMdQ?editors=1011)
+▶️ [Watch it work live on Codepen](https://codepen.io/adrienjoly/pen/bRRMdQ?editors=1011)
 
 
 Usage with npm & browserify
