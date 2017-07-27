@@ -8,13 +8,13 @@ PLAYERS += $(filter-out %-TODO.js,$(wildcard \
 ))
 
 # Command to run to execute the YUI Compressor.
-YUI_COMPRESSOR = /usr/local/bin/yuicompressor
+YUI_COMPRESSOR = node_modules/.bin/yuicompressor
 YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
 
 GIT_COMMIT_HASH = `git rev-parse HEAD`
 
 default:
-	@echo targets: compile, install
+	@echo targets: compile
 
 playem-all.js: $(PLAYERS)
 	@echo '==> Compiling: $(PLAYERS)'
@@ -37,6 +37,3 @@ tests:
 	@./test/server.sh
 
 compile: playem-min.js
-
-install:
-	brew install yuicompressor
