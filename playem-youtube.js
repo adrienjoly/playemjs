@@ -21,13 +21,14 @@ function YoutubePlayer(){
     SDK_LOADED = false,
     PLAYER_API_SCRIPT = 'https://www.youtube.com/iframe_api',
     PLAYER_API_LOADED = false,
+    YOUTUBE_VIDEO_URL = "https://www.youtube.com/watch?v=",
     apiReady = false,
     DEFAULT_PARAMS = {
       width: '200',
       height: '200',
       playerVars: {
         autoplay: 1,
-        version: 3, 
+        version: 3,
         enablejsapi: 1,
         controls: 0,
         modestbranding: 1,
@@ -141,7 +142,7 @@ function YoutubePlayer(){
     that.element = that.player.getIframe();
     that.player.addEventListener('onReady', function(event) {
       that.safeClientCall("onEmbedReady");
-      that.player.loadVideoById(that.embedVars.videoId);        
+      that.player.loadVideoById(that.embedVars.videoId);
     });
   }
 
@@ -162,7 +163,7 @@ function YoutubePlayer(){
         id : id,
         eId: "/yt/" + id,
         img: r.snippet.thumbnails["default"].url,
-        url: "https://www.youtube.com/watch?v=" + r.id.videoId,
+        url: YOUTUBE_VIDEO_URL + r.id.videoId,
         title: r.snippet.title,
         playerLabel: 'Youtube'
       };
@@ -170,19 +171,19 @@ function YoutubePlayer(){
     if (!cb) return;
     whenApiReady(function(){
       gapi.client.youtube.search.list({
-        part: 'snippet', 
-        q: query,
+        part: 'snippet',
+        q: YOUTUBE_VIDEO_URL + query,
         type : "video",
         maxResults : limit,
       }).execute(function(res){
         results = res.items.map(translateResult);
         cb(results);
-      });  
+      });
     });
   }
 
   Player.prototype.searchTracks = function(query, limit, cb){
-    searchTracks(query, limit, cb); 
+    searchTracks(query, limit, cb);
   }
 
   function fetchMetadata(id, cb){
@@ -223,24 +224,24 @@ function YoutubePlayer(){
     if (this.player && this.player.playVideo)
       this.player.playVideo();
   }
-  
+
   Player.prototype.stop = function() {
     try {
       this.player.stopVideo();
     } catch(e) {}
   }
-  
+
   Player.prototype.getTrackPosition = function(callback) {
     if (callback && this.player && this.player.getCurrentTime)
       callback(this.player.getCurrentTime());
   };
-  
+
   Player.prototype.setTrackPosition = function(pos) {
     // this.safeCall("seekTo", pos, true);
     if (this.player && this.player.seekTo)
       this.player.seekTo(pos);
   };
-  
+
   Player.prototype.setVolume = function(vol) {
     if (this.player && this.player.setVolume)
       this.player.setVolume(vol * 100);
