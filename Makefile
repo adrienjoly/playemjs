@@ -12,6 +12,7 @@ YUI_COMPRESSOR = node_modules/.bin/yuicompressor
 YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
 
 GIT_COMMIT_HASH = `git rev-parse HEAD`
+PACKAGE_VERSION=`node -p "require('./package.json').version"`
 
 default:
 	@echo targets: compile
@@ -19,18 +20,18 @@ default:
 playem-all.js: $(PLAYERS)
 	@echo '==> Compiling: $(PLAYERS)'
 	@mkdir -p ./dist
-	@echo "/* playemjs commit: $(GIT_COMMIT_HASH) */\n" > ./dist/playem-all.js
+	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */\n" > ./dist/playem-all.js
 	@cat $(PLAYERS) >> ./dist/playem-all.js
 	@echo
 
 playem-min.js: playem-all.js
 	@echo '==> Minifying $<'
-	@echo "/* playemjs commit: $(GIT_COMMIT_HASH) */ " > ./dist/playem-min.js
+	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */ " > ./dist/playem-min.js
 	$(YUI_COMPRESSOR) $(YUI_COMPRESSOR_FLAGS) --type js ./dist/playem-all.js >> ./dist/playem-min.js
 	# $< >$@
 	@echo
 	@echo Finished producing ./dist/playem-all.js and ./dist/playem-min.js
-	@echo Playemjs commit: $(GIT_COMMIT_HASH)
+	@echo Playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH)
 	@echo
 
 tests:
