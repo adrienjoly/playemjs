@@ -8,7 +8,7 @@
   },
   "scripts": {
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
-    "compile": "make compile && browserify browserify.js -o dist/browserify-bundle.js",
+    "compile": "rm dist/*.js; make compile && browserify browserify.js -o dist/browserify-bundle.js",
     "prepublishOnly": "npm run -s warn; npm run compile",
     "start": "echo \"go to http://localhost:8000/test\npress ctrl-c when done\" && python -m SimpleHTTPServer >/dev/null",
     "test": "npm run compile && npm start --loglevel=silent"
