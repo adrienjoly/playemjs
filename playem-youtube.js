@@ -158,7 +158,7 @@ function YoutubePlayer(){
 
   function searchTracks(query, limit, cb){
     function translateResult(r){
-      var id = r.id.videoId;
+      var id = r.id;
       return {
         id : id,
         eId: "/yt/" + id,
@@ -170,11 +170,9 @@ function YoutubePlayer(){
     }
     if (!cb) return;
     whenApiReady(function(){
-      gapi.client.youtube.search.list({
-        part: 'snippet',
-        q: YOUTUBE_VIDEO_URL + query,
-        type : "video",
-        maxResults : limit,
+      gapi.client.youtube.videos.list({
+        'id': query,
+        'part': 'snippet,contentDetails,statistics'
       }).execute(function(res){
         results = res.items.map(translateResult);
         cb(results);
