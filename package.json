@@ -10,7 +10,8 @@
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
     "compile-dist": "rm dist/*.js; make compile",
     "compile": "npm run -s compile-dist && browserify browserify.js -o dist/browserify-bundle.js",
-    "generate-doc": "npm run -s compile-dist && jsdoc dist/playem-all.js -d docs",
+    "generate-doc": "npm run -s compile-dist && documentation build dist/playem-all.js -f html -o docs",
+    "generate-doc-md": "npm run -s compile-dist && documentation build dist/playem-all.js -f md -o docs.md",
     "prepublishOnly": "npm run -s warn; npm run compile",
     "start": "echo \"go to http://localhost:8000/test\npress ctrl-c when done\" && python -m SimpleHTTPServer >/dev/null",
     "test": "npm run compile && npm start --loglevel=silent"
@@ -41,7 +42,7 @@
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
     "browserify": "^11.0.0",
-    "jsdoc": "^3.5.5",
+    "documentation": "^5.3.3",
     "yuicompressor": "^2.4.8"
   },
   "dependencies": {
