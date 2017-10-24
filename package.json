@@ -8,8 +8,8 @@
   },
   "scripts": {
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
-    "compile-dist": "rm dist/*.js; make compile",
-    "compile": "npm run -s compile-dist && browserify browserify.js -o dist/browserify-bundle.js",
+    "compile-dist": "make compile",
+    "compile": "rm dist/*.js; npm run -s compile-dist && browserify browserify.js -o dist/browserify-bundle.js",
     "generate-doc": "npm run -s compile-dist && documentation build dist/playem-all.js -f html -o docs",
     "generate-doc-md": "npm run -s compile-dist && documentation build dist/playem-all.js -f md -o docs.md",
     "prepublishOnly": "npm run -s warn; npm run compile",
