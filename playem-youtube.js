@@ -27,7 +27,7 @@ function YoutubePlayer(){
       width: '200',
       height: '200',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         version: 3,
         enablejsapi: 1,
         controls: 0,
@@ -143,6 +143,7 @@ function YoutubePlayer(){
     that.player.addEventListener('onReady', function(event) {
       that.safeClientCall("onEmbedReady");
       that.player.loadVideoById(that.embedVars.videoId);
+      that.player.playVideo();
     });
   }
 

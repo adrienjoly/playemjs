@@ -1,4 +1,4 @@
-/* playemjs 0.1.9, commit: e3bfe316c7e289e62011d7c16af0202fc9631470 */
+/* playemjs 0.1.9, commit: 5139e07c905164d07e1452da891f78cb23190c6c */
 
 // configuration
 
@@ -2062,7 +2062,7 @@ function YoutubePlayer(){
       width: '200',
       height: '200',
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         version: 3,
         enablejsapi: 1,
         controls: 0,
@@ -2178,6 +2178,7 @@ function YoutubePlayer(){
     that.player.addEventListener('onReady', function(event) {
       that.safeClientCall("onEmbedReady");
       that.player.loadVideoById(that.embedVars.videoId);
+      that.player.playVideo();
     });
   }
 
