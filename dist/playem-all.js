@@ -1,4 +1,4 @@
-/* playemjs 0.1.8, commit: 5746dfd6bc3f12a4411f924f19808122284d918f */
+/* playemjs 0.1.9, commit: e3bfe316c7e289e62011d7c16af0202fc9631470 */
 
 // configuration
 
@@ -14,11 +14,27 @@ window.$ = window.$ || function(){return window.$};
 if (undefined == window.console) 
   window.console = {log:function(){}};
 
-loader = new (function Loader() {
+/**
+ * This class provides helpers to load JavaScript resources and JSON data.
+ * @class Loader
+ */
+function Loader() {
   var FINAL_STATES = {"loaded": true, "complete": true, 4: true},
     head = document.getElementsByTagName("head")[0],
     pending = {}, counter = 0;
   return {
+    /**
+     * @private
+     * @callback dataCallback
+     * @memberof Loader.prototype
+     * @param {object|string} data JSON object, or string returned by request as `responseText`.
+     */
+    /**
+     * Loads and returns a JSON resource asynchronously, using XMLHttpRequest (AJAX).
+     * @memberof Loader.prototype
+     * @param {string} src HTTP(S) URL of the JSON resource to load.
+     * @param {dataCallback} cb Callback function with request's data as first parameter.
+     */
     loadJSON: function(src, cb){
       //if (pending[src]) return cb && cb();
       //pending[src] = true;
@@ -35,6 +51,18 @@ loader = new (function Loader() {
       xdr.open("GET", src, true);
       xdr.send();
     },
+    /**
+     * @private
+     * @callback errorCallback
+     * @memberof Loader.prototype
+     * @param {Error} error Error caught thru the `error` event or `appendChild()` call, if any.
+     */
+    /**
+     * Loads a JavaScript resource into the page.
+     * @memberof Loader.prototype
+     * @param {string} src HTTP(S) URL of the JavaScript resource to load into the page.
+     * @param {errorCallback} cb Callback function with error as first parameter, if any.
+     */
     includeJS: function(src, cb){
       var inc, nt;
       if (pending[src]) {
@@ -75,6 +103,12 @@ loader = new (function Loader() {
         cb(e);
       }
     },
+    /**
+     * Loads and returns a JSON resource asynchronously, by including it into the page (not AJAX).
+     * @memberof Loader.prototype
+     * @param {string} src HTTP(S) URL of the JSON resource to load.
+     * @param {function} cb Callback function, called by the resource's script.
+     */
     loadJSONP: function(src, cb){
       var callbackFct = "__loadjsonp__" + (counter++);
       window[callbackFct] = function(){
@@ -87,7 +121,9 @@ loader = new (function Loader() {
       });
     },
   };
-});
+}
+
+loader = new Loader();
 
 // EventEmitter
 
@@ -118,6 +154,7 @@ EventEmitter.prototype.emit = function(eventName){
  * @param {function} ctor Constructor function which needs to inherit the
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
+ * @ignore => this function will not be included in playemjs' generated documentation
  */
 function inherits(ctor, superCtor) {
   ctor.super_ = superCtor;
@@ -132,7 +169,8 @@ function inherits(ctor, superCtor) {
 };
 
 /**
- * Plays a sequence of streamed audio/video tracks by embedding the corresponding players
+ * Plays a sequence of streaming audio/video tracks by embedding the corresponding players
+ * into the page.
  *
  * Events:
  * - "onError", {code,source}
@@ -143,6 +181,8 @@ function inherits(ctor, superCtor) {
  * - "onTrackInfo", track{}
  * - "onTrackChange", track{}
  * - "loadMore"
+ * @param {Object} playemPrefs Settings and preferences.
+ * @param {booleam} playemPrefs.loop If `true`, the queue of tracks will repeat forever.
  */
 
 function Playem(playemPrefs) {
@@ -166,7 +206,12 @@ function Playem(playemPrefs) {
       playTimeout = null,
       volume = 1;
 
-    this.setPref = function(key, val){
+  /**
+   * @memberof Playem.prototype
+   * @param {string} key Key of the Playem parameter to set.
+   * @param {any} val Value to affect to that `key`.
+   */
+  this.setPref = function(key, val){
       playemPrefs[key] = val;
     }
 
