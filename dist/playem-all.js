@@ -1,8 +1,8 @@
-/* playemjs 0.1.10, commit: 5139e07c905164d07e1452da891f78cb23190c6c */
+/* playemjs 0.2.0, commit: 97f8393494b9916e4f98c8b643b3b05877220575 */
 
 // configuration
 
-var PLAY_TIMEOUT = 10000
+var DEFAULT_PLAY_TIMEOUT = 10000
 window.USE_SWFOBJECT = true //! !window.swfobject; // ... to embed youtube flash player
 
 window.$ = window.$ || function () { return window.$ }
@@ -176,7 +176,8 @@ function inherits (ctor, superCtor) {
  * - "onTrackChange", track{}
  * - "loadMore"
  * @param {Object} playemPrefs Settings and preferences.
- * @param {booleam} playemPrefs.loop If `true`, the queue of tracks will repeat forever.
+ * @param {Boolean} playemPrefs.loop - If true, the playlist will be played infinitely. (default: true)
+ * @param {Number} playemPrefs.playTimeoutMs - Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
  */
 
 function Playem (playemPrefs) {
@@ -185,6 +186,7 @@ function Playem (playemPrefs) {
 
     playemPrefs = playemPrefs || {}
     playemPrefs.loop = playemPrefs.hasOwnProperty('loop') ? playemPrefs.loop : true
+    playemPrefs.playTimeoutMs = playemPrefs.playTimeoutMs || DEFAULT_PLAY_TIMEOUT
 
     var players = [] // instanciated Player classes, added by client
     var i
@@ -301,7 +303,7 @@ function Playem (playemPrefs) {
 
     function setPlayTimeout (handler) {
       if (playTimeout) { clearTimeout(playTimeout) }
-      playTimeout = !handler ? null : setTimeout(handler, PLAY_TIMEOUT)
+      playTimeout = !handler ? null : setTimeout(handler, playemPrefs.playTimeoutMs)
     }
 
     function callPlayerFct (fctName, param) {
