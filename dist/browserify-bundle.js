@@ -7750,6 +7750,7 @@ function VimeoPlayer(){
       mozallowfullscreen: true,
       allowScriptAccess: "always",
       allowFullScreen: true,
+      allow: "autoplay; encrypted-media",
       src: 'https://player.vimeo.com/video/' + vars.videoId + "?" + param({
         api: 1,
         js_api: 1,

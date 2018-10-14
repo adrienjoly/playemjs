@@ -1,4 +1,4 @@
-/* playemjs 0.2.0, commit: 97f8393494b9916e4f98c8b643b3b05877220575 */
+/* playemjs 0.3.0, commit: 0dcf2f81025ff8d465fa3a969514c6f56020cec1 */
 
 // configuration
 
@@ -1949,6 +1949,7 @@ function VimeoPlayer(){
       mozallowfullscreen: true,
       allowScriptAccess: "always",
       allowFullScreen: true,
+      allow: "autoplay; encrypted-media",
       src: 'https://player.vimeo.com/video/' + vars.videoId + "?" + param({
         api: 1,
         js_api: 1,
