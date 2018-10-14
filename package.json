@@ -42,8 +42,8 @@
   },
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
-    "browserify": "^11.0.0",
-    "documentation": "^5.3.3",
+    "browserify": "^16.2.3",
+    "documentation": "^8.1.2",
     "standard": "11.0.1",
     "yuicompressor": "^2.4.8"
   },
