@@ -1,5 +1,4 @@
 var soundManager = require('SoundManager2').soundManager;
-var swfobject = window.swfobject = require('swfobject');
 var Playem = window.Playem = require('./playem.js');
 
 // constants / configuration

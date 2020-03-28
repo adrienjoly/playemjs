@@ -58,13 +58,6 @@ function PlayemLoader() {
 		});
 	}
 
-	function loadSwfObject(cb){
-		if (window.swfobject)
-			return cb();
-		console.info("Loading swfobject...");
-		loader.includeJS("//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js", cb);
-	}
-
 	function loadPlayem(cb){
 		if (playem)
 			return cb();
@@ -80,7 +73,7 @@ function PlayemLoader() {
 			else
 				clearInterval(loadInt);
 			playem = new Playem();
-			forEachAsync([ loadSoundManager, loadSwfObject ], cb);
+			forEachAsync([ loadSoundManager ], cb);
 		}, 200);
 	}
 

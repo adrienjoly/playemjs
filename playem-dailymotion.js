@@ -121,12 +121,7 @@ function DailymotionPlayer(){
       data: window.location.protocol+'//www.dailymotion.com/swf/'+this.embedVars.videoId+'?'+paramsQS,
       innerHTML: paramsHTML
     };
-    if (USE_SWFOBJECT) {
-      swfobject.embedSWF(embedAttrs.data, this.embedVars.playerId, embedAttrs.width, embedAttrs.height, "9.0.0", "/js/swfobject_expressInstall.swf", null, params, atts);
-    }
-    else {
-      $(this.element).attr(embedAttrs);
-    }
+    $(this.element).attr(embedAttrs);
     $(this.element).show();
     this.safeClientCall("onEmbedReady");
   }

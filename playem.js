@@ -1,7 +1,6 @@
 // configuration
 
 var DEFAULT_PLAY_TIMEOUT = 10000
-window.USE_SWFOBJECT = true //! !window.swfobject; // ... to embed youtube flash player
 
 window.$ = window.$ || function () { return window.$ }
 
