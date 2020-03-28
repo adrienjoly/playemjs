@@ -3,3 +3,4 @@ node_modules
 alt-players
 docs
 test
+*.tgz
