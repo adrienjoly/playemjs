@@ -1,15 +1,14 @@
 {
   "name": "playemjs",
-  "version": "0.3.1",
+  "version": "1.0.0-rc.1",
   "description": "Play'em is a javascript component that manages a music/video track queue and plays a sequence of songs by embedding several players in a HTML DIV including Youtube, Soundcloud and Vimeo.",
-  "main": "browserify.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
     "compile-dist": "make compile",
-    "compile": "rm dist/*.js; npm run -s compile-dist && browserify browserify.js -o dist/browserify-bundle.js",
+    "compile": "rm dist/*.js; npm run -s compile-dist",
     "generate-doc": "npm run -s compile-dist && documentation build dist/playem-all.js -f html -o docs",
     "generate-doc-md": "npm run -s compile-dist && documentation build dist/playem-all.js -f md -o docs.md",
     "prepublishOnly": "npm run -s warn; npm run compile",
@@ -42,13 +41,11 @@
   },
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
-    "browserify": "^16.2.3",
     "documentation": "^8.1.2",
     "standard": "11.0.1",
     "yuicompressor": "^2.4.8"
   },
   "dependencies": {
-    "soundmanager2": "scottschiller/SoundManager2",
     "swfobject": "^2.2.1"
   }
 }

@@ -108,8 +108,8 @@ Relies on soundmanager2.
 ▶️ [Watch it work live on Codepen](https://codepen.io/adrienjoly/pen/bRRMdQ?editors=1011)
 
 
-Usage with npm & browserify
----------------------------
+Usage with npm
+--------------
 
     npm install playemjs
 
@@ -117,7 +117,7 @@ Then use it that way in your front-end code:
 
 ```html
 <div id="container"></div>
-<script src="your-browserify-bundle.js"></script>
+<script src="dist/playem-min.js"></script>
 <script>
   // your app's API KEYS here
   window.SOUNDCLOUD_CLIENT_ID = "11f9999111b5555c22227777c3333fed"; // your api key
@@ -141,16 +141,6 @@ Then use it that way in your front-end code:
   });
 </script>
 ```
-
-Install using Bower
--------------------
-
-    bower install playemjs
-    make install
-    make compile
-    make tests
-
-... or download the javascript files (playem.js and player files you need) into your public directory of your web project.
 
 React component
 ---------------
