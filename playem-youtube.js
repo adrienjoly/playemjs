@@ -177,6 +177,7 @@ function YoutubePlayer(){
           type : "video",
           maxResults : limit,
         }).execute(function(res){
+          if (res.error) throw res.error; // e.g. 403 / "quota exceeded" error
           results = res.items.map(translateResult);
           cb(results);
         });
@@ -186,6 +187,7 @@ function YoutubePlayer(){
           'id': query,
           'part': 'snippet,contentDetails,statistics'
         }).execute(function(res){
+          if (res.error) throw res.error; // e.g. 403 / "quota exceeded" error
           results = res.items.map(translateResult);
           cb(results);
         });
