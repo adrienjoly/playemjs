@@ -3,18 +3,26 @@ const assert = require('assert');
 
 // define globals required by players
 $ = {}; 
-document = {};
+document = {
+  getElementById: () => ({}), // for deezer
+  createElement: () => ({}), // for deezer
+};
+loader = {
+  includeJS: (src, cb) => cb(), // for deezer
+};
 window = {
   $,
   document,
+  loader, // for deezer
   SC: { initialize: () => {} }, // for soundcloud
 };
 
 // load players
 const players = [
-  { id: "fi", name: "MP3 File", Player: require('./../playem-audiofile.js') },
+  { id: "fi", name: "Audio file", Player: require('./../playem-audiofile.js') },
   { id: "bc", name: "Bandcamp", Player: require('./../playem-bandcamp.js') },
   { id: "dm", name: "Dailymotion", Player: require('./../playem-dailymotion.js') },
+  { id: "dz", name: "Deezer", Player: require('./../playem-deezer.js') },
   { id: "sc", name: "Soundcloud", Player: require('./../playem-soundcloud.js') },
 ];
 
