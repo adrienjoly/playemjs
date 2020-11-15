@@ -152,7 +152,7 @@ Tests and further development
     
 You can run tests from that page:
 
-- [PlayemJS Youtube Video Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/sample.html)
+- [PlayemJS Youtube Video Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/test-youtube/index.html)
 - [PlayemJS Video Players Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/test-players/index.html)
 - [PlayemJS URL Detection Test](https://cdn.rawgit.com/adrienjoly/playemjs/master/test/test-detection/index.html)
 

@@ -7,14 +7,10 @@
   },
   "scripts": {
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
-    "compile-dist": "make compile",
-    "compile": "rm dist/*.js; npm run -s compile-dist",
-    "generate-doc": "npm run -s compile-dist && documentation build dist/playem-all.js -f html -o docs",
-    "generate-doc-md": "npm run -s compile-dist && documentation build dist/playem-all.js -f md -o docs.md",
-    "prepublishOnly": "npm run -s warn; npm run compile",
-    "start": "echo \"go to http://localhost:8000/test\npress ctrl-c when done\" && python -m SimpleHTTPServer >/dev/null",
+    "prepublishOnly": "npm run -s warn; make",
+    "start": "make test",
     "lint": "./node_modules/.bin/standard playem.js # TODO: playem-*.js",
-    "test": "npm run compile && npm start --loglevel=silent"
+    "test": "make test"
   },
   "repository": {
     "type": "git",
@@ -42,6 +38,7 @@
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
     "documentation": "^8.1.2",
+    "mocha": "^8.2.1",
     "standard": "11.0.1",
     "yuicompressor": "^2.4.8"
   },

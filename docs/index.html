@@ -2,19 +2,20 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>playemjs 0.2.0 | Documentation</title>
+  <title>playemjs 1.0.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
   <link href='assets/split.css' type='text/css' rel='stylesheet' />
+  <meta name='description' content='Play&#39;em is a javascript component that manages a music/video track queue and plays a sequence of songs by embedding several players in a HTML DIV including Youtube, Soundcloud and Vimeo.'>
 </head>
 <body class='documentation m0'>
     <div class='flex'>
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>playemjs</h3>
-          <div class='mb1'><code>0.2.0</code></div>
+          <div class='mb1'><code>1.0.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -101,7 +102,7 @@
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -116,8 +117,10 @@
 
   <p>This class provides helpers to load JavaScript resources and JSON data.</p>
 
-
-  <div class='pre p1 fill-light mt0'>new Loader()</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>new Loader()</div>
+   
   
   
 
@@ -158,8 +161,10 @@
 
   <p>Loads and returns a JSON resource asynchronously, using XMLHttpRequest (AJAX).</p>
 
-
-  <div class='pre p1 fill-light mt0'>loadJSON(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: dataCallback)</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>loadJSON(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: dataCallback)</div>
+   
   
   
 
@@ -176,7 +181,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    HTTP(S) URL of the JSON resource to load.
 
           </div>
@@ -227,8 +232,10 @@
 
   <p>Loads a JavaScript resource into the page.</p>
 
-
-  <div class='pre p1 fill-light mt0'>includeJS(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: errorCallback)</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>includeJS(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: errorCallback)</div>
+   
   
   
 
@@ -245,7 +252,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    HTTP(S) URL of the JavaScript resource to load into the page.
 
           </div>
@@ -296,8 +303,10 @@
 
   <p>Loads and returns a JSON resource asynchronously, by including it into the page (not AJAX).</p>
 
-
-  <div class='pre p1 fill-light mt0'>loadJSONP(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>loadJSONP(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
+   
   
   
 
@@ -314,7 +323,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>src</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    HTTP(S) URL of the JSON resource to load.
 
           </div>
@@ -323,7 +332,7 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>cb</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
+            <span class='code bold'>cb</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
 	    Callback function, called by the resource's script.
 
           </div>
@@ -358,10 +367,9 @@
   
 </section>
 
-          
         
           
-            <section class='p2 mb2 clearfix bg-white minishadow'>
+          <section class='p2 mb2 clearfix bg-white minishadow'>
 
   
   <div class='clearfix'>
@@ -388,8 +396,10 @@ into the page.</p>
 <li>"loadMore"</li>
 </ul>
 
-
-  <div class='pre p1 fill-light mt0'>new Playem(playemPrefs: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>new Playem(playemPrefs: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+   
   
   
 
@@ -406,7 +416,7 @@ into the page.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>playemPrefs</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+            <span class='code bold'>playemPrefs</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
 	    Settings and preferences.
 
           </div>
@@ -425,7 +435,7 @@ into the page.</p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>playemPrefs.loop</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  <td class='break-word'><span class='code bold'>playemPrefs.loop</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
   </td>
   <td class='break-word'><span>If true, the playlist will be played infinitely. (default: true)
 </span></td>
@@ -434,7 +444,7 @@ into the page.</p>
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>playemPrefs.playTimeoutMs</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  <td class='break-word'><span class='code bold'>playemPrefs.playTimeoutMs</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>
   </td>
   <td class='break-word'><span>Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
 </span></td>
@@ -477,8 +487,10 @@ into the page.</p>
   
 
   
-
-  <div class='pre p1 fill-light mt0'>setPref(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, val: any)</div>
+ 
+  
+    <div class='pre p1 fill-light mt0'>setPref(key: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, val: any)</div>
+   
   
   
 
@@ -495,7 +507,7 @@ into the page.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
 	    Key of the Playem parameter to set.
 
           </div>
@@ -541,7 +553,6 @@ into the page.</p>
   
 </section>
 
-          
         
       </div>
     </div>
