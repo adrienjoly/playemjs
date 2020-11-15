@@ -93,7 +93,7 @@ describe('Bandcamp track streaming', function() {
   // setup environment
   $.getJSON = (url, callback) =>
     fetch(`https:${url.replace('&callback=?', '')}`)
-      .then(res => res.text())
+      .then(res => res.json())
       .then(callback); // if the metadata is missing, BandcampPlayer will pass the error body to eventHandlers.onError()
   
   it(`works for track eId with stream URL`, (done) => {
@@ -116,7 +116,7 @@ describe('Bandcamp track streaming', function() {
   it.skip(`works for track eId without stream URL`, (done) => { // TODO: fix the test => remove the skip
     // set expectation
     eventHandlers.onError = (_player, result) => {
-      done(result.error && new Error(result.error)); // => {"error_message":"bad key","error":true}
+      done(result.error && new Error(result.error)); // => "bad key"
     };
     // run the test
     const url = '/bc/seanschafianski/oppressed-people';
