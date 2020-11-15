@@ -13,6 +13,8 @@ YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
 GIT_COMMIT_HASH = `git rev-parse HEAD`
 PACKAGE_VERSION=`node -p "require('./package.json').version"`
 
+.PHONY: build docs test
+
 default: build
 
 build: clean dist/playem-all.js dist/playem-min.js docs
