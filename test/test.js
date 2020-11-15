@@ -18,6 +18,7 @@ window = {
   document,
   loader, // for deezer
   soundManager, // for spotify
+  attachEvent: () => {}, // for vimeo
   SC: { initialize: () => {} }, // for soundcloud
 };
 
@@ -30,6 +31,7 @@ const players = [
   { id: "ja", name: "Jamendo", Player: require('./../playem-jamendo.js') },
   { id: "sc", name: "Soundcloud", Player: require('./../playem-soundcloud.js') },
   { id: "sp", name: "Spotify", Player: require('./../playem-spotify.js') },
+  { id: "vi", name: "Vimeo", Player: require('./../playem-vimeo.js') },
 ];
 
 const URLS_FILE = './test/test-detection/urls.txt';
@@ -59,7 +61,6 @@ function populateTracksPerPlayer(file) {
 }
 
 describe('Player instanciation', function() {
-  tracksPerPlayer = populateTracksPerPlayer(URLS_FILE);
   for (const player of players) {
     it(`works for ${player.name}`, () => {
       it(player.name, () => assert((new player.Player())));
@@ -68,9 +69,10 @@ describe('Player instanciation', function() {
 });
 
 describe('Id extraction', function() {
+  const tracksPerPlayer = populateTracksPerPlayer(URLS_FILE);
+  delete tracksPerPlayer.sc; // TODO: fix tests for soundcloud => remove this line
+  delete tracksPerPlayer.sp; // TODO: fix tests for spotify => remove this line
   for (const player of players) {
-    if (player.name === "Soundcloud") continue; // TODO: re-activate
-    if (player.name === "Spotify") continue; // TODO: re-activate
     describe(`works for ${player.name} URLs`, () => {
       if (!tracksPerPlayer[player.id]) {
         it.skip('(no URLs => skipping)', () => {});
