@@ -25,7 +25,7 @@ docs: dist/playem-all.js
 	node_modules/.bin/documentation build dist/playem-all.js -f md -o docs/docs.md
 
 test: $(PLAYERS) dist/playem-all.js dist/playem-min.js
-	node_modules/.bin/mocha
+	node_modules/.bin/mocha --exit
 	@echo "Run 'make test-web' to run additional tests in the browser."
 
 test-web: $(PLAYERS) dist/playem-all.js dist/playem-min.js
