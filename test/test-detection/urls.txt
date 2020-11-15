@@ -1,4 +1,4 @@
-# Youtube tracks
+# Youtube tracks (`/yt/`)
 
 /yt/-gOK9LjTtl8
 /yt/o4LBGitcvi8
@@ -10,7 +10,7 @@ http://www.youtube.com/watch?v=18_-fI-AgyI
 http://www.youtube.com/watch?v=qA05JnBh-_Q
 http://www.youtube.com/watch?v=r1tR4A-_Ntg
 
-# Vimeo tracks
+# Vimeo tracks (`/vi/`)
 
 /vi/46314116
 vimeo.com/46314116 # Man is not a Bird - IV - Live at le Klub, Paris
@@ -19,14 +19,14 @@ http://vimeo.com/46314116
 http://player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
 player.vimeo.com/video/23558972?title=0&byline=0&portrait=0
 
-# MP3 tracks
+# MP3 tracks (`/fi/`)
 
 //fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
 http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
 /fi/http://fsb.zedge.net/dl/ringtone/307f428fe6458475a442762301504cc7/the_rhythm.mp3
 https://archive.org/download/testmp3testfile/mpthreetest.mp3 # used to not pass (too short?)
 
-# Bandcamp tracks
+# Bandcamp tracks (`/bc/`)
 
 https://mambobertier.bandcamp.com/track/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0
 /bc/mambo/tokyo-tripot-2#http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=0faac63a94476bbdbf041d6cd0d8513e&id=3260779883&stream=1&ts=1393595969.0
@@ -39,7 +39,7 @@ http://mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 https://manisnotabird.bandcamp.com/track/the-sounds-of-spring # missing stream URL
 http://theweakend.com/track/the-weakend-ft-chris-daddy-dave # bandcamp track with custom domain
 
-# Soundcloud tracks
+# Soundcloud tracks (`/sc/`)
 
 http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
 /sc/adrienjoly/wolfentrap-3d
@@ -59,7 +59,7 @@ https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-reco
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
 http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
 
-# Deezer tracks
+# Deezer tracks (`/dz/`)
 
 /dz/73414915
 deezer.com/track/73414915
@@ -68,7 +68,7 @@ http://www.deezer.com/track/73414915
 https://www.deezer.com/track/73414915
 https://www.deezer.com/track/73414915?test=1&pouet=0
 
-# Jamendo tracks
+# Jamendo tracks (`/ja/`)
 
 /ja/1115147
 jamendo.com/track/1115147
@@ -77,7 +77,7 @@ http://jamendo.com/track/1115147
 https://jamendo.com/track/1115147
 //www.jamendo.com/en/track/1115147/get-momentum
 
-# Youtube tracks
+# Youtube tracks (`/yt/`)
 
 https://youtube.googleapis.com/v/PinTAGbIsV4&source=uds # VEVO for http://spiritiflauticos.blogspot.fr/2014/08/angel-olsen-burn-your-fire-for-no.html
 /yt/o4LBGitcvi8
