@@ -1,5 +1,6 @@
 const fs = require('fs');
 const assert = require('assert');
+const fetch = require('node-fetch');
 
 // define globals required by players
 $ = {}; 
@@ -8,7 +9,7 @@ document = {
   createElement: () => ({}), // for deezer
 };
 loader = {
-  includeJS: (src, cb) => cb(), // for deezer
+  includeJS: (src, cb) => cb && cb(), // for deezer
 };
 soundManager = {
   onready: (cb) => cb(), // for spotify
@@ -83,4 +84,44 @@ describe('Id extraction', function() {
       }
     });
   }
+});
+
+describe('Bandcamp track streaming', function() {
+
+  const bandcampEntry = players.find(({ id }) => id === "bc");
+
+  // setup environment
+  $.getJSON = (url, callback) =>
+    fetch(`https:${url.replace('&callback=?', '')}`)
+      .then(res => res.text())
+      .then(callback); // if the metadata is missing, BandcampPlayer will pass the error body to eventHandlers.onError()
+  
+  it(`works for track eId with stream URL`, (done) => {
+    // set expectations
+    const streamUrl = 'http://popplers5.bandcamp.com/download/track?enc=mp3-128&fsig=a5514873943b57d8d7b4567ee2f6295a&id=3049024530&stream=1&ts=1399281392.0';
+    eventHandlers.onError = (_player, result) => {
+      done(result.error && new Error(result.error));
+    };
+    soundManager.createSound = ({ url }) => {
+      const itWorks = url === streamUrl;
+      done(!itWorks);
+    };
+    // run the test
+    const url = `https://mambobertier.bandcamp.com/track/tokyo-tripot-2#${streamUrl}`;
+    const player = (new bandcampEntry.Player(eventHandlers));
+    const eId = player.getEid(url);
+    player.play(eId); // will call $.getJSON() to fetch track metadata from Bandcamp's API
+  });
+
+  it.skip(`works for track eId without stream URL`, (done) => { // TODO: fix the test => remove the skip
+    // set expectation
+    eventHandlers.onError = (_player, result) => {
+      done(result.error && new Error(result.error)); // => {"error_message":"bad key","error":true}
+    };
+    // run the test
+    const url = '/bc/seanschafianski/oppressed-people';
+    const player = (new bandcampEntry.Player(eventHandlers));
+    const eId = player.getEid(url);
+    player.play(eId); // will call $.getJSON() to fetch track metadata from Bandcamp's API
+  });
 });
