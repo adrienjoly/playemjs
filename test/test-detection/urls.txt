@@ -37,7 +37,7 @@ mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 //mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 http://mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 https://manisnotabird.bandcamp.com/track/the-sounds-of-spring # missing stream URL
-http://theweakend.com/track/the-weakend-ft-chris-daddy-dave # bandcamp track with custom domain
+# TODO: bandcamp track with custom domain (e.g. http://theweakend.com/track/the-weakend-ft-chris-daddy-dave)
 
 # Soundcloud tracks (`/sc/`)
 
