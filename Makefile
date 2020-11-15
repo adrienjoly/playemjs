@@ -13,17 +13,25 @@ YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
 GIT_COMMIT_HASH = `git rev-parse HEAD`
 PACKAGE_VERSION=`node -p "require('./package.json').version"`
 
-default:
-	@echo targets: compile
+default: build
 
-playem-all.js: $(PLAYERS)
+build: clean playem-all.js playem-min.js docs
+
+clean:
+	rm -rf dist/
+
+docs: playem-all.js
+	node_modules/.bin/documentation build dist/playem-all.js -f html -o docs
+	node_modules/.bin/documentation build dist/playem-all.js -f md -o docs/docs.md
+
+playem-all.js: node_modules $(PLAYERS)
 	@echo '==> Compiling: $(PLAYERS)'
 	@mkdir -p ./dist
 	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */\n" > ./dist/playem-all.js
 	@cat $(PLAYERS) >> ./dist/playem-all.js
 	@echo
 
-playem-min.js: playem-all.js
+playem-min.js: node_modules playem-all.js
 	@echo '==> Minifying $<'
 	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */ " > ./dist/playem-min.js
 	$(YUI_COMPRESSOR) $(YUI_COMPRESSOR_FLAGS) --type js ./dist/playem-all.js >> ./dist/playem-min.js
@@ -33,12 +41,11 @@ playem-min.js: playem-all.js
 	@echo Playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH)
 	@echo
 
-test: clean compile
+node_modules:
+	@echo "Run 'nvm use' to use the version of Node.js specified in .nvmrc"
+	npm install
+
+test: clean playem-min.js
 	@echo "👉 Start tests from http://localhost:8000/test"
 	@echo "   Press Ctrl-C when done"
 	@python -m SimpleHTTPServer >/dev/null
-
-compile: playem-min.js
-
-clean:
-	rm -rf dist/

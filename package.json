@@ -7,9 +7,7 @@
   },
   "scripts": {
     "warn": "echo \" === don't forget to update version and commit first. ===\n\n\"",
-    "generate-doc": "npm run -s compile-dist && documentation build dist/playem-all.js -f html -o docs",
-    "generate-doc-md": "npm run -s compile-dist && documentation build dist/playem-all.js -f md -o docs.md",
-    "prepublishOnly": "npm run -s warn; make compile",
+    "prepublishOnly": "npm run -s warn; make",
     "start": "make test",
     "lint": "./node_modules/.bin/standard playem.js # TODO: playem-*.js",
     "test": "make test"
