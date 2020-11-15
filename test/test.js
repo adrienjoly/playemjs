@@ -23,14 +23,12 @@ const URLS_FILE = './test/test-detection/urls.txt';
 function populateTracksPerPlayer(file) {
   const RE_PLAYER_ID = /\/([a-z]{2})\//;
   const tracksPerPlayer = {}; // { playerId -> url[] }
-  let currentPlayerId = "";
+  let currentPlayerId = null;
   for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
     if (line.startsWith("# ")) {
       const hasPlayerId = line.match(RE_PLAYER_ID);
-      if (hasPlayerId) {
-        currentPlayerId = hasPlayerId.pop();
-      }
-    } else if (line.length) {
+      currentPlayerId = hasPlayerId ? hasPlayerId.pop() : null;
+    } else if (line.length && currentPlayerId) {
       const url = line.split(/\s/)[0];
       tracksPerPlayer[currentPlayerId] = [
         ...(tracksPerPlayer[currentPlayerId] || []),
