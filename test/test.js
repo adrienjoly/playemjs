@@ -13,6 +13,7 @@ window = {
 // load players
 const players = [
   { id: "bc", name: "Bandcamp", Player: require('./../playem-bandcamp.js') },
+  { id: "fi", name: "MP3", Player: require('./../playem-audiofile.js') },
   { id: "sc", name: "Soundcloud", Player: require('./../playem-soundcloud.js') },
 ];
 
