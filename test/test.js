@@ -12,8 +12,9 @@ window = {
 
 // load players
 const players = [
-  { id: "bc", name: "Bandcamp", Player: require('./../playem-bandcamp.js') },
   { id: "fi", name: "MP3 File", Player: require('./../playem-audiofile.js') },
+  { id: "bc", name: "Bandcamp", Player: require('./../playem-bandcamp.js') },
+  { id: "dm", name: "Dailymotion", Player: require('./../playem-dailymotion.js') },
   { id: "sc", name: "Soundcloud", Player: require('./../playem-soundcloud.js') },
 ];
 
@@ -52,7 +53,10 @@ describe('Id extraction', function() {
   for (const player of players) {
     if (player.name === "Soundcloud") continue; // TODO: re-activate
     describe(`works for ${player.name} URLs`, () => {
-      console.log(player.id , tracksPerPlayer[player.id]);
+      if (!tracksPerPlayer[player.id]) {
+        it.skip('(no URLs => skipping)', () => {});
+        return;
+      }
       for (const url of tracksPerPlayer[player.id]) {
         it(url, () => assert((new player.Player()).getEid(url)));
       }
