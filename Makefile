@@ -1,5 +1,4 @@
 # inspired by: https://gist.github.com/rgrove/1116056
-#make compile to launch
 
 # PLAYERS = playem-dailymotion.js playem-soundcloud.js playem-youtube.js playem-audiofile.js playem-deezer.js playem-vimeo.js
 PLAYERS = playem.js
@@ -34,7 +33,12 @@ playem-min.js: playem-all.js
 	@echo Playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH)
 	@echo
 
-tests:
-	@./test/server.sh
+test: clean compile
+	@echo "👉 Start tests from http://localhost:8000/test"
+	@echo "   Press Ctrl-C when done"
+	@python -m SimpleHTTPServer >/dev/null
 
 compile: playem-min.js
+
+clean:
+	rm -rf dist/
