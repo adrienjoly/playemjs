@@ -38,6 +38,7 @@
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
     "documentation": "^8.1.2",
+    "mocha": "^8.2.1",
     "standard": "11.0.1",
     "yuicompressor": "^2.4.8"
   },
