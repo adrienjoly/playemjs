@@ -106,7 +106,7 @@ http://www.dailymotion.com/video/x142x6e_jean-jean-love_music
 https://www.dailymotion.com/video/x142x6e_jean-jean-love_music
 https://www.dailymotion.com/video/x142x6e_jean-jean-love_music?test=1&pouet=0
 
-# Spotify tracks (partially supported)
+# Spotify tracks (partially supported) (`/sp/`)
 
 /sp/63wxaMojZaS69nYttu7Fh1
 spotify.com/track/63wxaMojZaS69nYttu7Fh1
