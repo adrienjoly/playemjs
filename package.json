@@ -37,10 +37,10 @@
   },
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
   "devDependencies": {
-    "documentation": "^8.1.2",
-    "mocha": "^8.2.1",
+    "documentation": "^13.2.5",
+    "mocha": "^8.4.0",
     "node-fetch": "^2.6.1",
-    "standard": "11.0.1",
+    "standard": "16.0.3",
     "yuicompressor": "^2.4.8"
   },
   "dependencies": {}
