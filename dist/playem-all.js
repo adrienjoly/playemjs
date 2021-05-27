@@ -1,5 +1,4 @@
-/* playemjs 1.1.0, commit: 33eb4c30fdaa21bbf1fc2ce51c7e1d3652d4790f */
-
+/* playemjs 1.1.0, commit: 7314b065a17d9e42bf72eb86fc3e3dfacef63f79 */\n
 // configuration
 
 var DEFAULT_PLAY_TIMEOUT = 10000
