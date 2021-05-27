@@ -1,14 +1,14 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset='utf-8' />
+  <meta charset='utf-8'>
   <title>playemjs 1.1.0 | Documentation</title>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
-  <link href='assets/style.css' type='text/css' rel='stylesheet' />
-  <link href='assets/github.css' type='text/css' rel='stylesheet' />
-  <link href='assets/split.css' type='text/css' rel='stylesheet' />
   <meta name='description' content='Play&#39;em is a javascript component that manages a music/video track queue and plays a sequence of songs by embedding several players in a HTML DIV including Youtube, Soundcloud and Vimeo.'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
 </head>
 <body class='documentation m0'>
     <div class='flex'>
@@ -20,6 +20,9 @@
             placeholder='Filter'
             id='filter-input'
             class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
@@ -95,7 +98,7 @@
             </ul>
           </div>
           <div class='mt1 h6 quiet'>
-            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
           </div>
         </div>
       </div>
@@ -117,10 +120,7 @@
 
   <p>This class provides helpers to load JavaScript resources and JSON data.</p>
 
- 
-  
     <div class='pre p1 fill-light mt0'>new Loader()</div>
-   
   
   
 
@@ -129,6 +129,8 @@
   
   
   
+  
+
   
 
   
@@ -161,10 +163,7 @@
 
   <p>Loads and returns a JSON resource asynchronously, using XMLHttpRequest (AJAX).</p>
 
- 
-  
     <div class='pre p1 fill-light mt0'>loadJSON(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: dataCallback)</div>
-   
   
   
 
@@ -213,6 +212,10 @@
   
 
   
+
+  
+
+  
 </section>
 
       </div>
@@ -232,10 +235,7 @@
 
   <p>Loads a JavaScript resource into the page.</p>
 
- 
-  
     <div class='pre p1 fill-light mt0'>includeJS(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: errorCallback)</div>
-   
   
   
 
@@ -284,6 +284,10 @@
   
 
   
+
+  
+
+  
 </section>
 
       </div>
@@ -303,10 +307,7 @@
 
   <p>Loads and returns a JSON resource asynchronously, by including it into the page (not AJAX).</p>
 
- 
-  
     <div class='pre p1 fill-light mt0'>loadJSONP(src: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, cb: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
-   
   
   
 
@@ -355,6 +356,10 @@
   
 
   
+
+  
+
+  
 </section>
 
       </div>
@@ -365,8 +370,11 @@
   
 
   
+
+  
 </section>
 
+          
         
           
           <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -396,10 +404,7 @@ into the page.</p>
 <li>"loadMore"</li>
 </ul>
 
- 
-  
     <div class='pre p1 fill-light mt0'>new Playem(playemPrefs: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-   
   
   
 
@@ -471,6 +476,8 @@ into the page.</p>
   
 
   
+
+  
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
@@ -487,10 +494,7 @@ into the page.</p>
   
 
   
- 
-  
     <div class='pre p1 fill-light mt0'>setPref(key: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, val: any)</div>
-   
   
   
 
@@ -541,6 +545,10 @@ into the page.</p>
   
 
   
+
+  
+
+  
 </section>
 
       </div>
@@ -551,8 +559,11 @@ into the page.</p>
   
 
   
+
+  
 </section>
 
+          
         
       </div>
     </div>

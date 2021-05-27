@@ -2,17 +2,17 @@
 
 ### Table of Contents
 
--   [Loader][1]
-    -   [loadJSON][2]
-        -   [Parameters][3]
-    -   [includeJS][4]
-        -   [Parameters][5]
-    -   [loadJSONP][6]
-        -   [Parameters][7]
--   [Playem][8]
-    -   [Parameters][9]
-    -   [setPref][10]
-        -   [Parameters][11]
+*   [Loader][1]
+    *   [loadJSON][2]
+        *   [Parameters][3]
+    *   [includeJS][4]
+        *   [Parameters][5]
+    *   [loadJSONP][6]
+        *   [Parameters][7]
+*   [Playem][8]
+    *   [Parameters][9]
+    *   [setPref][10]
+        *   [Parameters][11]
 
 ## Loader
 
@@ -24,8 +24,8 @@ Loads and returns a JSON resource asynchronously, using XMLHttpRequest (AJAX).
 
 #### Parameters
 
--   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
--   `cb` **dataCallback** Callback function with request's data as first parameter.
+*   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
+*   `cb` **dataCallback** Callback function with request's data as first parameter.
 
 ### includeJS
 
@@ -33,8 +33,8 @@ Loads a JavaScript resource into the page.
 
 #### Parameters
 
--   `src` **[string][12]** HTTP(S) URL of the JavaScript resource to load into the page.
--   `cb` **errorCallback** Callback function with error as first parameter, if any.
+*   `src` **[string][12]** HTTP(S) URL of the JavaScript resource to load into the page.
+*   `cb` **errorCallback** Callback function with error as first parameter, if any.
 
 ### loadJSONP
 
@@ -42,8 +42,8 @@ Loads and returns a JSON resource asynchronously, by including it into the page 
 
 #### Parameters
 
--   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
--   `cb` **[function][13]** Callback function, called by the resource's script.
+*   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
+*   `cb` **[function][13]** Callback function, called by the resource's script.
 
 ## Playem
 
@@ -52,27 +52,28 @@ into the page.
 
 Events:
 
--   "onError", {code,source}
--   "onReady"
--   "onPlay"
--   "onPause"
--   "onEnd"
--   "onTrackInfo", track{}
--   "onTrackChange", track{}
--   "loadMore"
+*   "onError", {code,source}
+*   "onReady"
+*   "onPlay"
+*   "onPause"
+*   "onEnd"
+*   "onTrackInfo", track{}
+*   "onTrackChange", track{}
+*   "loadMore"
 
 ### Parameters
 
--   `playemPrefs` **[Object][14]** Settings and preferences.
-    -   `playemPrefs.loop` **[Boolean][15]** If true, the playlist will be played infinitely. (default: true)
-    -   `playemPrefs.playTimeoutMs` **[Number][16]** Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
+*   `playemPrefs` **[Object][14]** Settings and preferences.
+
+    *   `playemPrefs.loop` **[Boolean][15]** If true, the playlist will be played infinitely. (default: true)
+    *   `playemPrefs.playTimeoutMs` **[Number][16]** Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
 
 ### setPref
 
 #### Parameters
 
--   `key` **[string][12]** Key of the Playem parameter to set.
--   `val` **any** Value to affect to that `key`.
+*   `key` **[string][12]** Key of the Playem parameter to set.
+*   `val` **any** Value to affect to that `key`.
 
 [1]: #loader
 
