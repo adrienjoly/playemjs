@@ -19,7 +19,7 @@ function DeezerPlayer(){
   // CONSTANTS
   var SDK_URL = 'https://cdns-files.deezer.com/js/min/dz.js',
       IS_LOGGED = false,
-      URL_REG = /(deezer\.com\/track|\/dz)\/(\d+)/,
+      URL_REG = /(deezer\.com\/(?:fr\/)?track|\/dz)\/(\d+)/,
       EVENT_MAP = {
         player_play: 'onPlaying',
         player_paused: 'onPaused',

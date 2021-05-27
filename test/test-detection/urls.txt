@@ -65,6 +65,7 @@ http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, accord
 deezer.com/track/73414915
 //deezer.com/track/73414915
 http://www.deezer.com/track/73414915
+http://www.deezer.com/fr/track/73414915
 https://www.deezer.com/track/73414915
 https://www.deezer.com/track/73414915?test=1&pouet=0
 
