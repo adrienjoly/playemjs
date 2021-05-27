@@ -38,7 +38,7 @@ test-web: $(PLAYERS) dist/playem-all.js dist/playem-min.js
 dist/playem-all.js: $(PLAYERS) node_modules
 	@echo '==> Compiling: $(PLAYERS)'
 	@mkdir -p ./dist
-	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */ " > ./dist/playem-all.js
+	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */\n" > ./dist/playem-all.js
 	@cat $(PLAYERS) >> ./dist/playem-all.js
 	@echo
 
