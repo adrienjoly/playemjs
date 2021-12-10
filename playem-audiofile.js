@@ -127,7 +127,7 @@ function AudioFilePlayer(){
     this.soundOptions.url = vars.trackId.replace(/^\/fi\//, ""); // remove eId prefix /fi/ if necessary
     this.trackInfo = {};
     if (this.widget) {
-      this.pause();
+      try { this.pause(); } catch (err) { console.warn("[playemjs] audiofile.embed() failed to pause()", err) }
       this.widget = null;
       delete this.widget;
     }
