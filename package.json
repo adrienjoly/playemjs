@@ -39,7 +39,7 @@
   "devDependencies": {
     "documentation": "^13.2.5",
     "mocha": "^8.4.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "standard": "16.0.3",
     "yuicompressor": "^2.4.8"
   },
