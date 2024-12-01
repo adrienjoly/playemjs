@@ -1,6 +1,5 @@
 const fs = require('fs');
 const assert = require('assert');
-const fetch = require('node-fetch');
 
 // define globals required by players
 $ = {}; 
