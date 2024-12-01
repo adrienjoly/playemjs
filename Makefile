@@ -17,6 +17,9 @@ PACKAGE_VERSION=`node -p "require('./package.json').version"`
 
 default: build
 
+publish:
+	npm publish
+
 build: clean dist/playem-all.js dist/playem-min.js docs
 
 clean:
