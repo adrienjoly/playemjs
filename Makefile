@@ -33,7 +33,7 @@ test: $(PLAYERS) dist/playem-all.js dist/playem-min.js
 test-web: $(PLAYERS) dist/playem-all.js dist/playem-min.js
 	@echo "👉 Start tests from http://localhost:8000/test"
 	@echo "   Press Ctrl-C when done"
-	@python -m SimpleHTTPServer >/dev/null
+	@npx http-server --port 8000
 
 dist/playem-all.js: $(PLAYERS) node_modules
 	@echo '==> Compiling: $(PLAYERS)'
