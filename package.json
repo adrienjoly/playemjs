@@ -1,6 +1,6 @@
 {
   "name": "playemjs",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Play'em is a javascript component that manages a music/video track queue and plays a sequence of songs by embedding several players in a HTML DIV including Youtube, Soundcloud and Vimeo.",
   "directories": {
     "test": "test"
@@ -40,6 +40,6 @@
     "documentation": "^14.0.3",
     "mocha": "^10.8.2",
     "standard": "17.1.2",
-    "yuicompressor": "^2.4.8"
+    "terser": "^5.37.0"
   }
 }

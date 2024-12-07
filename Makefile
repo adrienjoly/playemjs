@@ -6,10 +6,6 @@ PLAYERS += $(filter-out %-TODO.js,$(wildcard \
 	./playem-*.js \
 ))
 
-# Command to run to execute the YUI Compressor.
-YUI_COMPRESSOR = node_modules/.bin/yuicompressor
-YUI_COMPRESSOR_FLAGS = --charset utf-8 --verbose
-
 GIT_COMMIT_HASH = `git rev-parse HEAD`
 PACKAGE_VERSION=`node -p "require('./package.json').version"`
 
@@ -48,8 +44,7 @@ dist/playem-all.js: $(PLAYERS) node_modules
 dist/playem-min.js: dist/playem-all.js node_modules
 	@echo '==> Minifying $<'
 	@echo "/* playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH) */ " > ./dist/playem-min.js
-	$(YUI_COMPRESSOR) $(YUI_COMPRESSOR_FLAGS) --type js ./dist/playem-all.js >> ./dist/playem-min.js
-	# $< >$@
+	npm exec terser ./dist/playem-all.js >> ./dist/playem-min.js
 	@echo
 	@echo Finished producing ./dist/playem-all.js and ./dist/playem-min.js
 	@echo Playemjs $(PACKAGE_VERSION), commit: $(GIT_COMMIT_HASH)
