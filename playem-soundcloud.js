@@ -1,6 +1,5 @@
 //loader.includeJS("https://w.soundcloud.com/player/api.js");
 
-//please set SOUNDCLOUD_CLIENT_ID before instanciation
 
 function SoundCloudPlayer(){
   return SoundCloudPlayer.super_.apply(this, arguments);
@@ -73,8 +72,7 @@ function SoundCloudPlayer(){
     if (window.SC)
       init();
     else {
-      loader.includeJS("https://connect.soundcloud.com/sdk.js", function(){
-        window.SC.initialize({client_id: window.SOUNDCLOUD_CLIENT_ID});
+      loader.includeJS("https://w.soundcloud.com/player/api.js", function(){
         init();
       });
     }
@@ -147,22 +145,15 @@ function SoundCloudPlayer(){
 
   function fetchMetadata(url, cb){
     var splitted, params, trackId, method;
-    if (!window.SOUNDCLOUD_CLIENT_ID) {
-      console.error("error: SOUNDCLOUD_CLIENT_ID is not set => fetchMetadata() will not call Soundcloud's API");
-      cb();
-      return;
-    }
     url = unwrapUrl(url);
     splitted = url.split("?");
     params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
     trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
     method = (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) ? "loadJSONP" : "loadJSON";
     if (trackId)
-      loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params
-        + "client_id=" + window.SOUNDCLOUD_CLIENT_ID, cb);
+      loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params, cb);
     else
-      loader[method](RESOLVE_URL + "?client_id=" + window.SOUNDCLOUD_CLIENT_ID
-        + "&url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
+      loader[method](RESOLVE_URL + "?url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
   }
 
   Player.prototype.fetchMetadata = function(url, cb){
