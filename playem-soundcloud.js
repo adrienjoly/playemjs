@@ -1,4 +1,8 @@
 /** @typedef { `snd.sc/{string}` | `/tracks/${number}` | `/{string}/{string}` | `/{string}/{string}#{string}` } SoundcloudId */ 
+// Examples SoundcloudId values: 
+// - /tracks/<number> (ready to stream)
+// - or /<artistname>/<tracktitle>
+// - or snd.sc/<hash>
 
 function SoundCloudPlayer(){
   return SoundCloudPlayer.super_.apply(this, arguments);
@@ -55,12 +59,12 @@ function SoundCloudPlayer(){
     return /(soundcloud\.com)\/player\/?\?.*url\=([^\&\?]+)/.test(url) ? decodeURIComponent(RegExp.lastParen) : url.replace(/^\/sc\//, "http://soundcloud.com/");
   }
 
-/**
+  /**
    * @param {string} url 
    * @returns {SoundcloudId | undefined}
    */
   Player.prototype.getEid = function(url) {
-// see test/test-detection/urls.txt for examples of urls to support
+    // see test/test-detection/urls.txt for examples of urls to support
     url = unwrapUrl(url);
     if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url)) {
       var parts = RegExp.lastParen.split("/");
@@ -68,11 +72,6 @@ function SoundCloudPlayer(){
     }
     else if (/snd\.sc\/([\w-_]+)/.test(url))
       return RegExp.lastMatch;
-    // => returns:
-    // - /tracks/<number> (ready to stream)
-    // - or /<artistname>/<tracktitle>
-    // - or snd.sc/<hash>
-    // or null / false (if not a track)
   }
 
   function searchTracks(query, limit, cb){
@@ -114,7 +113,7 @@ function SoundCloudPlayer(){
    * (requires an API key => not supported anymore)
    */
   Player.prototype.fetchMetadata = function(url, cb){
-      return cb();
+    return cb();
   }
 
   Player.prototype.getTrackPosition = async function(callback) {
@@ -129,13 +128,13 @@ function SoundCloudPlayer(){
     this.safeCall("seekTo", pos * 1000);
   };
 
-/**
+  /**
    * @param {SoundcloudId} id 
    */
   Player.prototype.play = function(id) {
     console.log("sc PLAY id:", id);
     this.trackInfo = {};
-    
+
     let url;
     if (id.startsWith('snd.sc')) {
       console.error('cannot play soundcloud id:', id); // this kind of URL requires to follow a redirect, which can't be done in JS because of CORS
@@ -146,43 +145,43 @@ function SoundCloudPlayer(){
       url = "https://soundcloud.com" + id;
     }
     
-      console.log("=> sc PLAY url:", url);
-      this.embedVars.playerContainer.innerHTML = '';
-      this.element = document.createElement("iframe");
-      this.element.id = this.embedVars.playerId; // e.g. "soundcloud-widget"
-      this.element.setAttribute("width", "100%");
-      this.element.setAttribute("height", "100%");
-      this.element.setAttribute("scrolling", "no");
-      this.element.setAttribute("frameborder", "no");
-      this.element.setAttribute("allow", "autoplay");
-            console.log("=> sc PLAY url:", url);
-      this.element.setAttribute("src", `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false`);
-      this.embedVars.playerContainer.appendChild(this.element);
+    console.log("=> sc PLAY url:", url);
+    this.embedVars.playerContainer.innerHTML = '';
+    this.element = document.createElement("iframe");
+    this.element.id = this.embedVars.playerId; // e.g. "soundcloud-widget"
+    this.element.setAttribute("width", "100%");
+    this.element.setAttribute("height", "100%");
+    this.element.setAttribute("scrolling", "no");
+    this.element.setAttribute("frameborder", "no");
+    this.element.setAttribute("allow", "autoplay");
+    console.log("=> sc PLAY url:", url);
+    this.element.setAttribute("src", `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false`);
+    this.embedVars.playerContainer.appendChild(this.element);
 
-      this.embedVars.trackId = id;
-      const SC = window.SC;
-      this.widget = SC.Widget(this.element);
-
+    this.embedVars.trackId = id;
+    const SC = window.SC;
+    this.widget = SC.Widget(this.element);
+  
     this.widget.bind(SC.Widget.Events.ERROR, (evt) => {
       console.error("SC error:", evt, e, e.stack);
       this.callHandler("onError", {code:evt.substr(2), source:"SoundCloudPlayer"})
     });
-      this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
-      this.widget.bind(SC.Widget.Events.PAUSE, () => this.callHandler("onPaused", this));
-      this.widget.bind(SC.Widget.Events.FINISH, () => this.callHandler("onEnded", this));
-      this.widget.bind(SC.Widget.Events.PLAY_PROGRESS, ({ currentPosition }) => {
-        this.trackInfo.position = currentPosition / 1000;
-        this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo(this.trackInfo);
+    this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
+    this.widget.bind(SC.Widget.Events.PAUSE, () => this.callHandler("onPaused", this));
+    this.widget.bind(SC.Widget.Events.FINISH, () => this.callHandler("onEnded", this));
+    this.widget.bind(SC.Widget.Events.PLAY_PROGRESS, ({ currentPosition }) => {
+      this.trackInfo.position = currentPosition / 1000;
+      this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo(this.trackInfo);
+    });
+    this.widget.bind(SC.Widget.Events.READY, () => {
+      console.log("READY");
+      this.widget.getDuration((ms) => {
+        this.trackInfo.duration = ms / 1000;
       });
-      this.widget.bind(SC.Widget.Events.READY, () => {
-        console.log("READY");
-        this.widget.getDuration((ms) => {
-          this.trackInfo.duration = ms / 1000;
-        });
-        this.widget.play();
-        this.callHandler("onEmbedReady", this);
-      });
-      }
+      this.widget.play();
+      this.callHandler("onEmbedReady", this);
+    });
+  }
 
   Player.prototype.resume = function() {
     this.safeCall("play");
