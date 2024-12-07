@@ -6,14 +6,7 @@ function SoundCloudPlayer(){
 };
 
 (function() {
-  var EVENT_MAP = {
-      "onplay": "onPlaying",
-      "onresume": "onPlaying",
-      "onpause": "onPaused",
-      "onstop": "onPaused",
-      "onfinish": "onEnded"
-    },
-    ERROR_EVENTS = [
+  const ERROR_EVENTS = [
       "onerror",
       "ontimeout",
       "onfailure",
@@ -43,14 +36,6 @@ function SoundCloudPlayer(){
     };
 
     function init() {
-      for (var i in EVENT_MAP)
-        (function(i) {
-          that.soundOptions[i] = function() {
-            //console.log("SC event:", i /*, this*/);
-            var handler = eventHandlers[EVENT_MAP[i]];
-            handler && handler(that);
-          }
-        })(i);
       ERROR_EVENTS.map(function(evt){
         that.soundOptions[evt] = function(e) {
           console.error("SC error:", evt, e, e.stack);
@@ -167,15 +152,13 @@ function SoundCloudPlayer(){
   }
 
   Player.prototype.getTrackPosition = function(callback) {
-    callback(this.trackInfo.position = this.widget.position / 1000);
-    if (this.widget.durationEstimate)
-      this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo({
-        duration: this.widget.duration / 1000
-      });
+    this.widget.getPosition((ms) => {
+      callback(this.trackInfo.position);
+    });
   };
   
   Player.prototype.setTrackPosition = function(pos) {
-    this.safeCall("setPosition", pos * 1000);
+    this.safeCall("setPosition", pos * 1000); // TODO
   };
 
   Player.prototype.play = function(id) {
@@ -199,8 +182,19 @@ function SoundCloudPlayer(){
 
       this.embedVars.trackId = id;
       this.widget = SC.Widget(this.element);
+
+      this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
+      this.widget.bind(SC.Widget.Events.PAUSE, () => this.callHandler("onPaused", this));
+      this.widget.bind(SC.Widget.Events.FINISH, () => this.callHandler("onEnded", this));
+      this.widget.bind(SC.Widget.Events.PLAY_PROGRESS, ({ currentPosition }) => {
+        this.trackInfo.position = currentPosition / 1000;
+        this.eventHandlers.onTrackInfo && this.eventHandlers.onTrackInfo(this.trackInfo);
+      });
       this.widget.bind(SC.Widget.Events.READY, () => {
         console.log("READY");
+        this.widget.getDuration((ms) => {
+          this.trackInfo.duration = ms / 1000;
+        });
         this.widget.play();
         this.callHandler("onEmbedReady", this);
       });

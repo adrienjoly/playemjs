@@ -34,6 +34,7 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 
 	window.startTest = () => {
 		playem.play();
+		window.playem = playem;
 
 		runner.run(function(res){
 			//playem.stop();
