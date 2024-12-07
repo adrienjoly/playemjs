@@ -10,8 +10,7 @@ function SoundCloudPlayer(){
       "ontimeout",
       "onfailure",
       "ondataerror"
-    ],
-    RESOLVE_URL = "https://api.soundcloud.com/resolve.json";
+    ];
 
   function Player(eventHandlers, embedVars) {  
     this.label = 'SoundCloud';
@@ -124,35 +123,11 @@ function SoundCloudPlayer(){
     searchTracks(query, limit, cb); 
   }
 
-  function fetchMetadata(url, cb){
-    var splitted, params, trackId, method;
-    url = unwrapUrl(url);
-    splitted = url.split("?");
-    params = splitted.length > 1 ? splitted[1] + "&" : ""; // might include a secret_token
-    trackId = /\/tracks\/(\d+)/.test(splitted[0]) ? RegExp.lastParen : null;
-    method = (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) ? "loadJSONP" : "loadJSON";
-    if (trackId)
-      loader[method]("https://api.soundcloud.com/tracks/" + trackId + ".json?" + params, cb);
-    else
-      loader[method](RESOLVE_URL + "?url=" + encodeURIComponent("http://" + url.replace(/^(https?\:)?\/\//, "")), cb);
-  }
-
+  /**
+   * (requires an API key => not supported anymore)
+   */
   Player.prototype.fetchMetadata = function(url, cb){
-    var embed = {};
-    if (!this.getEid(url))
       return cb();
-    fetchMetadata(url, function(data) {
-      if (data && data.kind == "track") {
-        embed.id = "" + data.id;
-        embed.eId = "/sc/" + data.permalink_url.substr(data.permalink_url.indexOf("/", 10) + 1)
-          + /*"/" + data.id +*/ "#" + data.stream_url;
-        embed.img = data.artwork_url || embed.img;
-        embed.title = data.title;
-        if (embed.title.indexOf(" - ") == -1 && (data.user || {}).username)
-          embed.title = data.user.username + " - " + embed.title;
-      }
-      cb(embed);
-    });
   }
 
   Player.prototype.getTrackPosition = async function(callback) {
