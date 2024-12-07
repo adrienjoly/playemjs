@@ -1,4 +1,4 @@
-/** @typedef { `snd.sc/{string}` | `/tracks/${number}` | `/{string}/{string}` | `/{string}/{string}#{string}` } SoundcloudId */ 
+/** @typedef { `snd.sc/{string}` | `tracks/${number}` | `{string}/{string}` | `{string}/{string}#{string}` } SoundcloudId */ 
 // Examples SoundcloudId values: 
 // - /tracks/<number> (ready to stream)
 // - or /<artistname>/<tracktitle>
@@ -66,12 +66,10 @@ function SoundCloudPlayer(){
   Player.prototype.getEid = function(url) {
     // see test/test-detection/urls.txt for examples of urls to support
     url = unwrapUrl(url);
-    if (/(soundcloud\.com)(\/[\w-_\/]+)/.test(url)) {
+    if (/(soundcloud\.com)\/([\w-_\/]+)/.test(url)) {
       var parts = RegExp.lastParen.split("/");
-      return parts.length === 3 && /*parts[1] !== "pages" &&*/ RegExp.lastParen;
+      return parts.length === 2 && /*parts[0] !== "pages" &&*/ RegExp.lastParen;
     }
-    else if (/snd\.sc\/([\w-_]+)/.test(url))
-      return RegExp.lastMatch;
   }
 
   function searchTracks(query, limit, cb){
@@ -139,10 +137,10 @@ function SoundCloudPlayer(){
     if (id.startsWith('snd.sc')) {
       console.error('cannot play soundcloud id:', id); // this kind of URL requires to follow a redirect, which can't be done in JS because of CORS
       return;
-    } else if (id.startsWith("/tracks/")){
-      url = "https://api.soundcloud.com" + id;
+    } else if (id.startsWith("tracks/")){
+      url = "https://api.soundcloud.com/" + id;
     } else {
-      url = "https://soundcloud.com" + id;
+      url = "https://soundcloud.com/" + id;
     }
     
     console.log("=> sc PLAY url:", url);
