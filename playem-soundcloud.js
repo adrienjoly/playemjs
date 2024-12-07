@@ -162,9 +162,10 @@ function SoundCloudPlayer(){
     const SC = window.SC;
     this.widget = SC.Widget(this.element);
   
-    this.widget.bind(SC.Widget.Events.ERROR, (evt) => {
-      console.error("SC error:", evt, e, e.stack);
-      this.callHandler("onError", {code:evt.substr(2), source:"SoundCloudPlayer"})
+    this.widget.bind(SC.Widget.Events.ERROR, (err) => {
+      const error = 'error displayed in embed';
+      console.error("SC error: ", error);
+      this.callHandler("onError", { error, source:"SoundCloudPlayer" })
     });
     this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
     this.widget.bind(SC.Widget.Events.PAUSE, () => this.callHandler("onPaused", this));
