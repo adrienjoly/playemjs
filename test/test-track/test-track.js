@@ -4,8 +4,10 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	toHide.parentElement.removeChild(toHide);
 
 	var TRACK =
+		"https://api.soundcloud.com/tracks/53867958"
+	    //"/sc/adrienjoly/wolfentrap-3d"
 		// "/yt/o4LBGitcvi8"; // youtube video
-		"/vi/35982411"; // very short vimeo video
+		// "/vi/35982411"; // very short vimeo video
 		// "https://www.dailymotion.com/video/x25ohb"; // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
 		// "http://manisnotabird.bandcamp.com/track/the-sound-of-spring";
 

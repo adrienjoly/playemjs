@@ -1,3 +1,23 @@
+# Soundcloud tracks (`/sc/`)
+
+http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
+/sc/adrienjoly/wolfentrap-3d
+/sc/adrienjoly/wolfentrap-3d#http://soundcloud.com/tracks/245733345
+soundcloud.com/adrienjoly/wolfentrap-3d # canonical url
+//soundcloud.com/adrienjoly/wolfentrap-3d # canonical url with slashes
+https://soundcloud.com/adrienjoly/wolfentrap-3d
+http://soundcloud.com/tracks/245733345
+http://snd.sc/GEOIEA # short url
+http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958 # embed url
+//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true
+http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958&auto_play=false&show_artwork=false&color=00b4ff
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fdualtone%2Fshovels-rope-evil&auto_play=false&show_comments=false&color=ff7e00
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpolyvinyl-records%2Fgenerationals-black-lemon-1&auto_play=false&show_comments=false&color=ff7e00
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineusa%2Finfestation&auto_play=false&show_comments=false&color=ff7e00
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-records%2Fhome-leave-the-lights-on&auto_play=false&show_comments=false&color=ff7e00
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
+http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
+
 # Youtube tracks (`/yt/`)
 
 /yt/-gOK9LjTtl8
@@ -38,26 +58,6 @@ mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 http://mambobertier.bandcamp.com/track/tokyo-tripot-2 # missing stream URL
 https://manisnotabird.bandcamp.com/track/the-sounds-of-spring # missing stream URL
 # TODO: bandcamp track with custom domain (e.g. http://theweakend.com/track/the-weakend-ft-chris-daddy-dave)
-
-# Soundcloud tracks (`/sc/`)
-
-http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
-/sc/adrienjoly/wolfentrap-3d
-/sc/adrienjoly/wolfentrap-3d#http://soundcloud.com/tracks/245733345
-soundcloud.com/adrienjoly/wolfentrap-3d # canonical url
-//soundcloud.com/adrienjoly/wolfentrap-3d # canonical url with slashes
-https://soundcloud.com/adrienjoly/wolfentrap-3d
-http://soundcloud.com/tracks/245733345
-http://snd.sc/GEOIEA # short url
-http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958 # embed url
-//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true
-http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958&auto_play=false&show_artwork=false&color=00b4ff
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fdualtone%2Fshovels-rope-evil&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpolyvinyl-records%2Fgenerationals-black-lemon-1&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineusa%2Finfestation&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-records%2Fhome-leave-the-lights-on&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
-http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
 
 # Deezer tracks (`/dz/`)
 
