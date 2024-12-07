@@ -8,9 +8,9 @@ soundcloud.com/adrienjoly/wolfentrap-3d # canonical url
 https://soundcloud.com/adrienjoly/wolfentrap-3d
 http://soundcloud.com/tracks/245733345
 http://snd.sc/GEOIEA # short url
-http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958 # embed url
+http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F864293650 # embed url
 //w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true
-http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53867958&auto_play=false&show_artwork=false&color=00b4ff
+http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F864293650&auto_play=false&show_artwork=false&color=00b4ff
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fdualtone%2Fshovels-rope-evil&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpolyvinyl-records%2Fgenerationals-black-lemon-1&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineusa%2Finfestation&auto_play=false&show_comments=false&color=ff7e00
