@@ -199,6 +199,7 @@ function SoundCloudPlayer(){
       this.element.setAttribute("height", "100%");
       this.element.setAttribute("scrolling", "no");
       this.element.setAttribute("frameborder", "no");
+      this.element.setAttribute("allow", "autoplay");
       const url = "https://api.soundcloud.com" + id.split('soundcloud.com').pop(); // e.g. "https://api.soundcloud.com/tracks/123456789"
       console.log("=> sc PLAY url:", url);
       this.element.setAttribute("src", `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false`);
@@ -206,8 +207,11 @@ function SoundCloudPlayer(){
 
       this.embedVars.trackId = id;
       this.widget = SC.Widget(this.element);
-      this.widget.play();
-      this.callHandler("onEmbedReady", this);
+      this.widget.bind(SC.Widget.Events.READY, () => {
+        console.log("READY");
+        this.widget.play();
+        this.callHandler("onEmbedReady", this);
+      });
     }
     if (id.indexOf("/tracks/") == 0)
       return playId(id);

@@ -16,10 +16,9 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	playem = testUI.wrapPlayem(playem);
 	playem.setPref("loop", false);
 	var eventLogger = new PlayemLogger().listenTo(playem, testUI.onPlayerEvent);
-
+	
 	playem.addTrackByUrl(TRACK);
-	playem.play();
-
+	
 	var runner = new TestRunner();
 	runner.addTests({
 		"track starts playing (or buffering) in less than 10 seconds": function(cb){
@@ -33,7 +32,11 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		}
 	});
 
-	runner.run(function(res){
-		//playem.stop();
-	});
+	window.startTest = () => {
+		playem.play();
+
+		runner.run(function(res){
+			//playem.stop();
+		});
+	};
 });
