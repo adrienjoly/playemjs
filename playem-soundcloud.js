@@ -5,13 +5,6 @@ function SoundCloudPlayer(){
 };
 
 (function() {
-  const ERROR_EVENTS = [
-      "onerror",
-      "ontimeout",
-      "onfailure",
-      "ondataerror"
-    ];
-
   function Player(eventHandlers, embedVars) {  
     this.label = 'SoundCloud';
     this.eventHandlers = eventHandlers || {};
@@ -34,12 +27,6 @@ function SoundCloudPlayer(){
     };
 
     function init() {
-      ERROR_EVENTS.map(function(evt){
-        that.soundOptions[evt] = function(e) {
-          console.error("SC error:", evt, e, e.stack);
-          that.eventHandlers.onError && that.eventHandlers.onError(that, {code:evt.substr(2), source:"SoundCloudPlayer"});
-        };
-      });
       that.isReady = true;
       that.callHandler("onApiReady", that);
     }
@@ -176,6 +163,10 @@ function SoundCloudPlayer(){
       const SC = window.SC;
       this.widget = SC.Widget(this.element);
 
+    this.widget.bind(SC.Widget.Events.ERROR, (evt) => {
+      console.error("SC error:", evt, e, e.stack);
+      this.callHandler("onError", {code:evt.substr(2), source:"SoundCloudPlayer"})
+    });
       this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
       this.widget.bind(SC.Widget.Events.PAUSE, () => this.callHandler("onPaused", this));
       this.widget.bind(SC.Widget.Events.FINISH, () => this.callHandler("onEnded", this));
