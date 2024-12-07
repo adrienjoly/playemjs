@@ -120,7 +120,6 @@ Then use it that way in your front-end code:
 <script src="dist/playem-min.js"></script>
 <script>
   // your app's API KEYS here
-  window.SOUNDCLOUD_CLIENT_ID = "11f9999111b5555c22227777c3333fed"; // your api key
   window.DEEZER_APP_ID = 123456789;
   window.DEEZER_CHANNEL_URL = "http://mysite.com/deezer-channel.html";
   window.JAMENDO_CLIENT_ID = "f9ff9f0f";
