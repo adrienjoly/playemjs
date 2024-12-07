@@ -1,21 +1,21 @@
 # Soundcloud tracks (`/sc/`)
 
-http://soundcloud.com/matas/hobnotropic # provided by soundcloud api documentation
-/sc/adrienjoly/wolfentrap-3d
-/sc/adrienjoly/wolfentrap-3d#http://soundcloud.com/tracks/245733345
-soundcloud.com/adrienjoly/wolfentrap-3d # canonical url
-//soundcloud.com/adrienjoly/wolfentrap-3d # canonical url with slashes
-https://soundcloud.com/adrienjoly/wolfentrap-3d
-http://soundcloud.com/tracks/245733345
+/sc/harissaquartet/no-service
+/sc/harissaquartet/no-service#http://soundcloud.com/tracks/245733345
+soundcloud.com/harissaquartet/no-service # canonical url
+//soundcloud.com/harissaquartet/no-service # canonical url with slashes
+http://soundcloud.com/harissaquartet/no-service
+https://soundcloud.com/harissaquartet/no-service
+http://api.soundcloud.com/tracks/245733345
+https://api.soundcloud.com/tracks/245733345
 http://snd.sc/GEOIEA # short url
 http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F864293650 # embed url
-//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F53156756&show_artwork=true
+//w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F245733345&show_artwork=true
 http://w.soundcloud.com/player/?url=http%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F864293650&auto_play=false&show_artwork=false&color=00b4ff
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fdualtone%2Fshovels-rope-evil&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpolyvinyl-records%2Fgenerationals-black-lemon-1&auto_play=false&show_comments=false&color=ff7e00
 https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fbearmedicineusa%2Finfestation&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fpartisan-records%2Fhome-leave-the-lights-on&auto_play=false&show_comments=false&color=ff7e00
-https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Faaron-behrens%2Fkeep-on-rising&auto_play=false&show_comments=false&color=ff7e00
+https://w.soundcloud.com/player?url=https%3A%2F%2Fsoundcloud.com%2Fharissaquartet%2Fno-service&auto_play=false&show_comments=false&color=ff7e00
 http://soundcloud.com/wildbelle/keep-you # supposed not to be embeddable, according to oembed API (status code 403)
 
 # Youtube tracks (`/yt/`)
