@@ -4,8 +4,10 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	toHide.parentElement.removeChild(toHide);
 
 	var TRACK =
+		"https://api.soundcloud.com/tracks/864293650"
+	    //"/sc/adrienjoly/wolfentrap-3d"
 		// "/yt/o4LBGitcvi8"; // youtube video
-		"/vi/35982411"; // very short vimeo video
+		// "/vi/35982411"; // very short vimeo video
 		// "https://www.dailymotion.com/video/x25ohb"; // contains a video ad that delays the onPlay event because of a linear ad -> new onBuffering event
 		// "http://manisnotabird.bandcamp.com/track/the-sound-of-spring";
 
@@ -14,10 +16,9 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 	playem = testUI.wrapPlayem(playem);
 	playem.setPref("loop", false);
 	var eventLogger = new PlayemLogger().listenTo(playem, testUI.onPlayerEvent);
-
+	
 	playem.addTrackByUrl(TRACK);
-	playem.play();
-
+	
 	var runner = new TestRunner();
 	runner.addTests({
 		"track starts playing (or buffering) in less than 10 seconds": function(cb){
@@ -31,7 +32,12 @@ new PlayemLoader().loadAllPlayers().whenReady(function(playem){
 		}
 	});
 
-	runner.run(function(res){
-		//playem.stop();
-	});
+	window.startTest = () => {
+		playem.play();
+		window.playem = playem;
+
+		runner.run(function(res){
+			//playem.stop();
+		});
+	};
 });

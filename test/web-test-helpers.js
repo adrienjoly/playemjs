@@ -21,7 +21,6 @@ function PlayemLoader() {
 		DEBUG = false;
 
 	window.YOUTUBE_API_KEY = "AIzaSyAHcfP2XwN1HmvwYRp8mr1yvYn1l1WE0-A"; 
-	window.SOUNDCLOUD_CLIENT_ID = "94f7290349b7801c04969260c4433fed"; // playemjs api key
 	window.DEEZER_APP_ID = 192342;
 	window.DEEZER_CHANNEL_URL = window.location.href.substr(0, window.location.href.indexOf("/", 10)) + "/lib/deezer-channel.html";
 	window.JAMENDO_CLIENT_ID = "c9cb2a0a";	
@@ -143,8 +142,8 @@ function PlayemLogger() {
 	var lastTypedEvent = {};
 
 	function makeLogger(evt, handler){
-		return function(){
-			var entry = [ Date.now(), evt ].concat(Array.prototype.slice.call(arguments));
+		return function(param){
+			var entry = [ Date.now(), evt, param ].concat(Array.prototype.slice.call(arguments));
 			self.log.push(entry);
 			lastTypedEvent[evt] = entry;
 			handler && handler(entry);
@@ -240,8 +239,9 @@ function TestUI(nbTracks, nbCommonTests){
 		self.set("testName", "(" + ++testNumber + " / " + nbCommonTests + ") " + title);
 	};
 	this.onPlayerEvent = function(entry){
-		//console.log(entry[1]);
-		self.prependToLog("-> " + entry[1]);
+		const event = entry[1];
+		const value = event === 'onTrackInfo' ? (Math.round(entry[2].trackPosition)) + 's' : ''
+		self.prependToLog(`-> ${event} ${value}`);
 	};
 	this.wrapPlayem = function(playem){
 		var playem = new PlayemWrapper(playem, function(fctName, arg){

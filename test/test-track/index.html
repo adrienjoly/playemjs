@@ -22,6 +22,12 @@
 	<p>If nothing shows up, please open this page using the incognito/private mode of your browser</p>
 </div>
 
+<button onclick="startTest()">Click to start playback</button>
+<button onclick="playem.pause()">Pause</button>
+<button onclick="playem.resume()">Resume</button>
+<button onclick="playem.seekTo(0.5)">Jump to middle of track</button>
+<button onclick="playem.stop()">Stop</button>
+
 <div class="info">
 	<p>current track:<span id="progress"></span></p>
 	<p>url:<span id="trackUrl"></span></p>

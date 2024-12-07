@@ -13,6 +13,14 @@
     *   [Parameters][9]
     *   [setPref][10]
         *   [Parameters][11]
+*   [currentTrack][12]
+*   [SoundCloudPlayer][13]
+*   [getEid][14]
+    *   [Parameters][15]
+*   [fetchMetadata][16]
+    *   [Parameters][17]
+*   [play][18]
+    *   [Parameters][19]
 
 ## Loader
 
@@ -24,7 +32,7 @@ Loads and returns a JSON resource asynchronously, using XMLHttpRequest (AJAX).
 
 #### Parameters
 
-*   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
+*   `src` **[string][20]** HTTP(S) URL of the JSON resource to load.
 *   `cb` **dataCallback** Callback function with request's data as first parameter.
 
 ### includeJS
@@ -33,7 +41,7 @@ Loads a JavaScript resource into the page.
 
 #### Parameters
 
-*   `src` **[string][12]** HTTP(S) URL of the JavaScript resource to load into the page.
+*   `src` **[string][20]** HTTP(S) URL of the JavaScript resource to load into the page.
 *   `cb` **errorCallback** Callback function with error as first parameter, if any.
 
 ### loadJSONP
@@ -42,8 +50,8 @@ Loads and returns a JSON resource asynchronously, by including it into the page 
 
 #### Parameters
 
-*   `src` **[string][12]** HTTP(S) URL of the JSON resource to load.
-*   `cb` **[function][13]** Callback function, called by the resource's script.
+*   `src` **[string][20]** HTTP(S) URL of the JSON resource to load.
+*   `cb` **[function][21]** Callback function, called by the resource's script.
 
 ## Playem
 
@@ -63,17 +71,46 @@ Events:
 
 ### Parameters
 
-*   `playemPrefs` **[Object][14]** Settings and preferences.
+*   `playemPrefs` **[Object][22]** Settings and preferences.
 
-    *   `playemPrefs.loop` **[Boolean][15]** If true, the playlist will be played infinitely. (default: true)
-    *   `playemPrefs.playTimeoutMs` **[Number][16]** Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
+    *   `playemPrefs.loop` **[Boolean][23]** If true, the playlist will be played infinitely. (default: true)
+    *   `playemPrefs.playTimeoutMs` **[Number][24]** Number of milliseconds after which an error event will be fired, if a tracks was not able to play. (default: 10000, i.e. 10 seconds)
 
 ### setPref
 
 #### Parameters
 
-*   `key` **[string][12]** Key of the Playem parameter to set.
+*   `key` **[string][20]** Key of the Playem parameter to set.
 *   `val` **any** Value to affect to that `key`.
+
+## currentTrack
+
+Type: (TrackInfo | null)
+
+## SoundCloudPlayer
+
+## getEid
+
+### Parameters
+
+*   `url` **[string][20]**&#x20;
+
+Returns **(SoundcloudId | [undefined][25])**&#x20;
+
+## fetchMetadata
+
+Best effort generation of metadata, based on URL.
+
+### Parameters
+
+*   `url` &#x20;
+*   `cb` &#x20;
+
+## play
+
+### Parameters
+
+*   `id` **SoundcloudId**&#x20;
 
 [1]: #loader
 
@@ -97,12 +134,30 @@ Events:
 
 [11]: #parameters-4
 
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[12]: #currenttrack
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[13]: #soundcloudplayer
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[14]: #geteid
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[15]: #parameters-5
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[16]: #fetchmetadata
+
+[17]: #parameters-6
+
+[18]: #play
+
+[19]: #parameters-7
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
