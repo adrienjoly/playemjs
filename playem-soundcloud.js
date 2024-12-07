@@ -157,7 +157,7 @@ function SoundCloudPlayer(){
   };
   
   Player.prototype.setTrackPosition = function(pos) {
-    this.widget.seekTo(pos * 1000);
+    this.safeCall("seekTo", pos * 1000);
   };
 
   Player.prototype.play = function(id) {
