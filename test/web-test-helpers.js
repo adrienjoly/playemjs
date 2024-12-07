@@ -143,8 +143,8 @@ function PlayemLogger() {
 	var lastTypedEvent = {};
 
 	function makeLogger(evt, handler){
-		return function(){
-			var entry = [ Date.now(), evt ].concat(Array.prototype.slice.call(arguments));
+		return function(param){
+			var entry = [ Date.now(), evt, param ].concat(Array.prototype.slice.call(arguments));
 			self.log.push(entry);
 			lastTypedEvent[evt] = entry;
 			handler && handler(entry);
@@ -240,8 +240,9 @@ function TestUI(nbTracks, nbCommonTests){
 		self.set("testName", "(" + ++testNumber + " / " + nbCommonTests + ") " + title);
 	};
 	this.onPlayerEvent = function(entry){
-		//console.log(entry[1]);
-		self.prependToLog("-> " + entry[1]);
+		const event = entry[1];
+		const value = event === 'onTrackInfo' ? (Math.round(entry[2].trackPosition)) + 's' : ''
+		self.prependToLog(`-> ${event} ${value}`);
 	};
 	this.wrapPlayem = function(playem){
 		var playem = new PlayemWrapper(playem, function(fctName, arg){

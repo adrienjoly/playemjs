@@ -188,6 +188,7 @@ function Playem (playemPrefs) {
     var players = [] // instanciated Player classes, added by client
     var i
     var exportedMethods
+    /** @type {TrackInfo | null} */
     var currentTrack = null
     var trackList = []
     var whenReady = null

@@ -1,6 +1,3 @@
-//loader.includeJS("https://w.soundcloud.com/player/api.js");
-
-
 function SoundCloudPlayer(){
   return SoundCloudPlayer.super_.apply(this, arguments);
 };
@@ -151,14 +148,16 @@ function SoundCloudPlayer(){
     });
   }
 
-  Player.prototype.getTrackPosition = function(callback) {
-    this.widget.getPosition((ms) => {
+  Player.prototype.getTrackPosition = async function(callback) {
+    const ms = this.widget ? await new Promise(resolve => this.widget.getPosition(resolve)) : null;
+    if (ms) {
+      this.trackInfo.position = ms / 1000;
       callback(this.trackInfo.position);
-    });
+    }
   };
   
   Player.prototype.setTrackPosition = function(pos) {
-    this.safeCall("setPosition", pos * 1000); // TODO
+    this.widget.seekTo(pos * 1000);
   };
 
   Player.prototype.play = function(id) {
@@ -181,6 +180,7 @@ function SoundCloudPlayer(){
       this.embedVars.playerContainer.appendChild(this.element);
 
       this.embedVars.trackId = id;
+      const SC = window.SC;
       this.widget = SC.Widget(this.element);
 
       this.widget.bind(SC.Widget.Events.PLAY, () => this.callHandler("onPlaying", this));
@@ -214,7 +214,10 @@ function SoundCloudPlayer(){
   }
 
   Player.prototype.stop = function() {
-    this.safeCall("stop");
+    this.embedVars.playerContainer.innerHTML = '';
+    this.element = null;
+    this.widget = null;
+    this.trackInfo = {};
   }
 
   Player.prototype.setVolume = function(vol) {
