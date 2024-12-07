@@ -108,10 +108,19 @@ function SoundCloudPlayer(){
   }
 
   /**
-   * (requires an API key => not supported anymore)
+   * Best effort generation of metadata, based on URL.
    */
   Player.prototype.fetchMetadata = function(url, cb){
-    return cb();
+    const id = this.getEid(url);
+    const parts = (id ?? '').split('/');
+    return cb(parts.length === 2 && parts[0] !== 'tracks' ? {
+      id,
+      eId: "/sc/" + id,
+      img: undefined,
+      url: "https://soundcloud.com/" + id,
+      title: parts[0].replace(/[\-_]+/g, " ") + " - " + parts[1].replace(/[\-_]+/g, " "),
+      playerLabel: 'Soundcloud'
+    } : undefined);
   }
 
   Player.prototype.getTrackPosition = async function(callback) {
