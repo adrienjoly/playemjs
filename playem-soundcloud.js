@@ -29,7 +29,7 @@ function SoundCloudPlayer(){
     this.widget = null;
     this.isReady = false;
     this.trackInfo = {};
-    this.soundOptions = {autoPlay:true};
+    this.soundOptions = {};
 
     var that = this;
 
@@ -189,24 +189,30 @@ function SoundCloudPlayer(){
   Player.prototype.play = function(id) {
     //console.log("sc PLAY id:", id)
     this.trackInfo = {};
-    var that = this;
-    function playId(id){
-      //console.log("=> sc PLAY id:", id)
-      that.embedVars.trackId = id;
-      //console.log("soundcloud play", this.embedVars);
-      window.SC.stream(id, that.soundOptions, function(sound){
-        that.widget = sound;
-        that.callHandler("onEmbedReady", that);
-        //that.safeCall("play");
-      });
+    const playId = (id) => {
+      console.log("=> sc PLAY id:", id);
+
+      this.embedVars.playerContainer.innerHTML = '';
+      this.element = document.createElement("iframe");
+      this.element.id = this.embedVars.playerId; // e.g. "soundcloud-widget"
+      this.element.setAttribute("width", "100%");
+      this.element.setAttribute("height", "100%");
+      this.element.setAttribute("scrolling", "no");
+      this.element.setAttribute("frameborder", "no");
+      const url = "https://api.soundcloud.com" + id.split('soundcloud.com').pop(); // e.g. "https://api.soundcloud.com/tracks/123456789"
+      console.log("=> sc PLAY url:", url);
+      this.element.setAttribute("src", `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}&auto_play=false`);
+      this.embedVars.playerContainer.appendChild(this.element);
+
+      this.embedVars.trackId = id;
+      this.widget = SC.Widget(this.element);
+      this.widget.play();
+      this.callHandler("onEmbedReady", this);
     }
     if (id.indexOf("/tracks/") == 0)
       return playId(id);
     id = "http://" + (!id.indexOf("/") ? "soundcloud.com" : "") + id;
-    //console.log("sc resolve url:", id);
-    fetchMetadata(id, function(data){
-      playId((data || {}).id);
-    });
+    playId(id);
   }
 
   Player.prototype.resume = function() {
