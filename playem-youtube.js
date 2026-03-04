@@ -177,7 +177,10 @@ function YoutubePlayer(){
           type : "video",
           maxResults : limit,
         }).execute(function(res){
-          if (res.error) throw res.error; // e.g. 403 / "quota exceeded" error
+          if (res.error) {
+            console.error('searchTracks - YouTube API error:', res.error); // e.g. 403 / "quota exceeded" error
+            return cb([], res.error);
+          }
           results = res.items.map(translateResult);
           cb(results);
         });
@@ -187,7 +190,10 @@ function YoutubePlayer(){
           'id': query,
           'part': 'snippet,contentDetails,statistics'
         }).execute(function(res){
-          if (res.error) throw res.error; // e.g. 403 / "quota exceeded" error
+          if (res.error) {
+            console.error('searchTracks - YouTube API error:', res.error); // e.g. 403 / "quota exceeded" error
+            return cb([], res.error);
+          }
           results = res.items.map(translateResult);
           cb(results);
         });
