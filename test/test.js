@@ -32,6 +32,7 @@ const players = [
   { id: "sc", name: "Soundcloud", Player: require('./../playem-soundcloud.js') },
   { id: "sp", name: "Spotify", Player: require('./../playem-spotify.js') },
   { id: "vi", name: "Vimeo", Player: require('./../playem-vimeo.js') },
+  { id: "yt", name: "Youtube", Player: require('./../playem-youtube.js') },
 ];
 
 const URLS_FILE = './test/test-detection/urls.txt';
