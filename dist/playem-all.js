@@ -1,4 +1,4 @@
-/* playemjs 1.3.3, commit: ebe7239ae9d8e2676ba8f263d0048f2f20280937 */
+/* playemjs 1.3.3, commit: 2e5931dcc33c99b04d5403609c2fd658c652c3b8 */
 
 // configuration
 
@@ -2124,7 +2124,7 @@ function YoutubePlayer(){
 
   function searchTracks(query, limit, cb){
     if (!cb) return;
-    cb([], new Error('searchTracks requires a YouTube API key and is no longer supported by default'));
+    cb([], new Error('searchTracks is not supported without a YouTube API key. Please implement a custom search solution.'));
   }
 
   Player.prototype.searchTracks = function(query, limit, cb){
@@ -2141,6 +2141,7 @@ function YoutubePlayer(){
         try {
           var data = JSON.parse(xhr.responseText);
           if (data.error) {
+            console.error('fetchMetadata - noembed error:', data.error);
             cb();
           } else {
             cb({
@@ -2153,13 +2154,18 @@ function YoutubePlayer(){
             });
           }
         } catch(e) {
+          console.error('fetchMetadata - JSON parse error:', e);
           cb();
         }
       } else {
+        console.error('fetchMetadata - HTTP error:', xhr.status);
         cb();
       }
     };
-    xhr.onerror = function() { cb(); };
+    xhr.onerror = function() {
+      console.error('fetchMetadata - network error');
+      cb();
+    };
     xhr.send();
   }
 

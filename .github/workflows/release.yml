@@ -1,0 +1,36 @@
+# Automatically creates a GitHub release and bumps package.json version
+# whenever a conventional commit (feat/fix/BREAKING CHANGE) is merged to master.
+# Uses GITHUB_TOKEN (auto-provided by GitHub Actions) — no manual token renewal needed.
+
+name: Release
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # full history needed for conventional-changelog to compute the next version
+    - name: Use Node.js 22.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+    - run: npm ci
+    - run: npm test
+    - name: Configure git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: npm run release -- --ci
