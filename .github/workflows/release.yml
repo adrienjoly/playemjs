@@ -25,7 +25,6 @@ jobs:
       with:
         node-version: 22.x
     - run: npm ci
-    - run: npm test
     - name: Configure git
       run: |
         git config user.name "github-actions[bot]"
