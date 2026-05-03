@@ -10,7 +10,8 @@
     "prepublishOnly": "npm run -s warn; make",
     "start": "make test",
     "lint": "./node_modules/.bin/standard playem.js # TODO: playem-*.js",
-    "test": "make test"
+    "test": "make test",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -36,9 +37,32 @@
     "url": "https://github.com/adrienjoly/playemjs/issues"
   },
   "homepage": "https://github.com/adrienjoly/playemjs#readme",
+  "release-it": {
+    "npm": false,
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}",
+      "addUntrackedFiles": true
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}"
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular",
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "hooks": {
+      "after:bump": "make build"
+    }
+  },
   "devDependencies": {
+    "@release-it/conventional-changelog": "^11.0.0",
     "documentation": "^14.0.3",
     "mocha": "^10.8.2",
+    "release-it": "^20.0.1",
     "standard": "17.1.2",
     "terser": "^5.37.0"
   }
